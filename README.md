@@ -1,25 +1,25 @@
 # 🚀 My Portfolio
 
-Welcome to my **Modern Portfolio**, built with the latest technologies like **React.js, Tailwind CSS, GSAP, and Lenis** for a smooth, stylish, and responsive experience.
+Welcome to my **Modern Developer Portfolio**, built with **React.js, Tailwind CSS, GSAP, and Lenis** for smooth animations and a stylish UI.  
 
 ## ✨ Features
-- 🎨 **Modern & Stylish UI**
-- 🌗 **Dark Mode & Light Mode**
-- 📱 **Fully Responsive**
-- 🔥 **Smooth Scroll Animations (GSAP & Lenis)**
+- 🌗 **Dark Mode & Light Mode** *(In Progress)*
+- 🎨 **Modern & Minimal UI**
+- 📱 **Fully Responsive Design**
+- 🔥 **Smooth Scrolling (Lenis + GSAP)**
 - ⚡ **Fast Performance with Vite**
-- 🌍 **Interactive Google Maps Section**
-- 📜 **Downloadable Resume Button**
-- 📂 **Projects Showcase with Live Demo & GitHub Links**
+- 🌍 **Google Maps Integration**
+- 📂 **Projects Showcase (Live Demo & GitHub Links)**
 - 📨 **Contact Form with Email Integration**
+- 📜 **Downloadable Resume Button**
 
 ## 🛠️ Tech Stack
 - **Frontend:** React.js, Tailwind CSS, Vite
 - **Animations:** GSAP, Lenis Smooth Scroll
 - **Icons:** Lucide React
-- **Hosting:** Vercel / Netlify (Optional)
+- **Hosting:** *(To be deployed soon)*
 
 ## 🚀 Installation & Setup
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/your-username/your-portfolio.git
+   git clone https://github.com/ankityadav456/My_Portfolio.git
