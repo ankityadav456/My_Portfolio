@@ -1,8 +1,25 @@
-# React + Vite
+# 🚀 My Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my **Modern Developer Portfolio**, built with **React.js, Tailwind CSS, GSAP, and Lenis** for smooth animations and a stylish UI.  
 
-Currently, two official plugins are available:
+## ✨ Features
+- 🌗 **Dark Mode & Light Mode** *(In Progress)*
+- 🎨 **Modern & Minimal UI**
+- 📱 **Fully Responsive Design**
+- 🔥 **Smooth Scrolling (Lenis + GSAP)**
+- ⚡ **Fast Performance with Vite**
+- 🌍 **Google Maps Integration**
+- 📂 **Projects Showcase (Live Demo & GitHub Links)**
+- 📨 **Contact Form with Email Integration**
+- 📜 **Downloadable Resume Button**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Frontend:** React.js, Tailwind CSS, Vite
+- **Animations:** GSAP, Lenis Smooth Scroll
+- **Icons:** Lucide React
+- **Hosting:** *(To be deployed soon)*
+
+## 🚀 Installation & Setup
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/ankityadav456/My_Portfolio.git
