@@ -1,113 +1,98 @@
-// Copyright 2025 PREM
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
-
-/**
- * Node modules
- */
-import  gsap  from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from '@gsap/react';
-
-
-/**
- * Register gsap plugins
- */
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-/**
- * Components
- */
-import ReviewCard from "./ReviewCard";
 const reviews = [
-    {
-      content: 'Exceptional web development! Delivered a seamless, responsive site with clean code and great UX.',
-      name: 'Ravi Patel',
-      imgSrc: '/images/people-1.png',
-      company: 'Self Business'
-    },
-    {
-      content: 'Impressive work! Fast loading times, intuitive design, and flawless backend integration. Highly recommend.',
-      name: 'Arjun Sharma',
-      imgSrc: '/images/people-2.png',
-      company: 'Mahinda'
-    },
-    {
-      content: 'Outstanding developer! Built a robust site with perfect functionality. Efficient and detail-oriented.',
-      name: 'Manish Mehta',
-      imgSrc: '/images/people-3.jpg',
-      company: 'CodeCraft'
-    },
-    {
-      content: 'Creative and skilled! Produced a modern, user-friendly site that exceeded expectations.',
-      name: 'Rakesh Gupta',
-      imgSrc: '/images/people-4.png',
-      company: 'Self Business'
-    },
-    {
-      content: 'Professional work! Delivered on time, with a polished design and smooth user experience.',
-      name: 'Anil Nair',
-      imgSrc: '/images/people-5.png',
-      company: 'TCS'
-    },
-    {
-      content: 'Excellent project! High-quality code, responsive design&exceptional problem-solving skills.',
-      name: 'Vijay Iyer',
-      imgSrc: '/images/people-6.jpg',
-      company: 'Home Work'
-    }
-  ];
+  {
+    name: "John Doe",
+    review: "Ankit is a fantastic developer! Highly skilled and great to work with.",
+    image: "/images/profile_img.png",
+    role: "Senior Developer",
+  },
+  {
+    name: "Emily Smith",
+    review: "Loved collaborating with Ankit. His skills in MERN Stack are amazing!",
+    image: "/images/profile_img.png",
+    role: "Project Manager",
+  },
+  {
+    name: "Michael Brown",
+    review: "A talented and detail-oriented developer. Would love to work again!",
+    image: "/images/profile_img.png",
+    role: "Tech Lead",
+  },
+  {
+    name: "Sophia White",
+    review: "Ankit is extremely creative and delivers high-quality projects on time.",
+    image: "/images/profile_img.png",
+    role: "UI/UX Designer",
+  },
+  {
+    name: "Michael Brown",
+    review: "A talented and detail-oriented developer. Would love to work again!",
+    image: "/images/profile_img.png",
+    role: "Tech Lead",
+  },
+  {
+    name: "Sophia White",
+    review: "Ankit is extremely creative and delivers high-quality projects on time.",
+    image: "/images/profile_img.png",
+    role: "UI/UX Designer",
+  },
+];
 
-  
-const Review = () => {
+const ReviewSection = () => {
+  const scrollRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ["start start", "end end"],
+  });
 
-    useGSAP(() => {
-      gsap.to('.scrub-slide', {
-        scrollTrigger: {
-          trigger: '.scrub-slide',
-          start: '-200% 80%',
-          end: '400% 80%',
-          scrub: true
-        },
-        x:'-1000'
-      })
-    })
-    return(
-        <section
-          id="reviews"
-          className="section overflow-hidden"
+  // Translate vertical scroll into horizontal movement
+  const xScroll = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+
+  return (
+    <section ref={scrollRef} id="reviews" className="py-16 relative bg-gray-50 dark:bg-zinc-900">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Section Title */}
+        <motion.h2
+          className="text-3xl font-bold text-start text-zinc-900 dark:text-zinc-100 mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          What People Say About Me
+        </motion.h2>
+
+        {/* Scrollable Review Cards */}
+        <div className="relative overflow-hidden">
+          <motion.div
+            className="flex gap-6"
+            style={{ x: xScroll }} // Moves horizontally as user scrolls down
           >
-            <div className="container">
-                <h2 className="headline-2 mb-8 reveal-up">
-                   What our customers say
+            {reviews.map((review, index) => (
+              <motion.div
+                key={index}
+                className="min-w-[300px] sm:min-w-[350px] snap-start p-6 bg-white dark:bg-zinc-800 rounded-xl shadow-lg flex flex-col items-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.2 }}
+              >
+                <img
+                  src={review.image}
+                  alt={review.name}
+                  className="w-16 h-16 rounded-full border-4 border-blue-500 shadow-md"
+                />
+                <h3 className="mt-4 text-lg font-semibold text-zinc-800 dark:text-zinc-100">{review.name}</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">{review.role}</p>
+                <p className="mt-3 text-center text-zinc-600 dark:text-zinc-300">{review.review}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-                </h2>
-                <div className="scrub-slide flex items-stretch gap-3 w-fit">
-                    {reviews.map(({ content, name, imgSrc, company}, key) => (
-                        <ReviewCard
-                          key={key}
-                          name={name}
-                          imgSrc={imgSrc}
-                          company={company}
-                          content={content} 
-                        />
-                    ))}
-                </div>
-            </div>
-
-        </section>
-    )
-}
-
-export default Review
+export default ReviewSection;

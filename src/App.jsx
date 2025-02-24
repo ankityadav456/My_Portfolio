@@ -10,6 +10,7 @@ import About from "./components/About";
 import Skill from "./components/Skill";
 import Contact from "./components/Contact";
 import Work from "./components/Work";
+import Review from "./components/Review";
 import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -66,6 +67,7 @@ const App = () => {
         <About />
         <Skill />
         <Work />
+        <Review />
         <Contact />
       </main>
       <Footer />

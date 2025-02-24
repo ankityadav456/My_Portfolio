@@ -1,91 +1,62 @@
-// Copyright 2025 PREM
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-
-/**
- * Node modules
- */
-
 import PropTypes from "prop-types";
-const ProjectCard = ({
-    imgSrc,
-    title,
-    tags,
-    projectLink,
-    classes,
-}) => {
+
+const ProjectCard = ({ imgSrc, title, tags, projectLink, classes = "" }) => {
     return (
-        <div className={"relative p-4 rounded-2xl bg-zinc-800 hover:bg-zinc-700/50 active:bg-zinc-700/60 ring-1 ring-inset ring-zinc-50/5 transition-colors" + classes}>
-            <figure className="img-box aspect-square rounded-lg">
-                <img
-                  src={imgSrc}
-                  alt={title}
-                  loading='lazy'
-                  className="img-cover"
+        <div 
+            className={
+                "relative p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg dark:hover:shadow-blue-500/30 " +
+                "bg-white dark:bg-zinc-900 ring-1 ring-inset ring-zinc-200 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 " +
+                classes
+            }
+        >
+            {/* Image Wrapper */}
+            <figure className="relative aspect-square rounded-lg overflow-hidden">
+                <img 
+                    src={imgSrc} 
+                    alt={title} 
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-all duration-300 group-hover:opacity-80"
                 />
             </figure>
 
-            <div className="flex items-center justify-between gap-4">
-            <div>
-                <h3 className="title-1 mb-3">
-                    {title}
-                </h3>
-          
-            <div className="flex flex-wrap items-center gap-1">
-                
-                    {tags.map((label, key) => (
-                        <span
-                          key={key} 
-                          className="h-8 text-sm text-zinc-400 bg-zinc-50/5 grid items-center px-3 rounded-lg"
-                          >
-                            {label}
-                        </span>
-                    ))}
-               
-            </div>
-        
+            {/* Content */}
+            <div className="flex items-center justify-between gap-4 mt-4">
+                <div>
+                    <h3 className="text-gray-900 dark:text-gray-100 font-semibold text-lg mb-2">{title}</h3>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1">
+                        {tags.map((label, index) => (
+                            <span 
+                                key={index} 
+                                className="h-8 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg"
+                            >
+                                {label}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Arrow Button */}
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-blue-500 text-white shadow-md transition-all duration-300 hover:bg-blue-600">
+                    <span className="material-symbols-rounded" aria-hidden="true">
+                        arrow_outward
+                    </span>
+                </div>
             </div>
 
-            <div className="w-9 h-9 rounded-lg grid place-items-center bg-sky-400 text-zinc-950 shrink-0">
-                <span 
-                className="material-symbols-rounded"
-                aria-hidden="true"
-                >
-                    arrow_outward
-
-                </span>
-            </div>
+            {/* Clickable Link */}
+            <a href={projectLink} target="_blank" rel="noopener noreferrer" className="absolute inset-0"></a>
         </div>
+    );
+};
 
-        <a 
-        href={projectLink}
-        target='_blank'
-        className="absolute inset-0"
-        >
-
-        </a>
-    </div>
-                
-    )
-}
-
-ProjectCard.propTypes ={
+ProjectCard.propTypes = {
     imgSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     tags: PropTypes.array.isRequired,
     projectLink: PropTypes.string,
     classes: PropTypes.string
-}
+};
 
-export default ProjectCard
+export default ProjectCard;

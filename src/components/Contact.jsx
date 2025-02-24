@@ -41,22 +41,20 @@ const socialLinks = [
   },
 ];
 
-
 const Contact = () => {
   return (
-    <section
-      id="contact"
-      className="section"
-    >
-      <div className="container lg:grid lg: grid-cols-2 lg:items-stretch">
+    <section id="contact" className="section">
+      <div className="container">
+        {/* Header */}
+        <h2 className="headline-2 reveal-up text-center sm:text-left px-4 sm:px-0 break-words">
+  Contact me for collaboration
+</h2>
 
-        <div className="mb-12 lg:mb-0 lg:flex lg:flex-col">
 
-          <h2 className="headline-2 lg:max-w-[12ch] reveal-up text-nowrap">
-            Contact me for collaboration
-          </h2>
-
-          <div className="relative h-64 rounded-lg overflow-hidden mt-5">
+        {/* Contact Content (Map & Form) */}
+        <div className="mt-4 grid gap-8 lg:grid-cols-2 lg:items-stretch">
+          {/* Left Section - Embedded Google Map */}
+          <div className="relative h-64 rounded-lg overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4032675.3784085556!2d77.41261550000002!3d20.593684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd2724ff18a9%3A0x4214383eeda9b56!2sIndia!5e0!3m2!1sen!2sin!4v1707589200000!5m2!1sen!2sin"
               width="100%"
@@ -69,99 +67,92 @@ const Contact = () => {
             ></iframe>
           </div>
 
-          
-        </div>
-
-        <form
-          action="https://getform.io/f/adrrjdla"
-          method="POST"
-          className="xl:pl-10 2xl:pl-20"
-        >
-
-          <div className="md:grid md:items-center md:grid-cols-2 md:gap-2">
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="label reveal-up"
-              >
-                Name
-              </label>
-
-              <input
-                type="text"
-                name="name"
-                id="name"
-                autoComplete="name"
-                required
-                placeholder="Ankit Yadav"
-                className="text-field reveal-up"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="label reveal-up"
-              >
-                Email
-              </label>
-
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                required
-                placeholder="xyz@gmail.com"
-                className="text-field reveal-up"
-              />
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="label reveal-up"
-            >
-              Message
-            </label>
-
-            <textarea
-              name="message"
-              id="message"
-              placeholder="Hi!"
-              required
-              spellCheck="true"
-              className="text-field resize-y min-h-20 max-h-80 reveal-up">
-
-            </textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary [&]:max-w-full w-full justify-center reveal-up"
+          {/* Right Section - Contact Form */}
+          <form
+            action="https://getform.io/f/adrrjdla"
+            method="POST"
+            className="xl:pl-10 2xl:pl-20"
           >
-            Submit
-          </button>
-          <div className="flex items-center gap-2 mt-auto pt-3">
-            {socialLinks.map(({ href, icon }, key) => (
-              <a
-                key={key}
-                href={href}
-                target="_blank"
-                className="w-12 h-12 grid place-items-center ring-inset ring-2 ring-zinc-50/5 rounded-lg transition-[background-color,color] hover:bg-zinc-50 hover:text-zinc-950 active:bg-zinc-50/80 reveal-up"
+            <div className="md:grid md:items-center md:grid-cols-2 md:gap-2">
+              <div className="mb-4">
+                <label htmlFor="name" className="label reveal-up">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  autoComplete="name"
+                  required
+                  placeholder="Ankit Yadav"
+                  className="text-field reveal-up bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border dark:border-zinc-600 focus:ring-2 focus:ring-primary focus:outline-none rounded-lg px-4 py-2 w-full"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="email" className="label reveal-up">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  autoComplete="email"
+                  required
+                  placeholder="xyz@gmail.com"
+                  className="text-field reveal-up bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border dark:border-zinc-600 focus:ring-2 focus:ring-primary focus:outline-none rounded-lg px-4 py-2 w-full"
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="message" className="label reveal-up">
+                Message
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                placeholder="Hi!"
+                required
+                spellCheck="true"
+                className="text-field resize-y min-h-20 max-h-80 reveal-up bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border dark:border-zinc-600 focus:ring-2 focus:ring-primary focus:outline-none rounded-lg px-4 py-2 w-full"
+              ></textarea>
+            </div>
+
+            {/* Submit Button & Social Links */}
+            <div className="flex flex-wrap items-center gap-4 mt-auto pt-3 justify-center sm:justify-between">
+              <button
+                type="submit"
+                className="btn btn-primary flex items-center justify-center reveal-up bg-primary dark:bg-primary-dark 
+                 text-white dark:text-zinc-100 hover:bg-primary-light dark:hover:bg-primary-lighter 
+                 active:scale-95 transition-transform duration-200 ease-in-out 
+                 rounded-lg px-6 py-3 font-semibold shadow-md"
               >
-                {icon}
-              </a>
-            ))}
-          </div>
+                Submit
+              </button>
 
-
-        </form>
+              <div className="flex gap-3">
+                {socialLinks.map(({ href, icon }, key) => (
+                  <a
+                    key={key}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 grid place-items-center ring-inset ring-2 ring-zinc-200 dark:ring-zinc-700 
+                     rounded-lg transition-all duration-300 ease-in-out hover:scale-110 
+                     hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white 
+                     active:scale-90 shadow-md"
+                  >
+                    {icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-
     </section>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

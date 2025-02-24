@@ -26,18 +26,30 @@ const works = [
     tags: ['Web App', 'API'],
     projectLink: 'https://github.com/ankityadav456/spotify__clone.git'
   },
-  // {
-  //   imgSrc: '/images/project-2.png',
-  //   title: 'Jewels Game',
-  //   tags: ['Game', 'Development'],
-  //   projectLink: 'https://github.com/allknowledge34/JewelsGame.git'
-  // },
-  // {
-  //   imgSrc: '/images/project-3.png',
-  //   title: 'Social Media Website[Buzzy Bird]',
-  //   tags: ['Development', 'API'],
-  //   projectLink: 'https://github.com/allknowledge34/BuzzyBird.git'
-  // },
+  {
+    imgSrc: '/images/',
+    title: 'User Managment',
+    tags: ['Web App', 'Crud'],
+    projectLink: 'https://github.com/ankityadav456/user-managment_.git'
+  },
+  {
+    imgSrc: '/images/portfolio.png',
+    title: 'My Portfolio',
+    tags: ['Web App', 'React'],
+    projectLink: 'https://github.com/ankityadav456/My-app.git'
+  },
+  {
+    imgSrc: '/images/project-2.png',
+    title: 'Food-Sharp',
+    tags: ['Android','E-Commerce'],
+    projectLink: ''
+  },
+  {
+    imgSrc: '/images/project-3.png',
+    title: 'Music Player',
+    tags: ['Development'],
+    projectLink: 'https://github.com/allknowledge34/BuzzyBird.git'
+  },
 ];
 
 
