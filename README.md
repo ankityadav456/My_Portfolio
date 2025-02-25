@@ -19,6 +19,15 @@ Welcome to my **Modern Developer Portfolio**, built with **React.js, Tailwind CS
 - **Icons:** Lucide React
 - **Hosting:** *(To be deployed soon)*
 
+## 🌗 Dark & Light Mode Screenshots
+
+### 🔹 Dark Mode
+![Light Mode](https://github.com/ankityadav456/My_Portfolio/blob/main/portfolio1.png)
+
+### 🔹 Light Mode
+![Dark Mode](https://github.com/ankityadav456/My_Portfolio/blob/main/portfolio2.png)
+
+
 ## 🚀 Installation & Setup
 1. **Clone the repository**
    ```sh
