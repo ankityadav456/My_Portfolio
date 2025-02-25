@@ -1,144 +1,100 @@
-// Copyright 2025 PREM
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+"use client";
 
-/**
- * Components
- */
-import { ButtonPrimary } from "./Button";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Youtube, Instagram } from "lucide-react";
 
 const sitemap = [
-  {
-    label: 'Home',
-    href: '#home'
-  },
-  {
-    label: 'About',
-    href: '#about'
-  },
-  {
-    label: 'Work',
-    href: '#work'
-  },
-  // {
-  //   label: 'Reviews',
-  //   href: '#reviews'
-  // },
-  {
-    label: 'Contact me',
-    href: '#contact'
-  }
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#work" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const socials = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com/ankityadav456'
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/ankit-yadav-y2302/'
-  },
-  {
-    label: 'Youtube',
-    href: 'https://www.youtube.com'
-  },
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com'
-  }
+  { label: "GitHub", href: "https://github.com/ankityadav456", icon: <Github size={20} /> },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/ankit-yadav-y2302/", icon: <Linkedin size={20} /> },
+  { label: "YouTube", href: "https://www.youtube.com", icon: <Youtube size={20} /> },
+  { label: "Instagram", href: "https://www.instagram.com", icon: <Instagram size={20} /> },
 ];
-
 
 const Footer = () => {
   return (
-    <footer className="section">
-      <div className="container">
-        <div className="lg:grid lg:grid-cols-2">
-          <div className="mb-10">
-            <h2 className="headline-1 mb-8 lg:max-w-[12ch] reveal-up">
-              Let&apos;s work together today!
-            </h2>
+    <footer className="text-gray-800 dark:text-gray-200 py-8">
+      <motion.div 
+        className="container mx-auto px-6 md:px-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Top Section */}
+        <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-8">
+          <motion.h2 
+            className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100"
+            whileHover={{ scale: 1.05 }}
+          >
+            Let’s work together today!
+          </motion.h2>
+        </div>
 
-            {/* <ButtonPrimary
-              href="mailto:allknowledge34@gmail.com"
-              label="Start project"
-              icon="chevron_right"
-              classes="reveal-up"
-            /> */}
+        {/* Sitemap & Socials */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          {/* Sitemap */}
+          <div>
+            <p className="text-lg font-semibold mb-3">Sitemap</p>
+            <ul className="space-y-2">
+              {sitemap.map(({ label, href }, key) => (
+                <motion.li 
+                  key={key}
+                  whileHover={{ x: 5, transition: { duration: 0.3 } }}
+                >
+                  <a
+                    href={href}
+                    className="text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition"
+                  >
+                    {label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 lg:pl-20">
-
-            <div>
-              <p className="mb-2 reveal-up">Sitemap</p>
-
-              <ul>
-                {sitemap.map(({ label, href }, key) => (
-                  <li key={key}>
-                    <a
-                      href={href}
-                      className="block text-sm text-zinc-400 py-1 transition-colors hover:text-zinc-200 reveal-up"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="mb-2 reveal-up">Socials</p>
-
-              <ul>
-                {socials.map(({ label, href }, key) => (
-                  <li key={key}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      className="block text-sm text-zinc-400 py-1 transition-colors hover:text-zinc-200 reveal-up"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-
+          {/* Socials */}
+          <div>
+            <p className="text-lg font-semibold mb-3">Socials</p>
+            <ul>
+              {socials.map(({ label, href, icon }, key) => (
+                <motion.li 
+                  key={key}
+                  whileHover={{ scale: 0.9}}
+                  transition={{ duration: 0.4 }}
+                >
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mb-3 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition"
+                  >
+                    {icon} {label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-10 mb-8">
-          <a
-            href="/"
-            className="logo reveal-up"
-          >
-            <img
-              src="/images/logo.png"
-              width={40}
-              height={40}
-              alt="Logo"
-            />
-
+        {/* Bottom Section */}
+        <div className="mt-10 border-t border-gray-300 dark:border-gray-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <a href="/" className="flex items-center">
+            <img src="/images/logo.jpg" alt="Logo" className="w-10 h-10 rounded-lg" />
           </a>
-
-          <p className="text-zinc-500 text-sm reveal-up">
-            &copy; 2025 <span className="text-zinc-200">Ankit Yadav</span>
+          <p className="text-md text-center md:text-left">
+            &copy; 2025 <span className="text-purple-500 dark:text-purple-400">Ankit Yadav</span>. All rights reserved.
           </p>
         </div>
-      </div>
+      </motion.div>
     </footer>
-  )
-}
+  );
+};
+
 export default Footer;

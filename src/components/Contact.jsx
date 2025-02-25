@@ -131,7 +131,7 @@ const Contact = () => {
                 Submit
               </button>
 
-              <div className="flex gap-3">
+              {/* <div className="flex gap-3">
                 {socialLinks.map(({ href, icon }, key) => (
                   <a
                     key={key}
@@ -146,7 +146,7 @@ const Contact = () => {
                     {icon}
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
           </form>
         </div>

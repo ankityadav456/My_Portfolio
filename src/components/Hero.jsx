@@ -92,7 +92,7 @@ const Hero = () => {
                 <div className="hidden lg:block">
                     <figure className="w-full max-w-[480px] ml-auto bg-gradient-to-t from-blue-400/40 via-25% via-blue-300/40 to-70% to-transparent rounded-[60px] overflow-hidden shadow-lg dark:shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl">
                         <img
-                            src="/images/heroImage.png"
+                            src="/images/heroimg.webp"
                             width={656}
                             height={800}
                             alt="Ankit Yadav"

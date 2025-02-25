@@ -30,13 +30,15 @@ const Header = () => {
         {/* Logo */}
         <h1>
           <a href="/" className="logo">
-            <img
-              src="/images/logo.png"
-              width={40}
-              height={40}
-              alt="Ankit Yadav"
-              className="transition-opacity duration-300 dark:opacity-90"
-            />
+          <figure className="img-box w-9 h-9 rounded-lg">
+                            <img
+                                src="/images/logo.jpg"
+                                width={40}
+                                height={40}
+                                alt="Ankit Yadav portrait"
+                                className="img-cover"
+                            />
+                        </figure>
           </a>
         </h1>
 
