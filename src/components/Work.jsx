@@ -27,9 +27,9 @@ const works = [
     projectLink: 'https://github.com/ankityadav456/spotify__clone.git'
   },
   {
-    imgSrc: '/images/',
-    title: 'User Managment',
-    tags: ['Web App', 'Crud'],
+    imgSrc: '/images/to-do.png',
+    title: 'Modern To-Do',
+    tags: ['Web App', 'Crud', 'Backend'],
     projectLink: 'https://github.com/ankityadav456/user-managment_.git'
   },
   {
@@ -39,13 +39,13 @@ const works = [
     projectLink: 'https://github.com/ankityadav456/My-app.git'
   },
   {
-    imgSrc: '/images/project-2.png',
+    imgSrc: '/images/food-sharp.webp',
     title: 'Food-Sharp',
     tags: ['Android','E-Commerce'],
     projectLink: ''
   },
   {
-    imgSrc: '/images/project-3.png',
+    imgSrc: '/images/music.jpg',
     title: 'Music Player',
     tags: ['Development'],
     projectLink: 'https://github.com/allknowledge34/BuzzyBird.git'

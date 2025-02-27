@@ -25,7 +25,7 @@ const About = () => {
             const timeout = setTimeout(() => {
                 setDisplayedText(prev => prev + typingText[index]);
                 setIndex(index + 1);
-            }, 20); // Adjust speed here
+            }, 30); // Adjust speed here
 
             return () => clearTimeout(timeout);
         }

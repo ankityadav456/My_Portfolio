@@ -1,6 +1,43 @@
-import { ButtonPrimary, ButtonOutline } from "./Button";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+
+// Typing effect component
+const TypewriterText = ({ text, delay, onComplete, showCursor }) => {
+    const [displayedText, setDisplayedText] = useState("");
+    const [index, setIndex] = useState(0);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (index < text.length) {
+                setDisplayedText((prev) => prev + text[index]);
+                setIndex(index + 1);
+            } else if (onComplete) {
+                onComplete(); // Trigger next text after completion
+            }
+        }, 100); // Typing speed
+        return () => clearTimeout(timeout);
+    }, [index, text, onComplete]);
+
+    return (
+        <motion.p className="text-white text-2xl font-semibold flex headline-1 ">
+            {displayedText}
+            {showCursor && (
+                <motion.span
+                    className="ml-1 w-1 h-6 bg-blue-500 inline-block "
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                />
+            )}
+        </motion.p>
+    );
+};
 
 const Hero = () => {
+
+    const [showName, setShowName] = useState(false);
+    const [showRole, setShowRole] = useState(false);
+    const [showCursor, setShowCursor] = useState(false);
+
     return (
         <section id="home" className="pt-28 lg:pt-36">
             <div className="container items-center lg:grid lg:grid-cols-2 lg:gap-10">
@@ -25,12 +62,20 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    {/* Hero Heading */}
+                    {/* Typing Animation */}
+
+                    {/* Typing Animation */}
                     <div className="text-left headline-1 max-w-[15ch] sm:max-w-[20ch] lg:max-w-[15ch] mt-5 mb-8 lg:mb-10">
-                        <p className="text-gray-700 dark:text-gray-200">Hi,</p>
-                        <p className="text-gray-900 dark:text-white font-bold">I&apos;m Ankit Yadav,</p>
-                        <p className="text-blue-600 dark:text-blue-400">MERN Stack Developer</p>
+                        {/* "Hi," types first */}
+                        <TypewriterText text="Hi," delay={0} onComplete={() => setShowName(true)} />
+
+                        {/* After "Hi," completes, "I'm Ankit Yadav" types */}
+                        {showName && <TypewriterText text="I'm Ankit Yadav," delay={500} onComplete={() => setShowRole(true)} />}
+
+                        {/* After "I'm Ankit Yadav," completes, "MERN Stack Developer" types */}
+                        {showRole && <TypewriterText text="MERN Stack Developer" delay={1000} onComplete={() => setShowCursor(true)} />}
                     </div>
+
 
                     {/* Buttons & Social Links */}
                     <div className="flex items-center gap-3">

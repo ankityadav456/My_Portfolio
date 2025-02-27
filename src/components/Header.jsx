@@ -28,17 +28,17 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full h-20 flex items-center z-40 bg-white dark:bg-zinc-900 shadow-md dark:shadow-zinc-800 transition-colors duration-300">
       <div className="max-w-screen-2xl w-full mx-auto px-4 flex justify-between items-center md:px-6">
         {/* Logo */}
-        <h1>
+        <h1 className="hidden md:block">
           <a href="/" className="logo">
-          <figure className="img-box w-9 h-9 rounded-lg">
-                            <img
-                                src="/images/logo.jpg"
-                                width={40}
-                                height={40}
-                                alt="Ankit Yadav portrait"
-                                className="img-cover"
-                            />
-                        </figure>
+            <figure className="img-box w-9 h-9 rounded-lg">
+              <img
+                src="/images/logo.jpg"
+                width={40}
+                height={40}
+                alt="Ankit Yadav portrait"
+                className="img-cover"
+              />
+            </figure>
           </a>
         </h1>
 
@@ -56,9 +56,8 @@ const Header = () => {
 
         {/* Navbar */}
         <nav
-          className={`absolute top-20 left-0 w-full bg-white dark:bg-zinc-900 md:static md:w-auto md:bg-transparent transition-all duration-300 ${
-            navOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
-          } md:translate-x-0 md:opacity-100`}
+          className={`absolute top-20 left-0 w-full bg-white dark:bg-zinc-900 md:static md:w-auto md:bg-transparent transition-all duration-300 ${navOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
+            } md:translate-x-0 md:opacity-100`}
         >
           <Navbar navOpen={navOpen} />
         </nav>
@@ -74,7 +73,7 @@ const Header = () => {
           </a>
 
           {/* Dark Mode Toggle */}
-          
+
         </div>
       </div>
     </header>
