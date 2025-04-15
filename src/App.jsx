@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ReactLenis } from "lenis/react";
+import { ReactLenis } from "lenis/react";  // ReactLenis for smooth scrolling
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useGSAP } from "@gsap/react";  // For GSAP hook
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -13,12 +13,12 @@ import Work from "./components/Work";
 import Review from "./components/Review";
 import "./App.css";
 
+// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  // Dark Mode State
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("theme") === "dark");
 
   useEffect(() => {
     if (darkMode) {
@@ -28,14 +28,14 @@ const App = () => {
     }
   }, [darkMode]);
 
-  // Store theme in localStorage
+  // Toggle Dark Mode and store it in localStorage
   const toggleDarkMode = () => {
     const newTheme = !darkMode ? "dark" : "light";
     localStorage.setItem("theme", newTheme);
     setDarkMode(!darkMode);
   };
 
-  // GSAP Animations
+  // GSAP Animations using useGSAP hook
   useGSAP(() => {
     const elements = gsap.utils.toArray(".reveal-up");
 

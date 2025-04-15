@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-import tailwindScrolbar from 'tailwind-scrollbar';
+import tailwindScrollbar from 'tailwind-scrollbar';  // Correct plugin name
 
 export default {
   darkMode: "class", // Enable class-based dark mode
@@ -10,9 +10,10 @@ export default {
   ],
   theme: {
     extend: {
-      'sans': ['Inter', 'sans-serif']
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],  // Make sure the font-family is applied properly
+      },
     },
   },
-  plugins: [tailwindScrolbar],
+  plugins: [tailwindScrollbar],  // Correct plugin name
 }
-
