@@ -21,6 +21,12 @@ import ProjectCard from "./ProjectCard";
 
 const works = [
   {
+    imgSrc: '/images/Yumigo.png',
+    title: 'Yumigo Food Ordering App',
+    tags: ['MERN','Web App', 'API','Full Stack'],
+    projectLink: 'https://github.com/ankityadav456/mern-food-ordering'
+  },
+  {
     imgSrc: '/images/Spotify-App.png',
     title: 'Spotify-Clone Music Player',
     tags: ['Web App', 'API'],

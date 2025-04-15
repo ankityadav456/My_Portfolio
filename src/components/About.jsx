@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 const aboutItems = [
     {
         label: 'Projects Done',
-        number: 10
+        number: 15
     },
     {
         label: 'Years of Experience',
-        number: 1.5
+        number: 2
     }
 ];
 
