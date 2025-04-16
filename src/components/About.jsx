@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-
+import logo from '../assets/images/logo.jpg'; 
 const aboutItems = [
     {
         label: 'Projects Done',
@@ -62,7 +62,7 @@ const About = () => {
                         ))}
                         <figure className="img-box w-9 h-9 rounded-lg ml-auto">
                             <img
-                                src="/images/logo.jpg"
+                                src={logo}
                                 width={40}
                                 height={40}
                                 alt="Ankit Yadav portrait"

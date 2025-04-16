@@ -1,62 +1,50 @@
-// Copyright 2025 PREM
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     https://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-
-/**
- * Components
- */
-
 import ProjectCard from "./ProjectCard";
+import yumigo from '../assets/images/Yumigo.png';
+import spotify from '../assets/images/Spotify-App.png';
+import todo from '../assets/images/to-do.png';
+import portfolio from '../assets/images/portfolio.png';
+import foodSharp from '../assets/images/food-sharp.webp';
+import music from '../assets/images/music.jpg';
 
 const works = [
   {
-    imgSrc: '/images/Yumigo.png',
+    imgSrc: yumigo,
     title: 'Yumigo Food Ordering App',
     tags: ['MERN','Web App', 'API','Full Stack'],
     projectLink: 'https://github.com/ankityadav456/mern-food-ordering'
   },
   {
-    imgSrc: '/images/Spotify-App.png',
+    imgSrc: spotify,
     title: 'Spotify-Clone Music Player',
-    tags: ['Web App', 'API'],
+    tags: ['Web App', 'React', 'API'],
     projectLink: 'https://github.com/ankityadav456/spotify__clone.git'
   },
   {
-    imgSrc: '/images/to-do.png',
+    imgSrc: todo,
     title: 'Modern To-Do',
-    tags: ['Web App', 'Crud', 'Backend'],
+    tags: ['Web App', 'React','Crud', 'Backend'],
     projectLink: 'https://github.com/ankityadav456/user-managment_.git'
   },
   {
-    imgSrc: '/images/portfolio.png',
+    imgSrc: portfolio,
     title: 'My Portfolio',
     tags: ['Web App', 'React'],
     projectLink: 'https://github.com/ankityadav456/My-app.git'
   },
   {
-    imgSrc: '/images/food-sharp.webp',
+    imgSrc: foodSharp,
     title: 'Food-Sharp',
     tags: ['Android','E-Commerce'],
-    projectLink: ''
+    projectLink: 'https://github.com/ankityadav456/Food-sharp'
   },
   {
-    imgSrc: '/images/music.jpg',
+    imgSrc: music,
     title: 'Music Player',
-    tags: ['Development'],
-    projectLink: 'https://github.com/allknowledge34/BuzzyBird.git'
+    tags: ['Android','Development'],
+    projectLink: 'https://github.com/ankityadav456/-Music-Player'
   },
 ];
+
 
 
 const Work = () => {

@@ -1,66 +1,80 @@
 import SkillCard from "./SkillCard";
+import react from '../assets/images/react.svg';
+import nodejs from '../assets/images/nodejs.svg';
+import express from '../assets/images/express.svg';
+import mongodb from '../assets/images/mongodb.png';
+import javascript from '../assets/images/javascript.svg';
+import html from '../assets/images/html.svg';
+import css from '../assets/images/css.svg';
+import git from '../assets/images/git.svg';
+import github from '../assets/images/github.svg';
+import figma from '../assets/images/figma.svg';
+import tailwind from '../assets/images/tailwind.svg';
+import vscode from '../assets/images/vscode.svg';
+
 const skillItem = [
   {
-    imgSrc: '/images/react.svg',
+    imgSrc: react,
     label: 'ReactJS',
     desc: 'JavaScript library for building UI',
   },
   {
-    imgSrc: '/images/nodejs.svg',
+    imgSrc: nodejs,
     label: 'Node.js',
     desc: 'JavaScript runtime for backend development',
   },
   {
-    imgSrc: '/images/express.svg',
+    imgSrc: express,
     label: 'Express.js',
     desc: 'Minimalist web framework for Node.js',
   },
   {
-    imgSrc: '/images/mongodb.png',
+    imgSrc: mongodb,
     label: 'MongoDB',
     desc: 'NoSQL database for scalable applications',
   },
   {
-    imgSrc: '/images/javascript.svg',
+    imgSrc: javascript,
     label: 'JavaScript',
     desc: 'Core programming language for web development',
   },
   {
-    imgSrc: '/images/html.svg',
+    imgSrc: html,
     label: 'HTML',
     desc: 'Markup language for structuring web pages',
   },
   {
-    imgSrc: '/images/css.svg',
+    imgSrc: css,
     label: 'CSS',
     desc: 'Stylesheet language for designing web pages',
   },
   {
-    imgSrc: '/images/git.svg',
+    imgSrc: git,
     label: 'Git',
     desc: 'Version control system for tracking changes',
   },
   {
-    imgSrc: '/images/github.svg',
+    imgSrc: github,
     label: 'GitHub',
     desc: 'Cloud-based Git repository hosting service',
   },
   {
-    imgSrc: '/images/figma.svg',
+    imgSrc: figma,
     label: 'Figma',
     desc: 'UI/UX design and prototyping tool',
   },
   {
-    imgSrc: '/images/tailwind.svg',
+    imgSrc: tailwind,
     label: 'Tailwind CSS',
     desc: 'Utility-first CSS framework',
   },
   {
-    imgSrc: '/images/vscode.svg',
+    imgSrc: vscode,
     label: 'VS Code',
     desc: 'Code editor for development',
   },
-  ];
+];
+
 const Skill = () => {
     return (
         <section className="section" id="skills">

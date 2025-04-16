@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Github, Linkedin, Youtube, Instagram } from "lucide-react";
-
+import logo from '../assets/images/logo.png';
 const sitemap = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -86,7 +86,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-10 border-t border-gray-300 dark:border-gray-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <a href="/" className="flex items-center">
-            <img src="/images/logo.jpg" alt="Logo" className="w-10 h-10 rounded-lg" />
+            <img src={logo} alt="Logo" className="w-10 h-10 rounded-lg" />
           </a>
           <p className="text-md text-center md:text-left">
             &copy; 2025 <span className="text-purple-500 dark:text-purple-400">Ankit Yadav</span>. All rights reserved.

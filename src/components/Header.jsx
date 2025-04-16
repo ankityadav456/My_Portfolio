@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
+import logo from '../assets/images/logo.jpg'; 
 
 const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
@@ -32,7 +33,7 @@ const Header = () => {
           <a href="/" className="logo">
             <figure className="img-box w-9 h-9 rounded-lg">
               <img
-                src="/images/logo.jpg"
+                src={logo}
                 width={40}
                 height={40}
                 alt="Ankit Yadav portrait"

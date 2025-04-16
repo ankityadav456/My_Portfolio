@@ -1,44 +1,46 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import profileImg from '../assets/images/profile_img.png';
 
 const reviews = [
   {
     name: "John Doe",
     review: "Ankit is a fantastic developer! Highly skilled and great to work with.",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "Senior Developer",
   },
   {
     name: "Emily Smith",
     review: "Loved collaborating with Ankit. His skills in MERN Stack are amazing!",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "Project Manager",
   },
   {
     name: "Michael Brown",
     review: "A talented and detail-oriented developer. Would love to work again!",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "Tech Lead",
   },
   {
     name: "Sophia White",
     review: "Ankit is extremely creative and delivers high-quality projects on time.",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "UI/UX Designer",
   },
   {
     name: "Michael Brown",
     review: "A talented and detail-oriented developer. Would love to work again!",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "Tech Lead",
   },
   {
     name: "Sophia White",
     review: "Ankit is extremely creative and delivers high-quality projects on time.",
-    image: "/images/profile_img.png",
+    image: profileImg,
     role: "UI/UX Designer",
   },
 ];
+
 
 const ReviewSection = () => {
   const scrollRef = useRef(null);

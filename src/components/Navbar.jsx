@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 
+
 const Navbar = ({ navOpen }) => {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
