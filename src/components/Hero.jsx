@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import heroImg from '../assets/images/heroimg.webp'; // Relative import from assets
 import logo from '../assets/images/logo.jpg'; // Relative import from assets
-
+import pdf from '../assets/images/Ankit_Yadav_newResumes.pdf'
 // Typing effect component
 const TypewriterText = ({ text, delay, onComplete, showCursor }) => {
     const [displayedText, setDisplayedText] = useState("");
@@ -82,15 +82,16 @@ const Hero = () => {
                     {/* Buttons & Social Links */}
                     <div className="flex items-center gap-3">
                         <a
-                            href="/path/to/your/cv.pdf"
+                            href={pdf}
                             download="Ankit_CV"
-                            className="contact-btn bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-400 text-white px-4 py-2 rounded-lg flex items-center transition-all"
+                            className="ms-2 contact-btn bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-400 text-white px-4 py-2 rounded-lg flex items-center transition-all text-sm sm:text-base whitespace-nowrap"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"></path>
                             </svg>
-                            Download CV
+                            <span className="truncate">Download CV</span>
                         </a>
+
 
                         <div className="flex gap-4 ms-3">
                             {[
@@ -136,17 +137,17 @@ const Hero = () => {
                 </div>
 
                 {/* Image Section with Hover Effect */}
-                <div className="hidden lg:block">
-                    <figure className="w-full max-w-[480px] ml-auto bg-gradient-to-t from-blue-400/40 via-25% via-blue-300/40 to-70% to-transparent rounded-[60px] overflow-hidden shadow-lg dark:shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl">
+                <div className="flex justify-center lg:justify-end mt-10 lg:mt-0 ms-2">
+                    <figure className="w-[320px] h-[350px] sm:w-[360px] sm:h-[400px] md:h-[400px] md:w-[420px] lg:w-[480px] lg:h-[480px] bg-gradient-to-t from-blue-400/40 via-25% via-blue-300/40 to-70% to-transparent rounded-[60px] overflow-hidden shadow-lg dark:shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl">
                         <img
                             src={heroImg}
-                            width={656}
-                            height={800}
                             alt="Ankit Yadav"
-                            className="w-full transition-transform duration-300 hover:scale-110"
+                            className="w-full h-full transition-transform duration-300 hover:scale-110"
                         />
                     </figure>
                 </div>
+
+
             </div>
         </section>
     );
