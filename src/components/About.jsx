@@ -14,7 +14,7 @@ const aboutItems = [
     }
 ];
 
-const typingText = "Welcome! Hi, I'm Ankit, a passionate Frontend MERN Stack Developer with 1.5+ years of experience in JavaScript, HTML, and CSS. I’ve had the opportunity to develop a self-project using ReactJS, Node.js, Express, and MongoDB, which has enhanced my skills in both frontend and backend development."
+const typingText = "Welcome! Hi, I'm Ankit, a passionate Frontend MERN Stack Developer with 2 years of experience in JavaScript, HTML, and CSS. I’ve had the opportunity to develop a self-project using ReactJS, Node.js, Express, and MongoDB, which has enhanced my skills in both frontend and backend development."
 
 const About = () => {
     const [displayedText, setDisplayedText] = useState("");

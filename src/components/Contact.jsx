@@ -69,7 +69,7 @@ const Contact = () => {
 
           {/* Right Section - Contact Form */}
           <form
-            action="https://getform.io/f/adrrjdla"
+            action="https://getform.io/f/bxowedoa"
             method="POST"
             className="xl:pl-10 2xl:pl-20"
           >
