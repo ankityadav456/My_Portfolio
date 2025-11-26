@@ -20,9 +20,21 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="text-gray-800 dark:text-gray-200 py-8">
+    //  <footer className="text-gray-800 dark:text-gray-200 py-8">
+       <footer className="pb-3 border-t-2 bottom-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-zinc-900/70 transition-all duration-300">
+       <div
+    className="absolute inset-0 z-0 pointer-events-none"
+    style={{
+      backgroundImage: `
+        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px),
+        repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px)
+      `,
+    }}
+  />
       <motion.div 
-        className="container mx-auto px-6 md:px-12"
+        className="container mx-auto md:px-12 mt-5"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

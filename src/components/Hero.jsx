@@ -41,7 +41,7 @@ const Hero = () => {
     const [showCursor, setShowCursor] = useState(false);
 
     return (
-        <section id="home" className="pt-28 lg:pt-36">
+        <section id="home" className="pt-6">
             <div className="container items-center lg:grid lg:grid-cols-2 lg:gap-10">
                 <div>
                     {/* Availability Status */}
@@ -137,12 +137,12 @@ const Hero = () => {
                 </div>
 
                 {/* Image Section with Hover Effect */}
-                <div className="flex justify-center lg:justify-end mt-10 lg:mt-0 ms-2">
-                    <figure className="w-[320px] h-[350px] sm:w-[360px] sm:h-[400px] md:h-[400px] md:w-[420px] lg:w-[480px] lg:h-[480px] bg-gradient-to-t from-blue-400/40 via-25% via-blue-300/40 to-70% to-transparent rounded-[60px] overflow-hidden shadow-lg dark:shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl">
+                <div className="flex justify-center lg:justify-end mt-10 lg:mt-3 ms-2">
+                    <figure className="w-[320px] h-[350px] sm:w-[360px] sm:h-[400px] md:h-[400px] md:w-[420px] lg:w-[440px] lg:h-[440px] rounded-[60px] overflow-hidden shadow-lg transition-all hover:scale-105 hover:shadow-xl z-10">
                         <img
                             src={heroImg}
                             alt="Ankit Yadav"
-                            className="w-full h-full transition-transform duration-300 hover:scale-110"
+                            className="w-full h-full transition-transform duration-300 hover:scale-10"
                         />
                     </figure>
                 </div>

@@ -26,8 +26,20 @@ const Header = () => {
   const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
   return (
-    <header className="fixed top-0 left-0 w-full h-20 flex items-center z-40 bg-white dark:bg-zinc-900 shadow-md dark:shadow-zinc-800 transition-colors duration-300">
-      <div className="max-w-screen-2xl w-full mx-auto px-4 flex justify-between items-center md:px-6">
+     <header className="pb-1 fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-zinc-900/70 transition-all duration-300">
+     
+    <div
+    className="absolute inset-0 z-0 pointer-events-none"
+    style={{
+      backgroundImage: `
+        repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(75, 85, 99, 0.06) 5px, rgba(75, 85, 99, 0.06) 6px, transparent 6px, transparent 15px),
+        repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px),
+        repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px)
+      `,
+    }}
+  />
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 md:px-8 h-16 my-1">
         {/* Logo */}
         <h1 className="hidden md:block">
           <a href="/" className="logo">
@@ -57,7 +69,7 @@ const Header = () => {
 
         {/* Navbar */}
         <nav
-          className={`absolute top-20 left-0 w-full bg-white dark:bg-zinc-900 md:static md:w-auto md:bg-transparent transition-all duration-300 ${navOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
+          className={`me-2 absolute top-20 left-0 w-full bg-white/70  md:static md:w-auto md:bg-transparent transition-all duration-300 ${navOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
             } md:translate-x-0 md:opacity-100`}
         >
           <Navbar navOpen={navOpen} />

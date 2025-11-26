@@ -36,6 +36,7 @@ const About = () => {
 
     return (
         <section id="about" className="section">
+            
             <div className="container">
                 <div className="bg-zinc-100 dark:bg-zinc-900/50 p-7 rounded-2xl md:p-12 reveal-up">
                     

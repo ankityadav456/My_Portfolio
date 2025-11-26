@@ -58,7 +58,7 @@ const Navbar = ({ navOpen }) => {
   ];
 
   return (
-    <nav className={`navbar ${navOpen ? "active" : ""} bg-white dark:bg-zinc-900 transition-all relative px-4 py-2 shadow-md dark:shadow-lg`}>
+    <nav className={`me-3 navbar ${navOpen ? "active" : ""} bg-white dark:bg-zinc-900 transition-all relative px-4 py-2 shadow-md dark:shadow-lg`}>
       <div
         className="absolute transition-all duration-300 rounded-md z-0 backdrop-blur-md"
         ref={activeBox}

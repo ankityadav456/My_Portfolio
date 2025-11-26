@@ -43,7 +43,7 @@ const socialLinks = [
 
 const Contact = () => {
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="py-16">
       <div className="container">
         {/* Header */}
         <h2 className="headline-2 reveal-up text-center sm:text-left px-4 sm:px-0 break-words">
