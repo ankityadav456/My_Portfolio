@@ -1,50 +1,30 @@
-import { useEffect, useState } from "react";
-import { ReactLenis } from "lenis/react";  // ReactLenis for smooth scrolling
+import { ReactLenis } from "lenis/react";
+import { useTheme } from "./context/ThemeContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";  // For GSAP hook
+import { useGSAP } from "@gsap/react";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Skill from "./components/Skill";
-import Contact from "./components/Contact";
 import Work from "./components/Work";
 import Review from "./components/Review";
+import Contact from "./components/Contact";
+
 import "./App.css";
 
-// Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
-  // Dark Mode State
-  const [darkMode, setDarkMode] = useState(() =>
-    localStorage.getItem("theme") === "dark"
-  );
+  const { theme, toggleTheme } = useTheme();
 
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
-  // Toggle Dark Mode and store it in localStorage
-  const toggleDarkMode = () => {
-    const newTheme = !darkMode ? "dark" : "light";
-    localStorage.setItem("theme", newTheme);
-    setDarkMode(!darkMode);
-  };
-
-  // GSAP Animations using useGSAP hook
+  // GSAP scroll animations
   useGSAP(() => {
-    const elements = gsap.utils.toArray(".reveal-up");
-
-    elements.forEach((element) => {
+    gsap.utils.toArray(".reveal-up").forEach((el) => {
       gsap.fromTo(
-        element,
+        el,
         { opacity: 0, y: 50 },
         {
           opacity: 1,
@@ -52,7 +32,7 @@ const App = () => {
           duration: 1,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: element,
+            trigger: el,
             start: "-200 bottom",
             end: "bottom 80%",
             scrub: true,
@@ -60,14 +40,21 @@ const App = () => {
         }
       );
     });
-  });
+  }, []);
 
   return (
     <ReactLenis root>
-      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <main className="mt-16">
-        <div className={`min-h-screen w-full relative transition-colors duration-500
-          }`}>
+      <div className="relative min-h-screen overflow-hidden">
+
+
+        {/* HEADER + CONTENT */}
+        <div className="relative z-10">
+          <div className="h-[70px]" aria-hidden />
+          {/* <LiquidBackground /> */}
+          <Header theme={theme} toggleTheme={toggleTheme} />
+
+          {/* MAIN */}
+          <main>
           <div
     className="absolute inset-0 z-0 pointer-events-none"
     style={{
@@ -78,18 +65,21 @@ const App = () => {
         repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(107, 114, 128, 0.04) 10px, rgba(107, 114, 128, 0.04) 11px, transparent 11px, transparent 30px)
       `,
     }}
-  />
+    />
+            <Hero theme={theme} />
+            <About theme={theme} />
+            <Skill />
+            <Work />
+            <Review />
+            <Contact />
+          </main>
 
-          <Hero />
-          <About />
-          <Skill />
-          <Work />
-          <Review />
-          <Contact />
+          <Footer />
         </div>
-      </main>
-      <Footer />
+
+      </div>
     </ReactLenis>
+
   );
 };
 

@@ -5,6 +5,26 @@
 /* ------------------ *\
  * BASE
 \* ------------------ */
+:root {
+  --background: #fafafa;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+
+  --primary: #ff5722;
+  --secondary: #ffc107;
+  --accent: #ff7043;
+  --header-height: 70px;
+}
+
+.dark {
+  --background: #121212;
+  --surface: #1e1e1e;
+  --text: #ffffff;
+
+  --primary: #ff5722;
+  --secondary: #ffd54f;
+  --accent: #ff8f00;
+}
 
 html {
     scroll-behavior: smooth;
@@ -12,6 +32,8 @@ html {
 
 body {
     @apply bg-white text-gray-900 dark:bg-zinc-900 dark:text-zinc-50 transition-colors duration-300;
+    background: var(--background);
+  color: var(--text);
 }
 
 /* ------------------ *\
@@ -69,7 +91,7 @@ body {
 }
 
 .section {
-    @apply pt-20 lg:pt-32;
+    @apply pt-20 lg:pt-24;
 }
 
 .reveal-up {
@@ -173,3 +195,6 @@ body {
     filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.2)); /* Dark Mode */
   }
   
+section {
+  scroll-margin-top: var(--header-height);
+}

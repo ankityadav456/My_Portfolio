@@ -11,7 +11,7 @@ import github from '../assets/images/github.svg';
 import figma from '../assets/images/figma.svg';
 import tailwind from '../assets/images/tailwind.svg';
 import vscode from '../assets/images/vscode.svg';
-
+import { motion } from "framer-motion";
 const skillItem = [
   {
     imgSrc: react,
@@ -77,8 +77,15 @@ const skillItem = [
 
 const Skill = () => {
     return (
-        <section className="section" id="skills">
+        <section className="section mt-10" id="skills">
             <div className="container">
+              <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-10 text-start"
+        >
                 <h2 className="headline-2 reveal-up">
                   Essential Tools I use
                 </h2>
@@ -86,6 +93,7 @@ const Skill = () => {
                 <p className="text-zinc-400 mt-3 mb-8 max-w-[50ch] reveal-up">
                   Discover the powerful tools and technologies I use to create exceptional, high-performing websites & applications.
                 </p>
+                </motion.div>
 
                 <div className="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))]">
                     {

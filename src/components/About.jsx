@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import logo from '../assets/images/logo.jpg'; 
+import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
+import light1 from "../assets/images/Modern AY logo design.png";
 const aboutItems = [
     {
         label: 'Projects Done',
@@ -16,7 +18,7 @@ const aboutItems = [
 
 const typingText = "Welcome! Hi, I'm Ankit, a passionate Frontend MERN Stack Developer with 2 years of experience in JavaScript, HTML, and CSS. I’ve had the opportunity to develop a self-project using ReactJS, Node.js, Express, and MongoDB, which has enhanced my skills in both frontend and backend development."
 
-const About = () => {
+const About = ({ theme }) => {
     const [displayedText, setDisplayedText] = useState("");
     const [index, setIndex] = useState(0);
 
@@ -35,10 +37,10 @@ const About = () => {
 </p>
 
     return (
-        <section id="about" className="section">
+        <section id="about" className="section mt-10">
             
             <div className="container">
-                <div className="bg-zinc-100 dark:bg-zinc-900/50 p-7 rounded-2xl md:p-12 reveal-up">
+                <div className="bg-zinc-100/60 dark:bg-zinc-700/50 p-7 rounded-2xl md:p-12 reveal-up">
                     
                     {/* Typing Animation */}
                     <motion.p 
@@ -56,20 +58,19 @@ const About = () => {
                             <div key={key}>
                                 <div className="flex items-center md:mb-2">
                                     <span className="text-2xl font-semibold md:text-4xl text-zinc-900 dark:text-zinc-100">{number}</span>
-                                    <span className="text-purple-500 dark:text-purple-400 font-semibold md:text-3xl">+</span>
+                                    <span className="text-purple-500 dark:text-purple-400 font-semibold md:text-3xl"><span className="text-primary">+</span></span>
                                 </div>
-                                <p className="text-sm text-zinc-600 dark:text-zinc-400">{label}</p>
+                                <p className="text-sm text-zinc-600 dark:text-zinc-400 ">{label}</p>
                             </div>
                         ))}
-                        <figure className="img-box w-9 h-9 rounded-lg ml-auto">
+                        
+                        <a href="/" className="w-9 h-9 rounded-lg ml-auto">
                             <img
-                                src={logo}
-                                width={40}
-                                height={40}
-                                alt="Ankit Yadav portrait"
-                                className="img-cover ml-auto"
+                            src={theme == "dark" ? dark1 : light1}
+                            alt="logo"
+                            className="w-14 h-14 rounded-xl object-cover"
                             />
-                        </figure>
+                        </a>
                     </div>
                 </div>
             </div>
