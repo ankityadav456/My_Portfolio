@@ -43,7 +43,7 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="relative section mt-10 overflow-hidden">
+    <footer className="relative section mt-10 overflow-hidden border-t-2 border-opacity-50 border-black dark:border-white">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-black/40" />
 

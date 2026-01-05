@@ -49,7 +49,6 @@ const Contact = () => {
             bg-white/70 dark:bg-[#121212]/60
             backdrop-blur-2xl
             border border-black/5 dark:border-white/10
-            shadow-2xl
             p-8 md:p-12
           "
         >

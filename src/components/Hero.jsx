@@ -7,12 +7,25 @@ import heroImgLight from "../assets/images/heroImgLight.png";
 import darkLogo from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
 import lightLogo from "../assets/images/Modern AY logo design.png";
 import pdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
+import Lottie from "react-lottie-player";
+import styles from "../style";
+import animationData from "../lotties/person-coding.json";
 
 const socials = [
   { href: "https://github.com/ankityadav456", icon: <Github /> },
   { href: "https://www.linkedin.com/in/ankit-yadav-y2302", icon: <Linkedin /> },
   { href: "mailto:ankityadav_45@outlook.com", icon: <Mail /> },
 ];
+
+// lottie config
+const defaultOptions = {
+  loop: true,
+  play: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 const Hero = ({ theme }) => {
   return (
@@ -39,25 +52,26 @@ const Hero = ({ theme }) => {
             />
 
             <div className="flex items-center gap-2 text-sm text-text/70">
-              <span className="relative w-2 h-2 rounded-full bg-emerald-400">
-                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
+              <span className="relative w-2 h-2 rounded-full bg-[#ff5722]">
+                <span className="absolute inset-0 rounded-full bg-[#ff5722] animate-ping" />
               </span>
               Available for work
             </div>
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl md:text-5xl xl:text-6xl font-semibold leading-tight mb-6">
-            Hi, I’m{" "}
-            <span className="text-primary">Ankit Yadav</span>
-            <br />
-            <span className="text-text/70">
-              MERN Stack Developer
-            </span>
-          </h1>
+       <h1 className="font-heading text-4xl md:text-5xl xl:text-6xl font-semibold leading-tight mb-6">
+  Hi, I’m{" "}
+  <span className="text-primary">Ankit Yadav</span>
+  <br />
+  <span className="text-text/70">
+    MERN Stack Developer
+  </span>
+</h1>
+
 
           {/* Description */}
-          <p className="max-w-xl text-text/70 mb-10">
+          <p className="max-w-xl text-text/70 mb-10 font-heading">
             I build modern, scalable and visually polished web applications
             with clean code, smooth animations and strong UX principles.
           </p>
@@ -107,23 +121,16 @@ const Hero = ({ theme }) => {
         </motion.div>
 
         {/* RIGHT – IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative flex justify-center"
+        <div
+          className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}
         >
-          {/* Glow */}
-          <div className="absolute inset-0 rounded-[48px] bg-primary/20 blur-2xl" />
-
-          <div className="relative rounded-[48px] overflow-hidden border border-white/10 shadow-lg">
-            <img
-             src={theme === "dark" ? heroImg : heroImgLight}
-              alt="Ankit Yadav"
-              className="w-[320px] sm:w-[380px] md:w-[420px] lg:w-[460px] object-cover"
-            />
+          <div className="relative z-index-[5] h-[90%] w-[85%]">
+            <Lottie {...defaultOptions} />
           </div>
-        </motion.div>
+          <div className="absolute -z-10 w-[60%] h-[60%] 
+bg-red-500/30 blur-[120px] rounded-full" />
+
+        </div>
       </div>
     </section>
   );

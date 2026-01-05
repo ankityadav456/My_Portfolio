@@ -14,8 +14,9 @@ export default {
     extend: {
       // Fonts
       fontFamily: {
-        sans: ["Inter", "sans-serif"],          // Modern UI font
-        display: ["Playfair Display", "serif"], // Stylish premium font
+        sans: ["Inter", "sans-serif"],          // Body text
+        heading: ["Poppins", "sans-serif"],     // Headings / Hero
+        mono: ["JetBrains Mono", "monospace"],  // Code accents
       },
 
       // Theme colors (linked to CSS variables)
