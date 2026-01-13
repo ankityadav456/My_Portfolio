@@ -94,7 +94,7 @@ const Header = ({ theme, toggleTheme }) => {
         "
       >
         {/* LOGO */}
-        <a href="/" className="flex items-center gap-2">
+        <a href="/My_Portfolio" className="flex items-center gap-2">
           <img
             src={theme == "dark" ? dark1 : light1}
             alt="logo"

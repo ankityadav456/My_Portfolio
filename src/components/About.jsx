@@ -64,7 +64,7 @@ const About = ({ theme }) => {
                             </div>
                         ))}
                         
-                        <a href="/" className="w-9 h-9 rounded-lg ml-auto">
+                        <a href="/My_Portfolio" className="w-9 h-9 rounded-lg ml-auto">
                             <img
                             src={theme == "dark" ? dark1 : light1}
                             alt="logo"
