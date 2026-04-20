@@ -1,4 +1,9 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+
 import ProjectCard from "./ProjectCard";
 
 import yumigo from "../assets/images/Yumigo.png";
@@ -29,7 +34,7 @@ const works = [
   },
   {
     imgSrc: portfolio,
-    title: "My Portfolio",
+    title: "Portfolio Website",
     tags: ["React", "UI/UX"],
     projectLink: "https://github.com/ankityadav456/My-app.git",
   },
@@ -47,52 +52,63 @@ const works = [
   },
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
 const Work = () => {
+  const sectionRef = useRef();
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".work-title",
+      { opacity: 0, y: 80 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+      }
+    );
+
+    gsap.fromTo(
+      ".project-card",
+      { opacity: 0, y: 120 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        delay: 0.3,
+      }
+    );
+  }, []);
+
   return (
-    <section id="work" className="relative section mt-10">
-      <div className="container mx-auto px-4">
-        {/* Section Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-10 text-start"
-        >
-          <h2 className="text-4xl font-semibold text-text ">
+    <section
+      ref={sectionRef}
+      id="work"
+      className="relative pb-24 overflow-hidden"
+    >
+      {/* Glow background */}
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[700px] h-[700px] bg-primary/20 blur-[160px] rounded-full" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* HEADER */}
+        <div className="work-title text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-semibold">
             Selected Work
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            A showcase of projects I’ve built with passion & precision
-          </p>
-        </motion.div>
 
-        {/* Grid */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="
-            grid gap-6
-            sm:grid-cols-2
-            lg:grid-cols-3
-          "
-        >
-          {works.map(({ imgSrc, title, tags, projectLink }, key) => (
-            <ProjectCard key={key} imgSrc={imgSrc}
-              title={title}
-              tags={tags}
-              projectLink={projectLink}  />
+          <p className="text-text/70 mt-4 max-w-2xl mx-auto">
+            Real-world projects built with performance,
+            scalability and beautiful user experience.
+          </p>
+        </div>
+
+        {/* PROJECT GRID */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {works.map((project, i) => (
+            <ProjectCard key={i} {...project} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

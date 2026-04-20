@@ -220,3 +220,54 @@ body {
 section {
   scroll-margin-top: var(--header-height);
 }
+
+.profile-image {
+  /* height: 260px; */
+  /* width: 260px; */
+  /* border-radius: 9999px; */
+  object-fit: cover;
+  animation: float 3s ease-in-out infinite alternate;
+  transition: 0.4s;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+@keyframes float {
+  from { transform: translateY(0px); }
+  to { transform: translateY(20px); }
+}
+
+/* Buttons */
+.hero-btn {
+  padding: 10px 22px;
+  border: 2px solid currentColor;
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  background: currentColor;
+  color: white;
+}
+
+/* Background circles */
+.circle-item {
+  position: absolute;
+  bottom: -150px;
+  background: rgba(255,193,7,.8);
+  animation: animate 15s linear infinite;
+}
+
+@keyframes animate {
+  from {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}

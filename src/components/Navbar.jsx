@@ -71,6 +71,7 @@ const Navbar = ({ navOpen }) => {
         <a
           key={link}
           href={link}
+          title={label}
           className={`nav-link ${activeLink === link ? "active text-blue-600 dark:text-blue-400" : "text-gray-800 dark:text-gray-300"} ${extraClass} relative px-4 py-2 font-medium transition-all`}
           onClick={(event) => handleNavClick(event, link)}
         >

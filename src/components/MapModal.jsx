@@ -52,12 +52,12 @@ const MapModal = ({ open, onClose }) => {
               </button>
 
               {/* Map */}
-              <iframe
-                title="India Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4032675.3784085556!2d77.4126155!3d20.593684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd2724ff18a9%3A0x4214383eeda9b56!2sIndia!5e0!3m2!1sen!2sin!4v1707589200000"
-                className="w-full h-[60vh] border-none"
-                loading="lazy"
-              />
+            <iframe
+              title="Sewri, Mumbai Location"
+              src="https://www.google.com/maps?q=Wadala%20Mumbai&output=embed"
+              className="w-full h-[60vh] border-none"
+              loading="lazy"
+            />
             </div>
           </motion.div>
         </>

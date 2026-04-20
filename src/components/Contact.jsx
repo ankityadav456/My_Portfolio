@@ -1,195 +1,189 @@
 import { motion } from "framer-motion";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, MapPin, Github, Linkedin, Instagram } from "lucide-react";
 import MapModal from "./MapModal";
 import { useState } from "react";
-import { MapPin } from "lucide-react";
+
 const Contact = () => {
   const [mapOpen, setMapOpen] = useState(false);
 
   return (
     <section
       id="contact"
-      className="relative section mt-10 overflow-hidden"
+      className="relative pb-24 overflow-hidden"
     >
-      {/* Background effects */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-primary/20 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[160px]" />
-      </div>
+      {/* ================= BACKGROUND ================= */}
 
       <div className="container mx-auto px-4">
-        {/* Heading */}
+
+        {/* ================= TITLE ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-start mb-10"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl font-semibold text-text">
-            Contact me for collaboration
+          <h2 className="text-5xl font-semibold text-text">
+            Let's Work Together
           </h2>
-          <p className="mt-2 text-muted-foreground mx-auto">
-            Have an idea, a project, or just want to say hello?
-            I’d love to hear from you.
+
+          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+            Have an idea or opportunity? I'm always open to discussing
+            creative projects, collaborations and full-time roles.
           </p>
         </motion.div>
 
-        {/* Main Card */}
+        {/* ================= MAIN CARD ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="
             max-w-7xl mx-auto
-            grid lg:grid-cols-2
-            gap-10
-            rounded-3xl
-            bg-white/70 dark:bg-[#121212]/60
-            backdrop-blur-2xl
+            grid lg:grid-cols-2 gap-14
+            rounded-[32px]
+            bg-white/60 dark:bg-[#121212]/70
+            backdrop-blur-3xl
             border border-black/5 dark:border-white/10
-            p-8 md:p-12
+            p-10 md:p-14
+            shadow-[0_30px_80px_rgba(0,0,0,0.08)]
           "
         >
-          {/* LEFT INFO */}
+          {/* ================= LEFT SIDE ================= */}
           <div className="flex flex-col justify-between">
+
             <div>
               <h3 className="text-2xl font-semibold text-text">
                 Get in touch
               </h3>
+
               <p className="mt-3 text-muted-foreground">
-                I’m currently open for freelance work, collaborations,
-                and full-time opportunities.
+                Available for freelance, startup collaboration,
+                and product development opportunities.
               </p>
 
-              <div className="mt-8 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+              {/* EMAIL */}
+              <div className="flex items-center gap-4 mt-10">
+                <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center text-primary">
                   <Mail />
                 </div>
-                <span className="text-text font-medium">
-                  ankityadav.dev@gmail.com
-                </span>
-              </div>
-               <button
-  onClick={() => setMapOpen(true)}
-  className="
-    mt-6 inline-flex items-center gap-2
-    px-4 py-2 rounded-xl
-    bg-white/70 dark:bg-white/10
-    backdrop-blur-md
-    border border-black/10 dark:border-white/20
-    text-text font-medium
-    shadow-sm
-    transition-all duration-300
-    hover:bg-white/90 dark:hover:bg-white/20
-    hover:shadow-md hover:-translate-y-[1px]
-    active:scale-95
-  "
->
-  <MapPin size={18} className="text-primary" />
-  <span>View Location</span>
-</button>
-            </div>
-           
 
-            {/* Social icons */}
-            <div className="mt-10 flex gap-4">
-              {["GitHub", "LinkedIn", "Instagram"].map((item, i) => (
+                <div>
+                  <p className="text-sm text-muted-foreground">
+                    Email
+                  </p>
+                  <p className="font-medium text-text">
+                    ankit.y.2302@gmail.com
+                  </p>
+                </div>
+              </div>
+
+              {/* MAP BUTTON */}
+              <button
+                onClick={() => setMapOpen(true)}
+               className="
+                mt-8 inline-flex items-center gap-2
+                px-6 py-3 rounded-xl
+                bg-primary text-white font-medium
+                hover:shadow-lg hover:-translate-y-[1px]
+                transition-all
+              "
+              >
+                <MapPin size={18} />
+                View Location
+              </button>
+            </div>
+
+            {/* SOCIAL ICONS */}
+            <div className="flex gap-4 mt-14">
+              {[Github, Linkedin, Instagram].map((Icon, i) => (
                 <motion.div
                   key={i}
-                  whileHover={{ y: -6 }} title={item}
+                  whileHover={{ y: -6, scale: 1.1 }}
                   className="
                     w-12 h-12 rounded-xl
                     grid place-items-center
-                    bg-white/60 dark:bg-white/10
+                    bg-white/70 dark:bg-white/10
                     border border-black/10 dark:border-white/10
                     cursor-pointer
                     transition
+                    hover:bg-primary/20
                   "
                 >
-                  <span className="text-sm font-medium text-text">
-                    {item[0]}
-                  </span>
+                  <Icon size={18} className="text-text" />
                 </motion.div>
               ))}
             </div>
           </div>
 
-
-          {/* RIGHT FORM */}
+          {/* ================= FORM ================= */}
           <form
             action="https://getform.io/f/bxowedoa"
             method="POST"
-            className="space-y-6"
+            className="space-y-7"
           >
-            <div>
-              <label className="text-sm text-muted-foreground">
-                Your Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Ankit Yadav"
-                className="
-                  mt-2 w-full rounded-xl px-4 py-3
-                  bg-white/80 dark:bg-black/40
-                  border border-black/10 dark:border-white/10
-                  text-text
-                  focus:ring-2 focus:ring-primary outline-none
-                "
-              />
-            </div>
+            {["Name", "Email"].map((item, i) => (
+              <div key={i}>
+                <label className="text-sm text-muted-foreground">
+                  Your {item}
+                </label>
 
-            <div>
-              <label className="text-sm text-muted-foreground">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="you@example.com"
-                className="
-                  mt-2 w-full rounded-xl px-4 py-3
-                  bg-white/80 dark:bg-black/40
-                  border border-black/10 dark:border-white/10
-                  text-text
-                  focus:ring-2 focus:ring-primary outline-none
-                "
-              />
-            </div>
+                <input
+                  required
+                  name={item.toLowerCase()}
+                  type={item === "Email" ? "email" : "text"}
+                  placeholder={`Enter your ${item}`}
+                  className="
+                    mt-2 w-full rounded-xl px-5 py-3
+                    bg-white/80 dark:bg-black/40
+                    border border-black/10 dark:border-white/10
+                    text-text
+                    transition-all duration-300
+                    focus:ring-2 focus:ring-primary
+                    focus:shadow-lg
+                    focus:scale-[1.02]
+                    outline-none
+                  "
+                />
+              </div>
+            ))}
 
             <div>
               <label className="text-sm text-muted-foreground">
                 Message
               </label>
+
               <textarea
                 name="message"
-                required
                 rows="4"
+                required
                 placeholder="Tell me about your project..."
                 className="
-                  mt-2 w-full rounded-xl px-4 py-3
+                  mt-2 w-full rounded-xl px-5 py-3
                   bg-white/80 dark:bg-black/40
                   border border-black/10 dark:border-white/10
                   text-text resize-none
-                  focus:ring-2 focus:ring-primary outline-none
+                  transition-all duration-300
+                  focus:ring-2 focus:ring-primary
+                  focus:shadow-lg
+                  focus:scale-[1.02]
+                  outline-none
                 "
               />
             </div>
 
-            {/* Submit */}
+            {/* SEND BUTTON */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+            
               className="
                 w-full flex items-center justify-center gap-2
-                py-3 rounded-xl
-                bg-primary text-white
-                font-semibold
-                shadow-lg
+                py-4 rounded-xl
+                bg-primary text-white font-medium
+                hover:shadow-lg hover:-translate-y-[1px]
+                transition-all
               "
             >
               Send Message <Send size={18} />
@@ -197,8 +191,8 @@ const Contact = () => {
           </form>
         </motion.div>
       </div>
-      <MapModal open={mapOpen} onClose={() => setMapOpen(false)} />
 
+      <MapModal open={mapOpen} onClose={() => setMapOpen(false)} />
     </section>
   );
 };

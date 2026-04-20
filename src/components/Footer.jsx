@@ -6,9 +6,9 @@ import {
   Linkedin,
   Youtube,
   Instagram,
-  ArrowUpRight,
 } from "lucide-react";
-import logo from "../assets/images/logo.png";
+import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
+import light1 from "../assets/images/Modern AY logo design.png";
 
 const sitemap = [
   { label: "Home", href: "#home" },
@@ -22,72 +22,69 @@ const socials = [
   {
     label: "GitHub",
     href: "https://github.com/ankityadav456",
-    icon: <Github />,
+    icon: <Github size={18} />,
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/ankit-yadav-y2302/",
-    icon: <Linkedin />,
+    icon: <Linkedin size={18} />,
   },
   {
     label: "YouTube",
     href: "https://www.youtube.com",
-    icon: <Youtube />,
+    icon: <Youtube size={18} />,
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com",
-    icon: <Instagram />,
+    icon: <Instagram size={18} />,
   },
 ];
 
-const Footer = () => {
+const Footer = ({theme}) => {
   return (
-    <footer className="relative section mt-10 overflow-hidden border-t-2 border-opacity-50 border-black dark:border-white">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-black/40" />
+    <footer className="relative border-t border-black/5 dark:border-white/10">
 
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="relative container mx-auto px-4"
-      >
-        {/* CTA */}
-        <div className="mb-20 rounded-3xl border border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
-          <h2 className="text-2xl md:text-3xl font-semibold">
-            Let’s build something meaningful together
-          </h2>
+      {/* subtle gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent to-primary/5 dark:to-primary/10" />
 
-          <a
-            href="#contact"
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl
-              bg-primary text-white font-medium
-              hover:shadow-lg hover:-translate-y-[1px]
-              transition-all"
-          >
-            Contact Me
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </a>
-        </div>
+      <div className="container mx-auto px-4 pt-16 pb-5">
 
-        {/* Main Footer */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-16">
-          {/* Brand */}
-          
+        {/* MAIN GRID */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid md:grid-cols-3 gap-12"
+        >
+          {/* BRAND */}
+          <div>
+            <div className="flex items-center gap-3">
+              <img src={theme === "dark" ? dark1 : light1} alt="logo" className="w-9 h-9" />
+              <h3 className="text-lg font-semibold text-text">
+                Ankit Yadav
+              </h3>
+            </div>
 
-          {/* Sitemap */}
+            <p className="mt-4 text-text/70 max-w-sm">
+              MERN Stack Developer crafting modern,
+              scalable and high-performance web applications.
+            </p>
+          </div>
+
+          {/* SITEMAP */}
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-text/60">
               Sitemap
             </p>
+
             <ul className="space-y-3">
               {sitemap.map(({ label, href }) => (
                 <li key={label}>
                   <a
                     href={href}
-                    className="text-text/70 hover:text-primary transition-colors"
+                    className="text-text/70 hover:text-primary transition"
                   >
                     {label}
                   </a>
@@ -96,55 +93,52 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Socials */}
+          {/* SOCIALS */}
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-text/60">
               Connect
             </p>
-            <div className="flex gap-3">
+
+            <div className="flex gap-4">
               {socials.map(({ href, icon, label }) => (
                 <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ y: -4 }}
+                  whileTap={{ scale: 0.9 }}
                   className="
-                    w-11 h-11 rounded-xl
+                    w-10 h-10 rounded-lg
                     flex items-center justify-center
-                    bg-white/70 dark:bg-white/10
-                    border border-white/10
-                    backdrop-blur-md
+                    border border-black/10 dark:border-white/10
                     hover:bg-primary hover:text-white
-                    transition-all
+                    transition-all duration-300
                   "
-                  aria-label={label}
                 >
                   {icon}
                 </motion.a>
               ))}
             </div>
-            
-            <div>
-            
-            <p className="text-sm text-text/70 max-w-xs mt-8">
-              Frontend MERN Stack Developer crafting elegant, performant and
-              modern web experiences.
+
+            <p className="mt-6 text-sm text-text/60">
+              Open for freelance & full-time opportunities.
             </p>
           </div>
+        </motion.div>
 
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="border-t border-white/10 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text/60">
+        {/* BOTTOM BAR */}
+        <div className="mt-12 pt-6 border-t border-black/5 dark:border-white/10 flex flex-col md:flex-row items-center justify-between text-sm text-text/60 gap-3">
           <p>
-            © 2025 <span className="text-primary font-medium">Ankit Yadav</span>
+            © {new Date().getFullYear()}{" "}
+            <span className="text-primary font-medium">
+              Ankit Yadav
+            </span>
           </p>
-          <p>Built with React, Tailwind & Framer Motion</p>
+
+          <p>Built with React • Tailwind • Framer Motion</p>
         </div>
-      </motion.div>
+      </div>
     </footer>
   );
 };

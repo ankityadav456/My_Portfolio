@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import React, { useEffect } from 'react';
+import { gsap } from "gsap";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import heroImg from "../assets/images/heroimg.png";
 import heroImgLight from "../assets/images/heroImgLight.png";
@@ -10,6 +12,7 @@ import pdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
 import Lottie from "react-lottie-player";
 import styles from "../style";
 import animationData from "../lotties/person-coding.json";
+// import ThreeBackground from "./AnimatedBackground";
 
 const socials = [
   { href: "https://github.com/ankityadav456", icon: <Github /> },
@@ -28,17 +31,57 @@ const defaultOptions = {
 };
 
 const Hero = ({ theme }) => {
+  useEffect(() => {
+
+  const isMobile = window.innerWidth < 768;
+
+  /* ===== LEFT SIDE ===== */
+  gsap.fromTo(
+    ".leftSide > *",
+    {
+      y: isMobile ? -120 : 500, // mobile ↓ , desktop ↑
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.3,
+      stagger: 0.15,
+    }
+  );
+
+  /* ===== RIGHT SIDE ===== */
+  gsap.fromTo(
+    ".rightSide",
+    {
+      y: isMobile ? 120 : -500, // mobile ↑ , desktop ↓
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 0.5,
+    }
+  );
+
+}, []);
   return (
     <section
       id="home"
-      className="relative mt-12 overflow-hidden"
+      className="h-screen relative mt-12 overflow-hidden  pb-24"
     >
       {/* Soft background glow */}
+      {/* <ThreeBackground theme={theme} /> */}
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center relative z-10">
         {/* LEFT */}
         <motion.div
+        className="leftSide"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -122,13 +165,13 @@ const Hero = ({ theme }) => {
 
         {/* RIGHT – IMAGE */}
         <div
-          className={`flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}
+          className={`rightSide flex-1 flex ${styles.flexCenter} md:my-0 my-10 relative`}
         >
-          <div className="relative z-index-[5] h-[90%] w-[85%]">
+          <div className="relative z-index-[5] h-[90%] w-[85%] ">
             <Lottie {...defaultOptions} />
           </div>
-          <div className="absolute -z-10 w-[60%] h-[60%] 
-bg-red-500/30 blur-[120px] rounded-full" />
+          {/* <div className="absolute -z-10 w-[60%] h-[60%] 
+bg-red-500/30 blur-[120px] rounded-full" /> */}
 
         </div>
       </div>

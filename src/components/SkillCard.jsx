@@ -1,33 +1,78 @@
-import PropTypes from "prop-types";
+"use client";
 
-const SkillCard = ({ imgSrc, label, desc, classes = "" }) => {
-    return (
-        <div
-            className={
-                "flex items-center gap-3 ring-2 ring-inset rounded-2xl p-3 group transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-xl " +
-                "ring-zinc-200 dark:ring-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 " +
-                classes
-            }
-        >
-            {/* Image Wrapper */}
-            <figure className="bg-zinc-100 dark:bg-zinc-800 rounded-lg overflow-hidden w-12 h-12 p-2 transition-all duration-300 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700">
-                <img src={imgSrc} width={32} height={32} alt={`${label} Icon`} className="w-full h-full object-contain" />
-            </figure>
+import { motion } from "framer-motion";
 
-            {/* Text Content */}
-            <div>
-                <h3 className="text-gray-900 dark:text-gray-100 font-semibold text-lg">{label}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{desc}</p>
-            </div>
-        </div>
-    );
-};
+const SkillCard = ({ imgSrc, label, desc, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: index * 0.05,
+        duration: 0.5,
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.03,
+      }}
+      className="
+        group relative
+        rounded-2xl
+        p-6
+        backdrop-blur-2xl
+        bg-white/60 dark:bg-white/5
+        border border-white/30 dark:border-white/10
+        shadow-lg
+        transition-all
+        overflow-hidden
+      "
+    >
+      {/* Glow Hover Effect */}
+      <div className="
+        absolute inset-0
+        opacity-0 group-hover:opacity-100
+        transition duration-500
+        bg-primary/10 blur-2xl
+      " />
 
-SkillCard.propTypes = {
-    imgSrc: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    desc: PropTypes.string.isRequired,
-    classes: PropTypes.string,
+      {/* ICON */}
+      <div className="relative z-10 mb-4">
+        <img
+          src={imgSrc}
+          alt={label}
+          className="
+            w-12 h-12 object-contain
+            transition-transform duration-300
+            group-hover:scale-110 group-hover:rotate-3
+          "
+        />
+      </div>
+
+      {/* TITLE */}
+      <h3 className="
+        relative z-10
+        text-lg font-semibold
+        mb-1
+        text-text
+      ">
+        {label}
+      </h3>
+
+      {/* DESCRIPTION */}
+      <p className="relative z-10 text-sm text-text/60">
+        {desc}
+      </p>
+
+      {/* Bottom Gradient Line */}
+      <span className="
+        absolute bottom-0 left-0
+        h-[2px] w-0
+        bg-primary
+        group-hover:w-full
+        transition-all duration-500
+      " />
+    </motion.div>
+  );
 };
 
 export default SkillCard;
