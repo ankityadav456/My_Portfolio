@@ -33,7 +33,7 @@ const typingText =
   return (
     <section
       id="about"
-      className="relative pb-24 overflow-hidden"
+      className="relative py-16 pb-24 overflow-hidden"
     >
       {/* Background Glow */}
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full pointer-events-none" />
@@ -42,7 +42,7 @@ const typingText =
 
         {/* SECTION TITLE */}
         <motion.h2
-          className="text-3xl md:text-5xl font-heading font-semibold text-center mb-14"
+          className="text-3xl md:text-5xl font-heading font-semibold text-center mb-8"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -65,7 +65,7 @@ const typingText =
           "
         >
       
-          <p className="text-lg leading-relaxed text-text/80 mb-12 font-heading"  style={{ fontFamily: "Red Rose, serif"}}>
+          <p className="text-lg leading-relaxed text-text/80 mb-12 font-heading">
             {displayedText}
             <span className="animate-pulse ml-1 text-primary">|</span>
           </p>

@@ -70,10 +70,10 @@ const Hero = ({ theme }) => {
 
 }, []);
   return (
-    <section
-      id="home"
-      className="h-screen relative mt-12 overflow-hidden  pb-24"
-    >
+<section
+  id="home"
+  className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-20"
+>
       {/* Soft background glow */}
       {/* <ThreeBackground theme={theme} /> */}
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[140px] rounded-full pointer-events-none" />

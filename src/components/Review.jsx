@@ -65,10 +65,10 @@ const Reviews = () => {
   return (
     <section id="reviews" className="relative pb-24 overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[700px] h-[700px] bg-primary/20 blur-[160px] rounded-full" />
+      {/* <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[700px] h-[700px] bg-primary/20 blur-[160px] rounded-full" /> */}
 
       {/* Heading */}
-      <div className="text-center mb-14 relative z-10">
+      <div className="text-center mb-14 relative z-10 mt-5">
         <h2 className="text-4xl md:text-5xl font-bold text-text">
           Reviews & Feedback
         </h2>
@@ -79,8 +79,8 @@ const Reviews = () => {
       </div>
 
       {/* Edge Fade Effect */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-20" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-20" />
+      {/* <div className="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-20" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-20" /> */}
 
       {/* ================================
               INFINITE ROW

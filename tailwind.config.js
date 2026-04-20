@@ -14,7 +14,6 @@ export default {
     extend: {
       // Fonts
       fontFamily: {
-         darling: ["Great Vibes", "cursive"],
         sans: ["Inter", "sans-serif"],          // Body text
         heading: ["Poppins", "sans-serif"],     // Headings / Hero
         mono: ["JetBrains Mono", "monospace"],  // Code accents
