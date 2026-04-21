@@ -37,7 +37,8 @@ const SpaceBackground = () => {
     });
 
     /* ================= STARS ================= */
-    const STAR_COUNT = 250;
+  const STAR_COUNT =
+  window.innerWidth < 768 ? 120 : 200;
 
     const createStars = () => {
       stars = Array.from({ length: STAR_COUNT }).map(() => ({

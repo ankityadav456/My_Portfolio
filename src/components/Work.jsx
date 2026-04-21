@@ -17,8 +17,14 @@ const works = [
   {
     imgSrc: yumigo,
     title: "Yumigo Food Ordering App",
-    tags: ["MERN", "Full Stack", "API"],
-    projectLink: "https://github.com/ankityadav456/mern-food-ordering",
+    tags: ["MERN", "Full Stack", "E-Commerce"],
+    projectLink: "https://yumigo-frontend.onrender.com",
+  },
+  {
+    imgSrc: portfolio,
+    title: "Portfolio Website",
+    tags: ["React", "UI/UX"],
+    projectLink: "https://ankityadav456.github.io/My_Portfolio",
   },
   {
     imgSrc: spotify,
@@ -31,12 +37,6 @@ const works = [
     title: "Modern To-Do App",
     tags: ["React", "CRUD", "Backend"],
     projectLink: "https://github.com/ankityadav456/user-managment_.git",
-  },
-  {
-    imgSrc: portfolio,
-    title: "Portfolio Website",
-    tags: ["React", "UI/UX"],
-    projectLink: "https://github.com/ankityadav456/My-app.git",
   },
   {
     imgSrc: foodSharp,
@@ -104,7 +104,7 @@ const Work = () => {
         </div>
 
         {/* PROJECT GRID */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 px-3">
           {works.map((project, i) => (
             <ProjectCard key={i} {...project} />
           ))}

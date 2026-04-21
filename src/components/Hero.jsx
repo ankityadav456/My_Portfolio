@@ -72,7 +72,7 @@ const Hero = ({ theme }) => {
   return (
 <section
   id="home"
-  className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-20"
+  className="relative min-h-screen flex items-center overflow-hidden pt-10 pb-20"
 >
       {/* Soft background glow */}
       {/* <ThreeBackground theme={theme} /> */}

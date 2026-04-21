@@ -309,22 +309,20 @@ shadow-xl
             {navItems.map((item) => (
               <li key={item.link}>
                 <a
-                  href={item.link}
-                  onClick={() => {
-                    setActiveLink(item.link);
-                    setRightMenuOpen(false);
-                  }}
-                  className={`
+  href={item.link}
+  onClick={(e) => handleNavClick(e, item.link)}
+  className={`
     relative block px-3 py-2 rounded-lg
     transition-all duration-300
-    ${activeLink === item.link
-                      ? "bg-black/10 dark:bg-white/90 text-primary shadow-md"
-                      : "text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/50"
-                    }
+    ${
+      activeLink === item.link
+        ? "bg-black/10 dark:bg-white/90 text-primary shadow-md"
+        : "text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/50"
+    }
   `}
-                >
-                  {item.label}
-                </a>
+>
+  {item.label}
+</a>
               </li>
             ))}
           </ul>
