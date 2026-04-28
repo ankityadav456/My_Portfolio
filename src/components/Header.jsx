@@ -41,89 +41,89 @@ const Header = ({ theme, toggleTheme }) => {
   };
 
   useEffect(() => {
-  const sections = navItems.map((item) =>
-    document.querySelector(item.link)
-  );
-})
+    const sections = navItems.map((item) =>
+      document.querySelector(item.link)
+    );
+  })
 
-useEffect(() => {
-  const handleScroll = () => {
-    const scrollY = window.scrollY + 150;
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 150;
 
-    let currentSection = null;
+      let currentSection = null;
 
-    navItems.forEach((item) => {
-      const section = document.querySelector(item.link);
-      if (!section) return;
+      navItems.forEach((item) => {
+        const section = document.querySelector(item.link);
+        if (!section) return;
 
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
 
-      if (scrollY >= top && scrollY < top + height) {
-        currentSection = item.link;
+        if (scrollY >= top && scrollY < top + height) {
+          currentSection = item.link;
+        }
+      });
+
+      // ✅ Only update if navbar section exists
+      if (currentSection) {
+        setActiveLink(currentSection);
+
+        const activeEl =
+          containerRef.current?.querySelector(
+            `a[href="${currentSection}"]`
+          );
+
+        if (activeEl) updateActiveBox(activeEl);
       }
-    });
+    };
 
-    // ✅ Only update if navbar section exists
-    if (currentSection) {
-      setActiveLink(currentSection);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-      const activeEl =
-        containerRef.current?.querySelector(
-          `a[href="${currentSection}"]`
-        );
+  const handleNavClick = (e, link) => {
+    e.preventDefault();
 
-      if (activeEl) updateActiveBox(activeEl);
+    const section = document.querySelector(link);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
+
+    setRightMenuOpen(false);
   };
-
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
- const handleNavClick = (e, link) => {
-  e.preventDefault();
-
-  const section = document.querySelector(link);
-
-  if (section) {
-    section.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-
-  setRightMenuOpen(false);
-};
 
   return (
     <>
-    <header className="
+      <header className="
       fixed top-0 w-full z-50
       backdrop-blur-xl
       bg-white/10 dark:bg-black/20
       border-b border-white/10
     ">
-      <motion.nav
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-[1200px] mx-auto px-4 py-2 flex justify-between items-center"
-      >
-        {/* LOGO */}
-        <a href="#home" className="flex items-center gap-2">
-          <img
-            src={theme === "dark" ? dark1 : light1}
-            alt="logo"
-            className="w-14 h-14 rounded-xl object-cover"
-          />
-        </a>
+        <motion.nav
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-[1200px] mx-auto px-4 py-2 flex justify-between items-center"
+        >
+          {/* LOGO */}
+          <a href="#home" className="flex items-center gap-2">
+            <img
+              src={theme === "dark" ? dark1 : light1}
+              alt="logo"
+              className="w-14 h-14 rounded-xl object-cover"
+            />
+          </a>
 
-        {/* ================= DESKTOP NAV ================= */}
-        <div className="hidden md:flex relative">
-          <ul
-            ref={containerRef}
-            className="
+          {/* ================= DESKTOP NAV ================= */}
+          <div className="hidden md:flex relative">
+            <ul
+              ref={containerRef}
+              className="
 relative flex items-center
 px-2 py-2
 rounded-full
@@ -132,21 +132,21 @@ backdrop-blur-2xl
 border border-white/40 dark:border-white/10
 shadow-xl
 "
-          >
-            {/* ACTIVE CAPSULE */}
-            <motion.span
-              layout
-              transition={{ type: "spring", stiffness: 420, damping: 35 }}
-              className="absolute top-1 bottom-1 rounded-full overflow-hidden"
-              style={{
-                width: boxStyle.width,
-                left: boxStyle.left,
+            >
+              {/* ACTIVE CAPSULE */}
+              <motion.span
+                layout
+                transition={{ type: "spring", stiffness: 420, damping: 35 }}
+                className="absolute top-1 bottom-1 rounded-full overflow-hidden"
+                style={{
+                  width: boxStyle.width,
+                  left: boxStyle.left,
 
-                backdropFilter: "blur(20px)",
+                  backdropFilter: "blur(20px)",
 
-                background:
-                  theme === "dark"
-                    ? `
+                  background:
+                    theme === "dark"
+                      ? `
           linear-gradient(
             to bottom,
             rgba(255,87,34,0.95),
@@ -154,7 +154,7 @@ shadow-xl
             rgba(255,87,34,0.45)
           )
         `
-                    : `
+                      : `
           linear-gradient(
             to bottom,
             rgba(255,87,34,0.85),
@@ -163,73 +163,74 @@ shadow-xl
           )
         `,
 
-                boxShadow:
-                  theme === "dark"
-                    ? `
+                  boxShadow:
+                    theme === "dark"
+                      ? `
           inset 0 1px 3px rgba(255,255,255,0.25),
           0 8px 28px rgba(255,87,34,0.45),
           0 0 45px rgba(255,87,34,0.75)
         `
-                    : `
+                      : `
           inset 0 2px 4px rgba(255,255,255,0.9),
           0 6px 18px rgba(255,87,34,0.25),
           0 0 25px rgba(255,87,34,0.35)
         `,
 
-                border:
-                  theme === "dark"
-                    ? "1px solid rgba(255,87,34,0.5)"
-                    : "1px solid rgba(255,255,255,0.8)",
-              }}
-            >
-              {/* TOP GLASS REFLECTION */}
-              <span
-                className={`
+                  border:
+                    theme === "dark"
+                      ? "1px solid rgba(255,87,34,0.5)"
+                      : "1px solid rgba(255,255,255,0.8)",
+                }}
+              >
+                {/* TOP GLASS REFLECTION */}
+                <span
+                  className={`
       absolute inset-x-2 top-0 h-1/2 rounded-full pointer-events-none
       ${theme === "dark"
-                    ? "bg-gradient-to-b from-white/20 to-transparent"
-                    : "bg-gradient-to-b from-white/70 to-transparent"}
+                      ? "bg-gradient-to-b from-white/20 to-transparent"
+                      : "bg-gradient-to-b from-white/70 to-transparent"}
     `}
-              />
+                />
 
-              <span
-                className={`
+                <span
+                  className={`
       absolute inset-0 rounded-full pointer-events-none
       ${theme === "dark"
-                    ? "shadow-[0_0_50px_rgba(255,87,34,0.8)]"
-                    : "shadow-[0_0_30px_rgba(255,87,34,0.35)]"}
+                      ? "shadow-[0_0_50px_rgba(255,87,34,0.8)]"
+                      : "shadow-[0_0_30px_rgba(255,87,34,0.35)]"}
     `}
-              />
-            </motion.span>
+                />
+              </motion.span>
 
-            {navItems.map((item) => (
-              <li key={item.link}>
-                <a
-                  href={item.link}
-                  onClick={(e) => handleNavClick(e, item.link)}
-                  className={`
+              {navItems.map((item) => (
+                <li key={item.link}>
+                  <a
+                    href={item.link}
+                    onClick={(e) => handleNavClick(e, item.link)}
+                    className={`
                     relative px-5 py-2 text-sm font-medium
                     transition-all duration-300
                     ${activeLink === item.link
-                      ? "text-black dark:text-white"
-                      : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
-                    }
+                        ? "text-black dark:text-white"
+                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
+                      }
                   `}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* ================= RIGHT SIDE ================= */}
-        <div className="flex items-center gap-3">
+          {/* ================= RIGHT SIDE ================= */}
+          <div className="flex items-center gap-3">
 
-          {/* CONTACT BUTTON */}
-          <a
-            href="#contact"
-            className="
+            {/* CONTACT BUTTON */}
+            <a
+              // href="#contact"
+              onClick={(e) => handleNavClick(e, "#contact")}
+              className="
               relative inline-flex items-center justify-center
               px-5 py-2 text-sm font-medium rounded-full
               bg-surface/80 text-text
@@ -238,16 +239,16 @@ shadow-xl
               shadow-lg
               hover:shadow-xl transition
             "
-          >
-            <span className="absolute inset-0 rounded-full bg-primary/30 blur-lg opacity-0 hover:opacity-100 transition" />
-            <span className="relative z-10">Contact Me</span>
-            <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
-          </a>
+            >
+              <span className="absolute inset-0 rounded-full bg-primary/30 blur-lg opacity-0 hover:opacity-100 transition" />
+              <span className="relative z-10">Contact Me</span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
+            </a>
 
-          {/* THEME BUTTON */}
-          <button
-            onClick={toggleTheme}
-            className="
+            {/* THEME BUTTON */}
+            <button
+              onClick={toggleTheme}
+              className="
               hidden md:flex
               p-2 rounded-full
               bg-white/30 dark:bg-white/10
@@ -257,45 +258,45 @@ shadow-xl
               hover:bg-white/40 dark:hover:bg-white/20
               transition
             "
-          >
-            {theme === "dark"
-              ? <Sun className="w-5 h-5 text-yellow-300" />
-              : <Moon className="w-5 h-5 text-black/80" />}
-          </button>
+            >
+              {theme === "dark"
+                ? <Sun className="w-5 h-5 text-yellow-300" />
+                : <Moon className="w-5 h-5 text-black/80" />}
+            </button>
 
-          {/* MOBILE MENU BUTTON */}
-          <button
-            onClick={() => setRightMenuOpen(!rightMenuOpen)}
-            className="
+            {/* MOBILE MENU BUTTON */}
+            <button
+              onClick={() => setRightMenuOpen(!rightMenuOpen)}
+              className="
               md:hidden p-2 rounded-full
               bg-white/30 dark:bg-white/10
               backdrop-blur-xl
               border border-white/20 dark:border-white/10
               shadow-xl
             "
-          >
-            {rightMenuOpen
-              ? <X className="w-6 h-6 dark:text-white" />
-              : <Menu className="w-6 h-6 dark:text-white" />}
-          </button>
-        </div>
-      </motion.nav>
+            >
+              {rightMenuOpen
+                ? <X className="w-6 h-6 dark:text-white" />
+                : <Menu className="w-6 h-6 dark:text-white" />}
+            </button>
+          </div>
+        </motion.nav>
 
-      {/* ================= MOBILE MENU ================= */}
+        {/* ================= MOBILE MENU ================= */}
 
 
-    </header>
+      </header>
 
-    <AnimatePresence>
-      {rightMenuOpen && (
-        <>
-          {/* OVERLAY */}
+      <AnimatePresence>
+        {rightMenuOpen && (
+          <>
+            {/* OVERLAY */}
             <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 40 }}
-          transition={{ duration: 0.3 }}
-          className="
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 40 }}
+              transition={{ duration: 0.3 }}
+              className="
       fixed right-5 top-20 -translate-y-5 z-[9998]
       w-56 rounded-2xl
       backdrop-blur-2xl
@@ -304,59 +305,58 @@ shadow-xl
       shadow-xl
       p-4
     "
-        >
-          <ul className="flex flex-col gap-3">
-            {navItems.map((item) => (
-              <li key={item.link}>
-                <a
-  href={item.link}
-  onClick={(e) => handleNavClick(e, item.link)}
-  className={`
+            >
+              <ul className="flex flex-col gap-3">
+                {navItems.map((item) => (
+                  <li key={item.link}>
+                    <a
+                      href={item.link}
+                      onClick={(e) => handleNavClick(e, item.link)}
+                      className={`
     relative block px-3 py-2 rounded-lg
     transition-all duration-300
-    ${
-      activeLink === item.link
-        ? "bg-black/10 dark:bg-white/90 text-primary shadow-md"
-        : "text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/50"
-    }
+    ${activeLink === item.link
+                          ? "bg-black/10 dark:bg-white/90 text-primary shadow-md"
+                          : "text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/50"
+                        }
   `}
->
-  {item.label}
-</a>
-              </li>
-            ))}
-          </ul>
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
 
-          {/* Divider */}
-          <div className="my-3 h-px bg-white/20" />
+              {/* Divider */}
+              <div className="my-3 h-px bg-white/20" />
 
-          {/* THEME TOGGLE */}
-          <button
-            onClick={toggleTheme}
-            className="
+              {/* THEME TOGGLE */}
+              <button
+                onClick={toggleTheme}
+                className="
         w-full flex items-center justify-center gap-2
         px-3 py-2 rounded-lg
         bg-white/30 dark:bg-white/10
         hover:bg-white/40 dark:hover:bg-white/20
         transition
       "
-          >
-            {theme === "dark" ? (
-              <>
-                <Sun className="w-5 h-5 text-yellow-300" />
-                <span className="text-sm">Light Mode</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-5 h-5 text-black" />
-                <span className="text-sm">Dark Mode</span>
-              </>
-            )}
-          </button>
-        </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun className="w-5 h-5 text-yellow-300" />
+                    <span className="text-sm">Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-5 h-5 text-black" />
+                    <span className="text-sm">Dark Mode</span>
+                  </>
+                )}
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
