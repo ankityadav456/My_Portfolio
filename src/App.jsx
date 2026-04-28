@@ -1,4 +1,4 @@
-import { ReactLenis } from "lenis/react";
+import { ReactLenis, useLenis } from "lenis/react";
 import { useTheme } from "./context/ThemeContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +13,7 @@ import Work from "./components/Work";
 import Review from "./components/Review";
 import Contact from "./components/Contact";
 import AnimatedBackground from "./components/AnimatedBackground";
+
 import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,12 +21,25 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   const { theme, toggleTheme } = useTheme();
 
-  // GSAP scroll animations
+  /* ================= LENIS + GSAP SYNC ================= */
+  const lenis = useLenis();
+
   useGSAP(() => {
+    if (!lenis) return;
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    /* ================= REVEAL ANIMATION ================= */
     gsap.utils.toArray(".reveal-up").forEach((el) => {
       gsap.fromTo(
         el,
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 60 },
         {
           opacity: 1,
           y: 0,
@@ -33,45 +47,53 @@ const App = () => {
           ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            start: "-200 bottom",
-            end: "bottom 80%",
-            scrub: true,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
           },
         }
       );
     });
-  }, []);
+
+    return () => {
+      lenis.off("scroll", ScrollTrigger.update);
+    };
+  }, [lenis]);
 
   return (
-  <ReactLenis root>
-    <div className="relative min-h-screen">
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.08,
+        smoothWheel: true,
+        smoothTouch: false,
+      }}
+    >
+      <div className="relative min-h-screen">
 
-      {/* BACKGROUND LAYER */}
-      <div className="fixed inset-0 -z-10">
-        <AnimatedBackground />
+        {/* BACKGROUND */}
+        <div className="fixed inset-0 -z-10">
+          <AnimatedBackground />
+        </div>
+
+        <div className="relative z-10">
+          <div className="h-[70px]" />
+
+          <Header theme={theme} toggleTheme={toggleTheme} />
+
+          <main>
+            <Hero theme={theme} />
+            <About theme={theme} />
+            <Skill />
+            <Work />
+            <Review />
+            <Contact />
+          </main>
+
+          <Footer theme={theme} />
+        </div>
       </div>
-
-      {/* CONTENT LAYER */}
-      <div className="relative z-10">
-        <div className="h-[70px]" />
-
-        <Header theme={theme} toggleTheme={toggleTheme} />
-
-        <main>
-          <Hero theme={theme} />
-          <About theme={theme} />
-          <Skill />
-          <Work />
-          <Review />
-          <Contact />
-        </main>
-
-        <Footer theme={theme}/>
-      </div>
-
-    </div>
-  </ReactLenis>
-);
+    </ReactLenis>
+  );
 };
 
 export default App;

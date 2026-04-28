@@ -19,12 +19,14 @@ const works = [
     title: "Yumigo Food Ordering App",
     tags: ["MERN", "Full Stack", "E-Commerce"],
     projectLink: "https://yumigo-frontend.onrender.com",
+    isLive: true,
   },
   {
     imgSrc: portfolio,
     title: "Portfolio Website",
     tags: ["React", "UI/UX"],
     projectLink: "https://ankityadav456.github.io/My_Portfolio",
+    isLive: true,
   },
   {
     imgSrc: spotify,

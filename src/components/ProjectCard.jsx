@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-const ProjectCard = ({ imgSrc, title, tags, projectLink }) => {
+const ProjectCard = ({ imgSrc, title, tags, projectLink, isLive }) => {
   const cardRef = useRef();
 
   const handleMove = (e) => {
@@ -49,17 +49,39 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink }) => {
           bg-surface/80
           backdrop-blur-xl
           border border-white/10
-          shadow-xl
+          shadow-xl hover:shadow-2xl
           transition-transform duration-300
         "
       >
         {/* IMAGE */}
-        <div className="h-56 overflow-hidden">
+        <div className="relative h-56 overflow-hidden">
           <img
             src={imgSrc}
             alt={title}
             className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
           />
+
+          {/* 🔥 LIVE BADGE */}
+          {isLive && (
+            <div
+              className="
+                absolute top-4 left-4
+                rotate-[-7deg]
+                px-4 py-1
+                text-xs font-semibold
+                rounded-md
+                bg-gradient-to-r from-yellow-400 to-red-500
+                text-white
+                shadow-lg
+                backdrop-blur-md
+              "
+            >
+              ● LIVE
+            </div>
+          )}
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </div>
 
         {/* CONTENT */}
@@ -70,7 +92,10 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink }) => {
             {tags.map((tag, i) => (
               <span
                 key={i}
-                className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary"
+                className="
+                  px-3 py-1 text-xs rounded-full
+                  bg-primary/10 text-primary
+                "
               >
                 {tag}
               </span>
@@ -90,8 +115,13 @@ const ProjectCard = ({ imgSrc, title, tags, projectLink }) => {
           />
         </div>
 
-        {/* Glow */}
-        <span className="absolute inset-0 bg-primary/20 blur-3xl opacity-0 group-hover:opacity-60 transition pointer-events-none" />
+        {/* Premium Glow */}
+        <span className="
+          absolute inset-0
+          bg-primary/20 blur-3xl
+          opacity-0 group-hover:opacity-60
+          transition pointer-events-none
+        " />
       </div>
     </motion.a>
   );
