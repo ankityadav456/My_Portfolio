@@ -221,7 +221,7 @@ shadow-xl\r
                     relative px-5 py-2 text-sm font-medium
                     transition-all duration-300
                     ${i===m.link?"text-black dark:text-white":"text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"}
-                  `,children:m.label})},m.link))]})}),jsxRuntimeExports.jsxs("div",{className:"flex items-center gap-3",children:[jsxRuntimeExports.jsxs("a",{href:"#contact",className:`\r
+                  `,children:m.label})},m.link))]})}),jsxRuntimeExports.jsxs("div",{className:"flex items-center gap-3",children:[jsxRuntimeExports.jsxs("a",{onClick:m=>y(m,"#contact"),className:`\r
               relative inline-flex items-center justify-center\r
               px-5 py-2 text-sm font-medium rounded-full\r
               bg-surface/80 text-text\r
