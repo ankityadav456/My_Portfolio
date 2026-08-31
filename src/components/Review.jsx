@@ -1,177 +1,117 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { MessageSquareQuote, Star, CheckCircle } from "lucide-react";
 
 const reviews = [
   {
     name: "Rahul Sharma",
-    role: "Product Manager",
+    role: "Engineering Manager",
+    company: "FinTech Scaleup",
     message:
-      "Ankit is extremely detail-oriented. His MERN skills and UI sense helped us ship faster with better quality.",
+      "Ankit's technical mastery over full-stack architectures and React state management helped our team shave weeks off our product milestone. Highly dependable senior engineer.",
   },
   {
     name: "Neha Verma",
-    role: "Startup Founder",
+    role: "Startup Founder & CEO",
+    company: "QuickCommerce",
     message:
-      "Working with Ankit was smooth and professional. He understands both design and development deeply.",
+      "Working with Ankit was an absolute pleasure. He doesn't just write code; he thinks deeply about product architecture, UX micro-interactions, and backend scalability.",
   },
   {
     name: "Amit Patel",
-    role: "Senior Developer",
+    role: "Lead Architect",
+    company: "Cloud Solutions Inc.",
     message:
-      "Clean code, modern UI, and great communication. Ankit consistently delivers beyond expectations.",
+      "Exceptional eye for performance optimization. His clean code structure, attention to accessibility, and API resilience stand out. A true senior developer caliber.",
+  },
+  {
+    name: "Siddharth Mehta",
+    role: "Product Director",
+    company: "OmniChannel Hub",
+    message:
+      "Ankit elevated our entire web platform. From GSAP animations to rock-solid MongoDB schemas, everything was delivered on schedule with 100% polish.",
   },
 ];
 
-// duplicate reviews for infinite loop
-const infiniteReviews = [...reviews, ...reviews];
+const duplicatedReviews = [...reviews, ...reviews];
 
-const Reviews = () => {
-  const controls = useAnimation();
-
-  /* ================================
-        START INFINITE ANIMATION
-  =================================*/
-  useEffect(() => {
-    controls.start({
-      x: "-50%",
-      transition: {
-        duration: 18,
-        ease: "linear",
-        repeat: Infinity,
-        repeatType: "loop",
-      },
-    });
-  }, [controls]);
-
-  /* ================================
-        PAUSE / RESUME
-  =================================*/
-  const pause = () => controls.stop(); // freeze current position
-
-  const play = () =>
-    controls.start({
-      x: "-50%",
-      transition: {
-        duration: 18,
-        ease: "linear",
-        repeat: Infinity,
-        repeatType: "loop",
-      },
-    });
-
+const Review = () => {
   return (
-    <section id="reviews" className="relative pb-24 overflow-hidden">
-      {/* Background Glow */}
-      {/* <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[700px] h-[700px] bg-primary/20 blur-[160px] rounded-full" /> */}
-
-      {/* Heading */}
-      <div className="text-center mb-14 relative z-10 mt-5">
-        <h2 className="text-4xl md:text-5xl font-bold text-text">
-          Reviews & Feedback
+    <section id="reviews" className="relative py-14 sm:py-20 lg:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-8 sm:mb-10 text-center">
+        <p className="text-xs uppercase tracking-widest font-mono text-primary font-semibold mb-2">
+          Testimonials
+        </p>
+        <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-950 dark:text-white mb-3">
+          What colleagues & teams say
         </h2>
-
-        <p className="text-muted-foreground mt-3">
-          What people say about working with me
+        <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+          Honest feedback on problem-solving, frontend execution, and day-to-day collaboration.
         </p>
       </div>
 
-      {/* Edge Fade Effect */}
-      {/* <div className="pointer-events-none absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-20" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-20" /> */}
+      {/* MARQUEE CONTAINER */}
+      <div className="relative w-full overflow-hidden flex items-center py-2">
+        {/* EDGE FADES */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-r from-background to-transparent z-20" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-l from-background to-transparent z-20" />
 
-      {/* ================================
-              INFINITE ROW
-      =================================*/}
-      <motion.div
-        className="flex gap-8 w-max cursor-pointer"
-        animate={controls}
-        style={{ willChange: "transform" }}
-        onMouseEnter={pause}
-        onMouseLeave={play}
-      >
-        {infiniteReviews.map((item, index) => (
-          <motion.div
-            key={index}
-            whileHover={{
-              y: -12,
-              rotateX: 6,
-              rotateY: -6,
-              scale: 1.03,
-            }}
-            transition={{ type: "spring", stiffness: 120 }}
-            className="
-              group relative
-              min-w-[340px]
-              max-w-[340px]
-              rounded-3xl
-              p-7
-              bg-white/60 dark:bg-[#121212]/70
-              backdrop-blur-xl
-              border border-black/5 dark:border-white/10
-              shadow-lg hover:shadow-2xl
-              transition-all duration-500
-            "
-          >
-            {/* Glow */}
-            <span
-              className="
-                absolute inset-0
-                rounded-3xl
-                bg-primary/20
-                blur-3xl
-                opacity-0
-                group-hover:opacity-100
-                transition duration-500
-              "
-            />
-
-            {/* Quote */}
-            <Quote className="w-9 h-9 text-primary/70 mb-4" />
-
-            {/* Message */}
-            <p className="text-sm leading-relaxed text-text">
-              “{item.message}”
-            </p>
-
-            {/* Stars */}
-            <div className="flex gap-1 mt-5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-4 h-4 fill-primary text-primary"
-                />
-              ))}
-            </div>
-
-            {/* User */}
-            <div className="flex items-center gap-3 mt-6">
-              <div
-                className="
-                w-11 h-11 rounded-full
-                flex items-center justify-center
-                bg-primary/20 text-primary font-semibold
-              "
-              >
-                {item.name.charAt(0)}
-              </div>
-
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 32,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+          className="flex gap-4 sm:gap-6 w-max cursor-pointer hover:[animation-play-state:paused]"
+        >
+          {duplicatedReviews.map((item, index) => (
+            <div
+              key={index}
+              className="w-[280px] sm:w-[360px] rounded-3xl p-5 sm:p-6 bg-white dark:bg-[#0f172a]/80 border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/20 transition-all duration-200 shadow-sm flex flex-col justify-between"
+            >
               <div>
-                <p className="text-sm font-semibold text-text">
-                  {item.name}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {item.role}
+                {/* RATING STARS */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={13} className="fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                    <CheckCircle size={12} />
+                    Verified
+                  </span>
+                </div>
+
+                {/* QUOTE TEXT */}
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                  "{item.message}"
                 </p>
               </div>
+
+              {/* AUTHOR */}
+              <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold font-heading flex items-center justify-center shadow-sm text-xs">
+                  {item.name.charAt(0)}
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold font-heading text-slate-900 dark:text-white">
+                    {item.name}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {item.role} • <span className="text-slate-700 dark:text-slate-300">{item.company}</span>
+                  </p>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 };
 
-export default Reviews;
+export default Review;
+

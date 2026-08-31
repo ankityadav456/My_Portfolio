@@ -1,364 +1,278 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, FileDown, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
 import light1 from "../assets/images/Modern AY logo design.png";
+import resumePdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
+
+const navItems = [
+  { label: "Home", link: "#home" },
+  { label: "About", link: "#about" },
+  { label: "Experience", link: "#experience" },
+  { label: "Skills", link: "#skills" },
+  { label: "Work", link: "#work" },
+  { label: "Reviews", link: "#reviews" },
+  { label: "Contact", link: "#contact" },
+];
 
 const Header = ({ theme, toggleTheme }) => {
-
-  const navItems = [
-    { label: "Home", link: "#home" },
-    { label: "About", link: "#about" },
-    { label: "Skills", link: "#skills" },
-    { label: "Work", link: "#work" },
-    { label: "Reviews", link: "#reviews" },
-  ];
-
   const [activeLink, setActiveLink] = useState("#home");
-  const [rightMenuOpen, setRightMenuOpen] = useState(false);
-  const [boxStyle, setBoxStyle] = useState({ left: 0, width: 0 });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isClickScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef(null);
 
-  const containerRef = useRef(null);
-
-  /* ================= ACTIVE TAB POSITION ================= */
-  useEffect(() => {
-    const firstItem = containerRef.current?.querySelector("li a");
-    if (firstItem) updateActiveBox(firstItem);
-  }, []);
-
-  const updateActiveBox = (element) => {
-    if (!element) return;
-
-    const parentRect = containerRef.current.getBoundingClientRect();
-    const elRect = element.getBoundingClientRect();
-
-    setBoxStyle({
-      left: elRect.left - parentRect.left,
-      width: elRect.width,
-    });
-  };
-
-  useEffect(() => {
-    const sections = navItems.map((item) =>
-      document.querySelector(item.link)
-    );
-  })
-
+  // ROBUST SCROLLSPY ALGORITHM (WITH CLICK LOCK TO PREVENT BLINKING)
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + 150;
+      setIsScrolled(window.scrollY > 20);
 
-      let currentSection = null;
+      // Prevent scroll event from overriding active pill during smooth scrolling
+      if (isClickScrollingRef.current) return;
 
-      navItems.forEach((item) => {
-        const section = document.querySelector(item.link);
-        if (!section) return;
+      // If at the very top
+      if (window.scrollY < 100) {
+        setActiveLink("#home");
+        return;
+      }
 
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
+      const sectionElements = navItems
+        .map((item) => ({
+          id: item.link,
+          el: document.querySelector(item.link),
+        }))
+        .filter((item) => item.el !== null);
 
-        if (scrollY >= top && scrollY < top + height) {
-          currentSection = item.link;
+      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
+
+      for (let i = sectionElements.length - 1; i >= 0; i--) {
+        const { id, el } = sectionElements[i];
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + window.scrollY;
+
+        if (scrollPosition >= top) {
+          setActiveLink(id);
+          break;
         }
-      });
+      }
 
-      // ✅ Only update if navbar section exists
-      if (currentSection) {
-        setActiveLink(currentSection);
-
-        const activeEl =
-          containerRef.current?.querySelector(
-            `a[href="${currentSection}"]`
-          );
-
-        if (activeEl) updateActiveBox(activeEl);
+      // Check if at the bottom of the page
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 80
+      ) {
+        setActiveLink("#contact");
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, []);
 
   const handleNavClick = (e, link) => {
     e.preventDefault();
+    setActiveLink(link);
+    isClickScrollingRef.current = true;
+
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 900);
 
     const section = document.querySelector(link);
-
     if (section) {
-      section.scrollIntoView({
+      const topOffset = section.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: topOffset,
         behavior: "smooth",
-        block: "start",
       });
     }
-
-    setRightMenuOpen(false);
+    setMobileMenuOpen(false);
   };
 
   return (
-    <>
-      <header className="
-      fixed top-0 w-full z-50
-      backdrop-blur-xl
-      bg-white/10 dark:bg-black/20
-      border-b border-white/10
-    ">
-        <motion.nav
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-[1200px] mx-auto px-4 py-2 flex justify-between items-center"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "py-3 bg-white/90 dark:bg-[#090d16]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/10 shadow-sm"
+          : "py-4 sm:py-5 bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        
+        {/* LOGO + BRAND */}
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, "#home")}
+          className="flex items-center gap-2.5 sm:gap-3 group min-w-0"
         >
-          {/* LOGO */}
-          <a href="#home" className="flex items-center gap-2">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden ring-1 ring-black/10 dark:ring-white/10 shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0">
             <img
               src={theme === "dark" ? dark1 : light1}
-              alt="logo"
-              className="w-14 h-14 rounded-xl object-cover"
+              alt="Ankit Yadav Logo"
+              className="w-full h-full object-cover"
             />
-          </a>
+          </div>
+          <div className="text-left min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="font-heading font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white truncate">
+                Ankit Yadav
+              </span>
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1" />
+                Senior Dev
+              </span>
+            </div>
+            {/* <p className="text-[10px] sm:text-[11px] text-slate-600 dark:text-slate-400 font-medium truncate">3+ YOE • Full Stack</p> */}
+          </div>
+        </a>
 
-          {/* ================= DESKTOP NAV ================= */}
-          <div className="hidden md:flex relative">
-            <ul
-              ref={containerRef}
-              className="
-relative flex items-center
-px-2 py-2
-rounded-full
-bg-white/50 dark:bg-white/5
-backdrop-blur-2xl
-border border-white/40 dark:border-white/10
-shadow-xl
-"
-            >
-              {/* ACTIVE CAPSULE */}
-              <motion.span
-                layout
-                transition={{ type: "spring", stiffness: 420, damping: 35 }}
-                className="absolute top-1 bottom-1 rounded-full overflow-hidden"
-                style={{
-                  width: boxStyle.width,
-                  left: boxStyle.left,
-
-                  backdropFilter: "blur(20px)",
-
-                  background:
-                    theme === "dark"
-                      ? `
-          linear-gradient(
-            to bottom,
-            rgba(255,87,34,0.95),
-            rgba(255,87,34,0.75),
-            rgba(255,87,34,0.45)
-          )
-        `
-                      : `
-          linear-gradient(
-            to bottom,
-            rgba(255,87,34,0.85),
-            rgba(255,87,34,0.6),
-            rgba(255,255,255,0.6)
-          )
-        `,
-
-                  boxShadow:
-                    theme === "dark"
-                      ? `
-          inset 0 1px 3px rgba(255,255,255,0.25),
-          0 8px 28px rgba(255,87,34,0.45),
-          0 0 45px rgba(255,87,34,0.75)
-        `
-                      : `
-          inset 0 2px 4px rgba(255,255,255,0.9),
-          0 6px 18px rgba(255,87,34,0.25),
-          0 0 25px rgba(255,87,34,0.35)
-        `,
-
-                  border:
-                    theme === "dark"
-                      ? "1px solid rgba(255,87,34,0.5)"
-                      : "1px solid rgba(255,255,255,0.8)",
-                }}
-              >
-                {/* TOP GLASS REFLECTION */}
-                <span
-                  className={`
-      absolute inset-x-2 top-0 h-1/2 rounded-full pointer-events-none
-      ${theme === "dark"
-                      ? "bg-gradient-to-b from-white/20 to-transparent"
-                      : "bg-gradient-to-b from-white/70 to-transparent"}
-    `}
-                />
-
-                <span
-                  className={`
-      absolute inset-0 rounded-full pointer-events-none
-      ${theme === "dark"
-                      ? "shadow-[0_0_50px_rgba(255,87,34,0.8)]"
-                      : "shadow-[0_0_30px_rgba(255,87,34,0.35)]"}
-    `}
-                />
-              </motion.span>
-
-              {navItems.map((item) => (
-                <li key={item.link}>
+        {/* DESKTOP CAPSULE NAVIGATION */}
+        <nav className="hidden lg:flex items-center p-1.5 rounded-full bg-slate-100/90 dark:bg-slate-900/80 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-md">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item) => {
+              const isActive = activeLink === item.link;
+              return (
+                <li key={item.link} className="relative">
                   <a
                     href={item.link}
                     onClick={(e) => handleNavClick(e, item.link)}
-                    className={`
-                    relative px-5 py-2 text-sm font-medium
-                    transition-all duration-300
-                    ${activeLink === item.link
-                        ? "text-black dark:text-white"
-                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
-                      }
-                  `}
+                    className={`relative z-10 px-3.5 py-1.5 text-xs font-semibold tracking-wide transition-colors duration-200 block rounded-full ${
+                      isActive
+                        ? "text-white font-bold"
+                        : "text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
+                    }`}
                   >
                     {item.label}
                   </a>
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeDesktopNav"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 rounded-full shadow-glow-sm"
+                    />
+                  )}
                 </li>
-              ))}
-            </ul>
-          </div>
+              );
+            })}
+          </ul>
+        </nav>
 
-          {/* ================= RIGHT SIDE ================= */}
-          <div className="flex items-center gap-3">
+        {/* ACTIONS */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          
+          {/* RESUME BUTTON (DESKTOP & TABLET) */}
+          <a
+            href={resumePdf}
+            download="Ankit_Yadav_Senior_Developer_Resume.pdf"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary backdrop-blur-md shadow-sm transition-all hover:scale-105 active:scale-95"
+            title="Download Resume"
+          >
+            <FileDown size={14} className="text-primary" />
+            <span>CV</span>
+          </a>
 
-            {/* CONTACT BUTTON */}
-            <a
-              // href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
-              className="
-              relative inline-flex items-center justify-center
-              px-5 py-2 text-sm font-medium rounded-full
-              bg-surface/80 text-text
-              backdrop-blur-xl
-              border border-white/30
-              shadow-lg
-              hover:shadow-xl transition
-            "
-            >
-              <span className="absolute inset-0 rounded-full bg-primary/30 blur-lg opacity-0 hover:opacity-100 transition" />
-              <span className="relative z-10">Contact Me</span>
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full animate-ping" />
-            </a>
+          {/* HIRE / CONTACT CTA (DESKTOP & TABLET ONLY TO AVOID MOBILE CROWDING) */}
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, "#contact")}
+            className="hidden md:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-glow-sm hover:shadow-glow-md hover:scale-105 active:scale-95 transition-all"
+          >
+            <Sparkles size={13} />
+            <span>Let's Talk</span>
+          </a>
 
-            {/* THEME BUTTON */}
-            <button
-              onClick={toggleTheme}
-              className="
-              hidden md:flex
-              p-2 rounded-full
-              bg-white/30 dark:bg-white/10
-              backdrop-blur-xl
-              border border-white/30 dark:border-white/10
-              shadow-md
-              hover:bg-white/40 dark:hover:bg-white/20
-              transition
-            "
-            >
-              {theme === "dark"
-                ? <Sun className="w-5 h-5 text-yellow-300" />
-                : <Moon className="w-5 h-5 text-black/80" />}
-            </button>
+          {/* THEME TOGGLE */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="p-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm transition-all hover:scale-110 active:scale-90"
+          >
+            {theme === "dark" ? (
+              <Sun size={16} className="text-amber-400" />
+            ) : (
+              <Moon size={16} className="text-slate-700" />
+            )}
+          </button>
 
-            {/* MOBILE MENU BUTTON */}
-            <button
-              onClick={() => setRightMenuOpen(!rightMenuOpen)}
-              className="
-              md:hidden p-2 rounded-full
-              bg-white/30 dark:bg-white/10
-              backdrop-blur-xl
-              border border-white/20 dark:border-white/10
-              shadow-xl
-            "
-            >
-              {rightMenuOpen
-                ? <X className="w-6 h-6 dark:text-white" />
-                : <Menu className="w-6 h-6 dark:text-white" />}
-            </button>
-          </div>
-        </motion.nav>
+          {/* MOBILE MENU TOGGLE */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Open navigation menu"
+            className="lg:hidden p-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-800 text-slate-800 dark:text-slate-100 transition-all hover:scale-110 active:scale-90"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </div>
 
-        {/* ================= MOBILE MENU ================= */}
-
-
-      </header>
-
+      {/* MOBILE DRAWER */}
       <AnimatePresence>
-        {rightMenuOpen && (
+        {mobileMenuOpen && (
           <>
-            {/* OVERLAY */}
+            {/* BACKDROP */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 40 }}
-              transition={{ duration: 0.3 }}
-              className="
-      fixed right-5 top-20 -translate-y-5 z-[9998]
-      w-56 rounded-2xl
-      backdrop-blur-2xl
-      bg-white/40 dark:bg-black/20
-      border border-white/20 dark:border-white/10
-      shadow-xl
-      p-4
-    "
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 top-[60px] bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden relative z-50 mt-2 mx-3 sm:mx-6 p-4 rounded-2xl bg-white dark:bg-[#0f172a] shadow-2xl border border-slate-200 dark:border-white/10"
             >
-              <ul className="flex flex-col gap-3">
-                {navItems.map((item) => (
-                  <li key={item.link}>
+              <div className="flex flex-col space-y-1.5">
+                {navItems.map((item) => {
+                  const isActive = activeLink === item.link;
+                  return (
                     <a
+                      key={item.link}
                       href={item.link}
                       onClick={(e) => handleNavClick(e, item.link)}
-                      className={`
-    relative block px-3 py-2 rounded-lg
-    transition-all duration-300
-    ${activeLink === item.link
-                          ? "bg-black/10 dark:bg-white/90 text-primary shadow-md"
-                          : "text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/50"
-                        }
-  `}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                        isActive
+                          ? "bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 text-white shadow-md"
+                          : "text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
+                      }`}
                     >
                       {item.label}
                     </a>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Divider */}
-              <div className="my-3 h-px bg-white/20" />
-
-              {/* THEME TOGGLE */}
-              <button
-                onClick={toggleTheme}
-                className="
-        w-full flex items-center justify-center gap-2
-        px-3 py-2 rounded-lg
-        bg-white/30 dark:bg-white/10
-        hover:bg-white/40 dark:hover:bg-white/20
-        transition
-      "
-              >
-                {theme === "dark" ? (
-                  <>
-                    <Sun className="w-5 h-5 text-yellow-300" />
-                    <span className="text-sm">Light Mode</span>
-                  </>
-                ) : (
-                  <>
-                    <Moon className="w-5 h-5 text-black" />
-                    <span className="text-sm">Dark Mode</span>
-                  </>
-                )}
-              </button>
+                  );
+                })}
+                <div className="pt-3 border-t border-slate-200 dark:border-white/10 mt-2 flex items-center justify-between">
+                  <a
+                    href={resumePdf}
+                    download="Ankit_Yadav_Senior_Developer_Resume.pdf"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary py-1 px-2 hover:underline"
+                  >
+                    <FileDown size={14} />
+                    Download CV
+                  </a>
+                  <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Available for Hire
+                  </span>
+                </div>
+              </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 
 export default Header;
+
+

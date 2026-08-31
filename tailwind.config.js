@@ -14,25 +14,35 @@ export default {
     extend: {
       // Fonts
       fontFamily: {
-        sans: ["Inter", "sans-serif"],          // Body text
-        heading: ["Poppins", "sans-serif"],     // Headings / Hero
-        mono: ["JetBrains Mono", "monospace"],  // Code accents
+        sans: ["Inter", "system-ui", "sans-serif"],
+        heading: ["Poppins", "Inter", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
 
       // Theme colors (linked to CSS variables)
       colors: {
         background: "var(--background)",
         surface: "var(--surface)",
+        "surface-card": "var(--surface-card)",
+        "surface-border": "var(--surface-border)",
         text: "var(--text)",
-        primary: "var(--primary)",
+        "text-muted": "var(--text-muted)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          hover: "var(--primary-hover)",
+          glow: "var(--primary-glow)",
+        },
         secondary: "var(--secondary)",
         accent: "var(--accent)",
       },
 
-      // Shadows
+      // Shadows & Glass
       boxShadow: {
         soft: "0 4px 20px rgba(0,0,0,0.05)",
-        glow: "0 0 20px rgba(255, 87, 34, 0.4)",
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.3)",
+        "glow-sm": "0 0 15px var(--primary-glow)",
+        "glow-md": "0 0 30px var(--primary-glow)",
+        "glow-lg": "0 0 50px var(--primary-glow)",
       },
 
       // Animation Timing
@@ -40,7 +50,7 @@ export default {
         250: "250ms",
       },
 
-      // ✨ Glowing Text Animation
+      // Keyframes
       keyframes: {
         glowPulse: {
           "0%, 100%": {
@@ -50,9 +60,14 @@ export default {
             textShadow: "0 0 25px var(--secondary)",
           },
         },
+        floatSlow: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         glowPulse: "glowPulse 2s ease-in-out infinite",
+        floatSlow: "floatSlow 4s ease-in-out infinite",
       },
     },
   },
@@ -61,3 +76,4 @@ export default {
     tailwindScrollbar({ nocompatible: true }),
   ],
 };
+

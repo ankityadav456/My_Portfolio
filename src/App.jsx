@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Experience from "./components/Experience";
 import Skill from "./components/Skill";
 import Work from "./components/Work";
 import Review from "./components/Review";
@@ -20,8 +21,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
-
-  /* ================= LENIS + GSAP SYNC ================= */
   const lenis = useLenis();
 
   useGSAP(() => {
@@ -29,33 +28,15 @@ const App = () => {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const tickerCb = (time) => {
       lenis.raf(time * 1000);
-    });
-
+    };
+    gsap.ticker.add(tickerCb);
     gsap.ticker.lagSmoothing(0);
-
-    /* ================= REVEAL ANIMATION ================= */
-    gsap.utils.toArray(".reveal-up").forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    });
 
     return () => {
       lenis.off("scroll", ScrollTrigger.update);
+      gsap.ticker.remove(tickerCb);
     };
   }, [lenis]);
 
@@ -63,26 +44,23 @@ const App = () => {
     <ReactLenis
       root
       options={{
-        lerp: 0.08,
+        lerp: 0.09,
         smoothWheel: true,
         smoothTouch: false,
       }}
     >
-      <div className="relative min-h-screen">
-
-        {/* BACKGROUND */}
-        <div className="fixed inset-0 -z-10">
-          <AnimatedBackground />
-        </div>
-
+      <div className="relative min-h-screen bg-background text-text selection:bg-primary/20 selection:text-primary transition-colors duration-300">
+        
+        {/* AMBIENT MESH AURORA BACKGROUND */}
+        <AnimatedBackground />
+        
         <div className="relative z-10">
-          <div className="h-[70px]" />
-
           <Header theme={theme} toggleTheme={toggleTheme} />
 
           <main>
             <Hero theme={theme} />
             <About theme={theme} />
+            <Experience />
             <Skill />
             <Work />
             <Review />
@@ -96,4 +74,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App;

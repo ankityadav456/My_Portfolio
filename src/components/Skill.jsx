@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import SkillCard from "./SkillCard";
 import { motion } from "framer-motion";
+import { Code2, Layers, Database, Wrench, Sparkles } from "lucide-react";
 
 import react from "../assets/images/react.svg";
 import nodejs from "../assets/images/nodejs.svg";
@@ -15,110 +17,195 @@ import github from "../assets/images/github.svg";
 import figma from "../assets/images/figma.svg";
 import tailwind from "../assets/images/tailwind.svg";
 import vscode from "../assets/images/vscode.svg";
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import firebase from "../assets/images/firebase.svg";
+import kotlin from "../assets/images/Kotlin.svg";
 
-gsap.registerPlugin(ScrollTrigger);
-const skillItem = [
-  { imgSrc: react, label: "ReactJS", desc: "Building modern UI" },
-  { imgSrc: nodejs, label: "Node.js", desc: "Backend runtime" },
-  { imgSrc: express, label: "Express.js", desc: "REST API framework" },
-  { imgSrc: mongodb, label: "MongoDB", desc: "NoSQL database" },
-  { imgSrc: javascript, label: "JavaScript", desc: "Core language" },
-  { imgSrc: html, label: "HTML", desc: "Semantic structure" },
-  { imgSrc: css, label: "CSS", desc: "Modern layouts & design" },
-  { imgSrc: git, label: "Git", desc: "Version control" },
-  { imgSrc: github, label: "GitHub", desc: "Code collaboration" },
-  { imgSrc: figma, label: "Figma", desc: "UI/UX design" },
-  { imgSrc: tailwind, label: "Tailwind CSS", desc: "Utility styling" },
-  { imgSrc: vscode, label: "VS Code", desc: "Development editor" },
+const categories = [
+  { id: "all", label: "All Skills", icon: <Sparkles size={14} /> },
+  { id: "frontend", label: "Frontend & UI", icon: <Code2 size={14} /> },
+  { id: "state", label: "State & Routing", icon: <Layers size={14} /> },
+  { id: "backend", label: "Backend & DB", icon: <Database size={14} /> },
+  { id: "tools", label: "Tools & DevOps", icon: <Wrench size={14} /> },
+];
+
+const skills = [
+  // FRONTEND
+  {
+    imgSrc: react,
+    label: "React.js",
+    desc: "React 18+, Component architecture, Virtual DOM, code splitting & custom hooks",
+    category: "frontend",
+    tag: "Core Skill",
+  },
+  {
+    imgSrc: javascript,
+    label: "JavaScript (ES6+)",
+    desc: "Modern ECMAScript, Async/Await, Closures, Promises, Event Loop & DOM APIs",
+    category: "frontend",
+    tag: "Expert",
+  },
+  {
+    imgSrc: tailwind,
+    label: "Tailwind CSS",
+    desc: "Utility-first architecture, responsive layouts, design tokens & dark/light theme systems",
+    category: "frontend",
+    tag: "Core Skill",
+  },
+  {
+    imgSrc: html,
+    label: "HTML5 & CSS3",
+    desc: "Semantic HTML, Accessibility (a11y), CSS Grid, Flexbox, Keyframes & Animations",
+    category: "frontend",
+    tag: "Foundation",
+  },
+  {
+    imgSrc: react,
+    label: "Bootstrap & Metronic UI",
+    desc: "Rapid enterprise UI prototyping with Bootstrap and Metronic UI Framework",
+    category: "frontend",
+    tag: "UI Frameworks",
+  },
+
+  // STATE & ROUTING
+  {
+    imgSrc: react,
+    label: "React Hooks & Context API",
+    desc: "useState, useEffect, useMemo, useCallback, useRef & global Context architecture",
+    category: "state",
+    tag: "State Mgmt",
+  },
+  {
+    imgSrc: react,
+    label: "React Router & SPA",
+    desc: "Dynamic routing, nested layouts, protected routes, loaders & browser history navigation",
+    category: "state",
+    tag: "Routing",
+  },
+  {
+    imgSrc: react,
+    label: "Redux & Storage",
+    desc: "State management, Redux actions/reducers, LocalStorage & SessionStorage syncing",
+    category: "state",
+    tag: "State Mgmt",
+  },
+
+  // BACKEND & DATABASE
+  {
+    imgSrc: nodejs,
+    label: "Node.js",
+    desc: "Event-driven JavaScript runtime, asynchronous I/O, REST APIs & server logic",
+    category: "backend",
+    tag: "Backend",
+  },
+  {
+    imgSrc: express,
+    label: "Express.js",
+    desc: "RESTful API development, custom middlewares, routing & error handling pipelines",
+    category: "backend",
+    tag: "Backend",
+  },
+  {
+    imgSrc: mongodb,
+    label: "MongoDB & Mongoose",
+    desc: "NoSQL schema modeling, validation, aggregation pipelines & MongoDB Atlas indexing",
+    category: "backend",
+    tag: "Database",
+  },
+  {
+    imgSrc: express,
+    label: "RESTful APIs & Axios",
+    desc: "20+ production APIs integrated, async data handling, interceptors, error states & loading states",
+    category: "backend",
+    tag: "API Integration",
+  },
+  {
+    imgSrc: firebase,
+    label: "JWT Auth & Stripe API",
+    desc: "JWT authentication, Bcrypt password hashing, protected routes & Stripe payment workflows",
+    category: "backend",
+    tag: "Security & Payments",
+  },
+
+  // TOOLS & WORKFLOW
+  {
+    imgSrc: git,
+    label: "Git & GitHub",
+    desc: "Git branching strategies, pull requests, code reviews, rebasing & version control",
+    category: "tools",
+    tag: "Workflow",
+  },
+  {
+    imgSrc: vscode,
+    label: "Lighthouse & Chrome DevTools",
+    desc: "Performance audits, eliminating render-blocking resources, lazy loading & resolving memory leaks",
+    category: "tools",
+    tag: "Performance",
+  },
+  {
+    imgSrc: vscode,
+    label: "Postman & VS Code",
+    desc: "API debugging, automated endpoint testing, modern linting, Prettier & developer tooling",
+    category: "tools",
+    tag: "Developer Tools",
+  },
+  {
+    imgSrc: firebase,
+    label: "C# / ASP.NET MVC Exposure",
+    desc: "Working knowledge of C#, ASP.NET MVC, Razor Views, SQL Server & deployment on Render/Vercel",
+    category: "tools",
+    tag: "Full-Stack Exposure",
+  },
 ];
 
 const Skill = () => {
-  const sectionRef = useRef(null);
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  useEffect(() => {
-  const ctx = gsap.context(() => {
+  const filteredSkills = activeCategory === "all"
+    ? skills
+    : skills.filter((s) => s.category === activeCategory);
 
-    // TITLE animation
-    gsap.from(".skill-title", {
-      y: 60,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-      },
-    });
-
-    // DESCRIPTION animation
-    gsap.from(".skill-desc", {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      delay: 0.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-      },
-    });
-
-    // CARDS stagger animation
-    gsap.from(".skill-card", {
-      y: 80,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: ".skills-grid",
-        start: "top 85%",
-      },
-    });
-
-  }, sectionRef);
-
-  return () => ctx.revert();
-}, []);
   return (
-    <section id="skills" ref={sectionRef} className="relative pb-24 overflow-hidden">
-
-      {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[140px] rounded-full pointer-events-none" />
-
-      <div className="container mx-auto px-4 relative z-10">
-
-        {/* SECTION HEADER */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <h2 className="skill-title font-heading text-4xl md:text-5xl font-semibold mb-4">
-            My Tech Stack
-          </h2>
-
-          <p className="skill-desc text-text/70 max-w-2xl mx-auto">
-            Technologies and tools I use to build scalable,
-            modern and high-performance web applications.
+    <section id="skills" className="relative py-14 sm:py-20 lg:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* HEADER */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          <p className="text-xs uppercase tracking-widest font-mono text-primary font-semibold mb-2">
+            My Toolkit
           </p>
-        </motion.div>
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-950 dark:text-white mb-3">
+            Everyday tools & technologies
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+            Technologies, libraries, and tools I use to build fast, reliable, and accessible web applications.
+          </p>
+        </div>
+
+        {/* CATEGORY FILTER TABS */}
+        <div className="flex items-center justify-start sm:justify-center gap-2 mb-8 sm:mb-10 overflow-x-auto pb-2 sm:pb-0 px-2 sm:px-0">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 shrink-0 ${
+                  isActive
+                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-sm"
+                    : "bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
+              >
+                {cat.icon}
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
 
         {/* SKILLS GRID */}
-        <div className="
-        skill-grid
-          grid grid-cols-2 gap-6
-          sm:grid-cols-2
-          lg:grid-cols-3
-          xl:grid-cols-4
-        ">
-          {skillItem.map((skill, index) => (
-            <SkillCard key={index} {...skill} index={index} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5">
+          {filteredSkills.map((skill, index) => (
+            <SkillCard key={skill.label} {...skill} index={index} />
           ))}
         </div>
 
