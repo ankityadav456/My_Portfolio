@@ -17,6 +17,8 @@ export default {
         sans: ["Inter", "system-ui", "sans-serif"],
         heading: ["Poppins", "Inter", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
+        script: ["'Alex Brush'", "cursive"],
+        handwriting: ["Caveat", "cursive"],
       },
 
       // Theme colors (linked to CSS variables)

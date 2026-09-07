@@ -1,157 +1,363 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Download, ArrowDown, Terminal, Sparkles, CheckCircle2, Code2, Layers, Cpu } from "lucide-react";
-import pdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Download,
+  ArrowRight,
+} from "lucide-react";
+import developerAvatar from "../assets/images/developer_3d_avatar.png";
+import HeroAnimatedBackground from "./HeroAnimatedBackground";
+
+const baseUrl = (import.meta.env.BASE_URL || "/").endsWith("/")
+  ? import.meta.env.BASE_URL || "/"
+  : `${import.meta.env.BASE_URL}/`;
+const resumeUrl = `${baseUrl}Ankit_Yadav_ResumeNew.pdf`;
 
 const socials = [
-  { href: "https://github.com/ankityadav456", icon: <Github size={18} />, label: "GitHub" },
-  { href: "https://www.linkedin.com/in/ankit-yadav", icon: <Linkedin size={18} />, label: "LinkedIn" },
-  { href: "mailto:ankit.y.2302@gmail.com", icon: <Mail size={18} />, label: "Email" },
+  { href: "https://github.com/ankityadav456", icon: <Github size={17} />, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/ankit-yadav", icon: <Linkedin size={17} />, label: "LinkedIn" },
+  { href: "mailto:ankit.y.2302@gmail.com", icon: <Mail size={17} />, label: "Email" },
 ];
 
-const terminalTabs = [
-  {
-    id: "developer",
-    label: "DeveloperProfile.ts",
-    icon: <Code2 size={14} className="text-orange-400" />,
-    code: (
-      <>
-        <span className="text-slate-500">// Ankit Yadav — Personal Profile</span>
-        <br />
-        <span className="text-purple-400">const</span> <span className="text-blue-400">developer</span> = &#123;
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">name</span>: <span className="text-emerald-300">"Ankit Yadav"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">focus</span>: <span className="text-emerald-300">"Frontend & Full-Stack Web Development"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">experience</span>: <span className="text-amber-300">"3+ Years"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">currentRole</span>: <span className="text-emerald-300">"Frontend Developer @ AIMBEAT Technology"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">previousRole</span>: <span className="text-emerald-300">"Frontend Developer @ Scan Infotech"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">education</span>: <span className="text-emerald-300">"B.Sc. Computer Science (Distinction - 8.14 CGPI)"</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">stack</span>: [<span className="text-emerald-300">"React"</span>, <span className="text-emerald-300">"ES6+"</span>, <span className="text-emerald-300">"Node"</span>, <span className="text-emerald-300">"Express"</span>, <span className="text-emerald-300">"MongoDB"</span>, <span className="text-emerald-300">"Tailwind"</span>, <span className="text-emerald-300">"Stripe"</span>],
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">philosophy</span>: <span className="text-emerald-300">"Clean components, fast loads, zero fluff."</span>,
-        <br />
-        &nbsp;&nbsp;<span className="text-slate-300">location</span>: <span className="text-emerald-300">"Mumbai, India"</span>
-        <br />
-        &#125;;
-        <br />
-        <span className="text-purple-400">export default</span> <span className="text-blue-400">developer</span>;
-      </>
-    ),
-  },
-  {
-    id: "stack",
-    label: "MyEverydayTools.json",
-    icon: <Layers size={14} className="text-sky-400" />,
-    code: (
-      <>
-        &#123;
-        <br />
-        &nbsp;&nbsp;<span className="text-sky-300">"frontend"</span>: [<span className="text-emerald-300">"React.js"</span>, <span className="text-emerald-300">"JavaScript ES6+"</span>, <span className="text-emerald-300">"Tailwind CSS"</span>, <span className="text-emerald-300">"HTML5/CSS3"</span>],
-        <br />
-        &nbsp;&nbsp;<span className="text-sky-300">"stateAndRouting"</span>: [<span className="text-emerald-300">"React Hooks"</span>, <span className="text-emerald-300">"Context API"</span>, <span className="text-emerald-300">"React Router"</span>],
-        <br />
-        &nbsp;&nbsp;<span className="text-sky-300">"backendAndDB"</span>: [<span className="text-emerald-300">"Node.js"</span>, <span className="text-emerald-300">"Express.js"</span>, <span className="text-emerald-300">"MongoDB"</span>, <span className="text-emerald-300">"RESTful APIs"</span>],
-        <br />
-        &nbsp;&nbsp;<span className="text-sky-300">"authAndPayments"</span>: [<span className="text-emerald-300">"JWT Auth"</span>, <span className="text-emerald-300">"Bcrypt"</span>, <span className="text-emerald-300">"Stripe API"</span>],
-        <br />
-        &nbsp;&nbsp;<span className="text-sky-300">"qualityAndAudits"</span>: [<span className="text-emerald-300">"Google Lighthouse"</span>, <span className="text-emerald-300">"Chrome DevTools"</span>, <span className="text-emerald-300">"Postman"</span>, <span className="text-emerald-300">"Git"</span>]
-        <br />
-        &#125;
-      </>
-    ),
-  },
-  {
-    id: "metrics",
-    label: "QuickAudit.sh",
-    icon: <Cpu size={14} className="text-emerald-400" />,
-    code: (
-      <>
-        <span className="text-amber-400">$ ./run-audit.sh --profile ankit-yadav</span>
-        <br />
-        <span className="text-emerald-400">✓</span> <span className="text-slate-200">Experience:</span> <span className="text-orange-400">3+ Years Building Production Web Apps</span>
-        <br />
-        <span className="text-emerald-400">✓</span> <span className="text-slate-200">REST APIs:</span> <span className="text-orange-400">20+ Endpoints Integrated with Fetch & Axios</span>
-        <br />
-        <span className="text-emerald-400">✓</span> <span className="text-slate-200">Audits:</span> <span className="text-emerald-400">95+ Score Performance, Zero Memory Leaks</span>
-        <br />
-        <span className="text-emerald-400">✓</span> <span className="text-slate-200">Full-Stack:</span> <span className="text-sky-300">MERN Stack with JWT Auth & Stripe Payments</span>
-        <br />
-        <span className="text-emerald-400">✓</span> <span className="text-slate-200">Education:</span> <span className="text-emerald-400">B.Sc. Computer Science (Distinction - 8.14 CGPI)</span>
-        <br />
-        <span className="text-slate-400">&gt; Status: Ready to build and collaborate on modern products.</span>
-      </>
-    ),
-  },
-];
+const frontendLetters = "FRONTEND".split("");
 
 const Hero = () => {
-  const [activeTab, setActiveTab] = useState("developer");
+  const heroRef = useRef(null);
+  const topBarRef = useRef(null);
+  const headlineRef = useRef(null);
+  const portraitContainerRef = useRef(null);
+  const portraitCircleRef = useRef(null);
+  const scriptRef = useRef(null);
+  const narrativeRef = useRef(null);
+  const actionsRef = useRef(null);
+  const footerRef = useRef(null);
+
+  // Synchronized GSAP entrance & organic kinetic timeline
+  useGSAP(
+    () => {
+      // Set initial states
+      gsap.set(topBarRef.current, { y: -16, opacity: 0 });
+      gsap.set(".frontend-char", { y: 50, opacity: 0, scale: 0.92 });
+      gsap.set(portraitContainerRef.current, { scale: 0.8, opacity: 0, filter: "blur(8px)" });
+      gsap.set(scriptRef.current, { x: -40, y: 20, opacity: 0, scale: 0.85, rotate: -14 });
+      gsap.set(narrativeRef.current, { y: 16, opacity: 0 });
+      gsap.set(actionsRef.current, { y: 14, opacity: 0, scale: 0.96 });
+      gsap.set(footerRef.current, { y: 12, opacity: 0 });
+
+      // Master Timeline
+      const masterTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      masterTl
+        // 1. Top status pill
+        .to(topBarRef.current, {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+        })
+        // 2. FRONTEND letters ripple outward from center
+        .to(
+          ".frontend-char",
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.85,
+            stagger: {
+              each: 0.035,
+              from: "center",
+              ease: "power2.out",
+            },
+          },
+          "-=0.25"
+        )
+        // 3. Portrait blooms in
+        .to(
+          portraitContainerRef.current,
+          {
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.9,
+            ease: "back.out(1.3)",
+          },
+          "-=0.6"
+        )
+        // 4. Sweeping cursive "Developer" flows across
+        .to(
+          scriptRef.current,
+          {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotate: -7,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+          },
+          "-=0.55"
+        )
+        // 5. Human narrative
+        .to(
+          narrativeRef.current,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+          },
+          "-=0.4"
+        )
+        // 6. Action buttons
+        .to(
+          actionsRef.current,
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.45,
+          },
+          "-=0.3"
+        )
+        // 7. Minimal bottom bar
+        .to(
+          footerRef.current,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+          },
+          "-=0.2"
+        );
+
+      // Gentle floating levitation on portrait
+      gsap.to(portraitCircleRef.current, {
+        y: -7,
+        duration: 3.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1.2,
+      });
+
+      // Gentle floating on script
+      gsap.to(scriptRef.current, {
+        y: 5,
+        rotate: -5,
+        duration: 3.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1.4,
+      });
+    },
+    { scope: heroRef }
+  );
+
+  // Butter-smooth mouse parallax tilt
+  const handleMouseMove = (e) => {
+    if (!heroRef.current || !portraitCircleRef.current || !headlineRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    gsap.to(portraitCircleRef.current, {
+      rotateY: x * 16,
+      rotateX: -y * 16,
+      duration: 0.45,
+      ease: "power2.out",
+    });
+
+    gsap.to(headlineRef.current, {
+      x: -x * 20,
+      y: -y * 12,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+
+    gsap.to(scriptRef.current, {
+      x: x * 10,
+      y: y * 6,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (!portraitCircleRef.current || !headlineRef.current) return;
+    gsap.to(portraitCircleRef.current, {
+      rotateY: 0,
+      rotateX: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+    gsap.to(headlineRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.7,
+      ease: "power2.out",
+    });
+    gsap.to(scriptRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+  };
 
   return (
     <section
+      ref={heroRef}
       id="home"
-      className="relative min-h-[90vh] flex items-center pt-24 pb-10 sm:pt-28 sm:pb-14 lg:pt-28 lg:pb-16 overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative min-h-[90vh] flex flex-col justify-between pt-24 pb-8 sm:pt-28 sm:pb-10 overflow-hidden"
     >
-      {/* SUBTLE BACKGROUND LIGHTING */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] bg-primary/5 dark:bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+      {/* ANIMATED BACKGROUND */}
+      <HeroAnimatedBackground />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-between">
+        
+        {/* ════════════════════════════════════════════
+            TOP ROW: HUMAN AVAILABILITY BADGE
+            ════════════════════════════════════════════ */}
+        {/* <div ref={topBarRef} className="flex items-center justify-center sm:justify-start mb-2 sm:mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-700 dark:text-emerald-300 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="font-semibold">Available for Opportunities</span>
+            <span className="text-emerald-400/50">•</span>
+            <span className="font-normal text-slate-600 dark:text-slate-300">Mumbai, India</span>
+          </div>
+        </div> */}
+
+        {/* ════════════════════════════════════════════
+            CENTERPIECE: EDITORIAL SIGNATURE STAGE
+            Massive architectural "FRONTEND" background
+            with circular portrait and sweeping cursive
+            "Developer" calligraphy (exact reference style)
+            ════════════════════════════════════════════ */}
+        <div className="relative w-full h-[280px] sm:h-[330px] md:h-[370px] lg:h-[390px] flex items-center justify-center select-none my-2 sm:my-3">
           
-          {/* LEFT COLUMN: HUMAN HERO NARRATIVE */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="lg:col-span-7 flex flex-col items-start w-full min-w-0"
+          {/* LAYER 1: ARCHITECTURAL "FRONTEND" WATERMARK */}
+          <div
+            ref={headlineRef}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 px-2 sm:px-0 will-change-transform"
           >
-            {/* PERSONAL BADGE */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-300 shadow-sm mb-3.5 sm:mb-4">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Based in Mumbai, India</span>
-              <span className="text-slate-300 dark:text-slate-700">•</span>
-              <span className="text-slate-900 dark:text-white font-semibold">Frontend & MERN Developer</span>
-            </div>
-
-            {/* HEADLINE */}
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-[3rem] xl:text-[3.25rem] font-bold tracking-tight text-slate-950 dark:text-white leading-[1.45] sm:leading-[1.42] lg:leading-[1.38] mb-4 break-words w-full">
-              Building <span className="text-gradient">high-performance</span> web apps with <span className="text-primary">clean React</span> & solid <span className="text-gradient">MERN stack</span> foundations.
+            <h1
+              className="frontend-watermark font-heading font-black text-[15vw] sm:text-[13vw] md:text-[12vw] lg:text-[10.5rem] xl:text-[12rem] uppercase leading-none select-none whitespace-nowrap flex items-center justify-center w-full"
+              style={{
+                letterSpacing: "clamp(2px, 0.05em, 16px)",
+              }}
+            >
+              {frontendLetters.map((char, idx) => (
+                <span
+                  key={idx}
+                  className="frontend-char inline-block will-change-transform"
+                >
+                  {char}
+                </span>
+              ))}
             </h1>
+          </div>
 
-            {/* SUBTITLE */}
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-6 w-full">
-              Hi, I'm <strong className="text-slate-950 dark:text-white font-bold">Ankit Yadav</strong>. I'm a <span className="text-primary font-semibold">Frontend & MERN Developer</span> with <span className="text-slate-950 dark:text-white font-semibold">3+ years of production experience</span> turning Figma designs into fast, accessible web applications using <span className="font-semibold text-slate-900 dark:text-white">React.js, JavaScript (ES6+), and Node.js</span>.
+          {/* LAYER 2: CENTRAL CIRCULAR PORTRAIT (HUMAN & CLEAN) */}
+          <div
+            ref={portraitContainerRef}
+            style={{ perspective: 1000 }}
+            className="relative z-10 cursor-pointer will-change-transform"
+          >
+            <div
+              ref={portraitCircleRef}
+              style={{ transformStyle: "preserve-3d" }}
+              className="relative flex items-center justify-center will-change-transform"
+            >
+              {/* Subtle ambient aura behind portrait */}
+              <div className="absolute w-52 sm:w-64 md:w-72 h-52 sm:h-64 md:h-72 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent dark:from-sky-500/20 dark:via-indigo-500/15 dark:to-transparent blur-3xl pointer-events-none -z-10" />
+
+              {/* Clean circular frame: Apple luxury medallion */}
+              <div className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-66 lg:h-66 rounded-full p-2 sm:p-2.5 bg-gradient-to-b from-white/90 to-white/40 dark:from-white/20 dark:to-white/5 border border-orange-500/30 dark:border-white/20 ring-1 ring-orange-500/20 dark:ring-transparent backdrop-blur-xl shadow-2xl shadow-orange-500/10 dark:shadow-black/80 transition-all duration-300">
+                <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 ring-1 ring-black/5 dark:ring-white/10">
+                  <img
+                    src={developerAvatar}
+                    alt="Ankit Yadav — Frontend & MERN Developer"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* LAYER 3: SWEEPING CURSIVE "Developer" */}
+          <div
+            ref={scriptRef}
+            className="absolute z-20 pointer-events-none select-none -bottom-2 sm:bottom-0 md:bottom-1 will-change-transform"
+          >
+            <span
+              className="font-script text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-primary dark:text-white drop-shadow-[0_4px_16px_rgba(234,88,12,0.4)] dark:drop-shadow-[0_4px_24px_rgba(56,189,248,0.35)] transition-colors duration-300"
+              style={{
+                display: "inline-block",
+                fontFamily: "'Alex Brush', cursive",
+              }}
+            >
+              Developer
+            </span>
+          </div>
+        </div>
+
+        {/* ════════════════════════════════════════════
+            BOTTOM SECTION: WARM NARRATIVE, CTAS & FOOTER
+            Uncluttered, elegant & human-centered
+            ════════════════════════════════════════════ */}
+        <div className="flex flex-col items-center text-center mt-3 sm:mt-5 space-y-4 sm:space-y-5">
+          
+          {/* WARM HUMAN INTRODUCTION */}
+          <div ref={narrativeRef} className="max-w-xl mx-auto space-y-1.5 will-change-transform">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-slate-950 dark:text-white tracking-tight">
+              Hi, I'm <span className="text-gradient">Ankit Yadav</span>
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+              A Frontend &amp; MERN Developer crafting fast, clean, and thoughtful web experiences. Turning complex ideas into intuitive, pixel-perfect interfaces.
             </p>
+          </div>
 
-            {/* CTA ACTION BUTTONS */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-7 w-full">
+          {/* ACTION SECTION & MATCHED FOOTER COLUMN */}
+          <div className="w-full max-w-md sm:max-w-lg mx-auto flex flex-col items-center space-y-6 pt-1">
+            
+            {/* CLEAN CALL TO ACTIONS */}
+            <div ref={actionsRef} className="w-full flex items-center justify-center gap-3.5 will-change-transform">
               <a
                 href="#work"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-semibold text-sm shadow-sm transition-all text-center w-full sm:w-auto hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-semibold text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
-                <span>See my work</span>
-                <ArrowDown size={15} />
+                <span>Explore My Work</span>
+                <ArrowRight size={15} />
               </a>
 
               <a
-                href={pdf}
+                href={resumeUrl}
                 download="Ankit_Yadav_Resume.pdf"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold text-sm shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-center w-full sm:w-auto hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 font-semibold text-sm shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all hover:-translate-y-0.5 active:translate-y-0"
+                title="Download Resume"
               >
                 <Download size={15} className="text-primary" />
-                <span>View Resume (PDF)</span>
+                <span>Download CV</span>
               </a>
+            </div>
 
-              {/* SOCIAL LINKS */}
-              <div className="flex items-center justify-center sm:justify-start gap-2 pt-1 sm:pt-0">
+            {/* MINIMAL BOTTOM BAR: PERFECTLY ANCHORED UNDER BUTTONS */}
+            <div
+              ref={footerRef}
+              className="w-full pt-4 sm:pt-5 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-4 text-xs will-change-transform"
+            >
+              {/* Social Icons Dock */}
+              <div className="flex items-center gap-2">
                 {socials.map((social, idx) => (
                   <a
                     key={idx}
@@ -159,79 +365,25 @@ const Hero = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 hover:border-slate-400 dark:hover:border-white/30 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm hover:-translate-y-0.5"
+                    title={social.label}
+                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-800/80 hover:border-primary/50 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all shadow-xs hover:-translate-y-0.5"
                   >
                     {social.icon}
                   </a>
                 ))}
               </div>
-            </div>            
-          </motion.div>
 
-          {/* RIGHT COLUMN: DEVELOPER TERMINAL */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-            className="lg:col-span-5 w-full min-w-0 mt-4 lg:mt-0"
-          >
-            <div className="relative rounded-2xl overflow-hidden bg-[#0d1117] border border-slate-700/70 shadow-xl w-full">
-              
-              {/* TERMINAL HEADER */}
-              <div className="flex items-center justify-between px-3.5 sm:px-4 py-2.5 bg-[#161b22] border-b border-slate-800">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
-                  <span className="ml-1.5 text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                    <Terminal size={13} className="text-orange-400" />
-                    ankit@portfolio: ~
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
-                  <CheckCircle2 size={12} />
-                  <span>online</span>
-                </div>
-              </div>
-
-              {/* TABS */}
-              <div className="flex items-center px-2 pt-2 bg-[#161b22]/70 border-b border-slate-800 gap-1 overflow-x-auto scrollbar-none">
-                {terminalTabs.map((tab) => {
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-t-lg text-xs font-mono transition-colors shrink-0 ${
-                        isActive
-                          ? "bg-[#0d1117] text-white border-t border-x border-slate-700 font-medium"
-                          : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40"
-                      }`}
-                    >
-                      {tab.icon}
-                      <span>{tab.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* TERMINAL CODE DISPLAY */}
-              <div className="p-3.5 sm:p-4 font-mono text-[11px] sm:text-xs overflow-x-auto overflow-y-hidden bg-[#0d1117] text-slate-200 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
-                <div className="leading-relaxed whitespace-pre font-mono">
-                  {terminalTabs.find((t) => t.id === activeTab)?.code}
-                </div>
-              </div>
-
-              {/* TERMINAL FOOTER STATUS */}
-              <div className="px-3.5 sm:px-4 py-2 bg-[#161b22] border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Node.js / React 18
-                </span>
-                <span>UTF-8</span>
-              </div>
+              {/* Direct Email Link */}
+              <a
+                href="mailto:ankit.y.2302@gmail.com"
+                title="ankit.y.2302@gmail.com"
+                className="h-9 px-3.5 rounded-lg flex items-center gap-2 border border-slate-200/80 dark:border-white/10 bg-white/80 dark:bg-slate-800/80 hover:border-primary/50 text-slate-700 dark:text-slate-200 hover:text-primary dark:hover:text-primary transition-all shadow-xs text-xs font-medium hover:-translate-y-0.5"
+              >
+                <Mail size={14} className="text-primary shrink-0" />
+                <span>Email Me</span>
+              </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -239,7 +391,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-
-
-

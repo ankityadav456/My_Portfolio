@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowUp, Code2, FileDown } from "lucide-react";
 import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
 import light1 from "../assets/images/Modern AY logo design.png";
-import resumePdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
+const baseUrl = (import.meta.env.BASE_URL || "/").endsWith("/")
+  ? import.meta.env.BASE_URL || "/"
+  : `${import.meta.env.BASE_URL}/`;
+const resumePdf = `${baseUrl}Ankit_Yadav_ResumeNew.pdf`;
 
 const sitemap = [
   { label: "Home", href: "#home" },
@@ -153,4 +156,4 @@ const Footer = ({ theme }) => {
 };
 
 export default Footer;
-
+

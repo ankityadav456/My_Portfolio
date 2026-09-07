@@ -1,11 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, Menu, X, FileDown, Sparkles } from "lucide-react";
+import { Sun, Moon, Menu, X, FileDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
 import light1 from "../assets/images/Modern AY logo design.png";
-import resumePdf from "../assets/images/Ankit_Yadav_newResumes.pdf";
+
+const baseUrl = (import.meta.env.BASE_URL || "/").endsWith("/")
+  ? import.meta.env.BASE_URL || "/"
+  : `${import.meta.env.BASE_URL}/`;
+const resumeUrl = `${baseUrl}Ankit_Yadav_ResumeNew.pdf`;
 
 const navItems = [
   { label: "Home", link: "#home" },
@@ -100,8 +104,8 @@ const Header = ({ theme, toggleTheme }) => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "py-3 bg-white/90 dark:bg-[#090d16]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-white/10 shadow-sm"
-          : "py-4 sm:py-5 bg-transparent"
+          ? "py-2.5 sm:py-3 ios-glass-bar backdrop-blur-2xl backdrop-saturate-[180%]"
+          : "py-3.5 sm:py-4 border-b border-white/20 dark:border-white/[0.05]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -133,8 +137,8 @@ const Header = ({ theme, toggleTheme }) => {
           </div>
         </a>
 
-        {/* DESKTOP CAPSULE NAVIGATION */}
-        <nav className="hidden lg:flex items-center p-1.5 rounded-full bg-slate-100/90 dark:bg-slate-900/80 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 shadow-md">
+        {/* DESKTOP CAPSULE NAVIGATION (iOS FROSTED GLASS CAPSULE) */}
+        <nav className="hidden lg:flex items-center p-1.5 rounded-full ios-glass-capsule">
           <ul className="flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = activeLink === item.link;
@@ -145,7 +149,7 @@ const Header = ({ theme, toggleTheme }) => {
                     onClick={(e) => handleNavClick(e, item.link)}
                     className={`relative z-10 px-3.5 py-1.5 text-xs font-semibold tracking-wide transition-colors duration-200 block rounded-full ${
                       isActive
-                        ? "text-white font-bold"
+                        ? "text-slate-950 dark:text-white font-bold"
                         : "text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
                     }`}
                   >
@@ -155,7 +159,7 @@ const Header = ({ theme, toggleTheme }) => {
                     <motion.div
                       layoutId="activeDesktopNav"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 rounded-full shadow-glow-sm"
+                      className="absolute inset-0 bg-white dark:bg-white/20 rounded-full shadow-sm dark:shadow-[0_2px_12px_rgba(0,0,0,0.3)] border border-slate-200/80 dark:border-white/20 backdrop-blur-md"
                     />
                   )}
                 </li>
@@ -165,13 +169,13 @@ const Header = ({ theme, toggleTheme }) => {
         </nav>
 
         {/* ACTIONS */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          {/* RESUME BUTTON (DESKTOP & TABLET) */}
+          {/* RESUME BUTTON (DESKTOP & TABLET - iOS GLASS) */}
           <a
-            href={resumePdf}
-            download="Ankit_Yadav_Senior_Developer_Resume.pdf"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-primary dark:hover:text-primary backdrop-blur-md shadow-sm transition-all hover:scale-105 active:scale-95"
+            href={resumeUrl}
+            download="Ankit_Yadav_Resume.pdf"
+            className="hidden sm:inline-flex h-9 px-3.5 items-center justify-center gap-1.5 text-xs font-semibold rounded-full ios-glass-btn text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white transition-all hover:scale-105 active:scale-95 shrink-0"
             title="Download Resume"
           >
             <FileDown size={14} className="text-primary" />
@@ -182,17 +186,29 @@ const Header = ({ theme, toggleTheme }) => {
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "#contact")}
-            className="hidden md:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-glow-sm hover:shadow-glow-md hover:scale-105 active:scale-95 transition-all"
+            className="hidden md:inline-flex relative h-9 px-4 items-center justify-center gap-2 text-xs font-semibold rounded-full bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 text-white shadow-[0_2px_12px_rgba(249,115,22,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_4px_20px_rgba(249,115,22,0.5),inset_0_1px_0_rgba(255,255,255,0.45)] hover:scale-105 active:scale-95 transition-all overflow-hidden shrink-0 group"
           >
-            <Sparkles size={13} />
-            <span>Let's Talk</span>
+            {/* Glossy Sheen Reflection */}
+            <span className="absolute inset-0 pointer-events-none overflow-hidden rounded-full">
+              <span className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer-sweep pointer-events-none" />
+            </span>
+
+            {/* Razor-Sharp Blinking 4-Point Star */}
+            <svg
+              className="w-3.5 h-3.5 text-white fill-white shrink-0 animate-star-blink relative z-10"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z" />
+            </svg>
+            <span className="tracking-wide font-semibold relative z-10">Let's Talk</span>
           </a>
 
-          {/* THEME TOGGLE */}
+          {/* THEME TOGGLE (iOS GLASS BUTTON) */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-sm transition-all hover:scale-110 active:scale-90"
+            className="h-9 w-9 inline-flex items-center justify-center rounded-full ios-glass-btn text-slate-800 dark:text-slate-100 transition-all hover:scale-110 active:scale-90 shrink-0"
           >
             {theme === "dark" ? (
               <Sun size={16} className="text-amber-400" />
@@ -201,18 +217,18 @@ const Header = ({ theme, toggleTheme }) => {
             )}
           </button>
 
-          {/* MOBILE MENU TOGGLE */}
+          {/* MOBILE MENU TOGGLE (iOS GLASS BUTTON) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Open navigation menu"
-            className="lg:hidden p-2 rounded-full border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-800 text-slate-800 dark:text-slate-100 transition-all hover:scale-110 active:scale-90"
+            className="lg:hidden h-9 w-9 inline-flex items-center justify-center rounded-full ios-glass-btn text-slate-800 dark:text-slate-100 transition-all hover:scale-110 active:scale-90 shrink-0"
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* MOBILE DRAWER */}
+      {/* MOBILE DRAWER (iOS FROSTED GLASS SHEET) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -222,7 +238,7 @@ const Header = ({ theme, toggleTheme }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 top-[60px] bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 top-[60px] bg-black/40 backdrop-blur-sm z-40 lg:hidden"
             />
 
             <motion.div
@@ -230,7 +246,7 @@ const Header = ({ theme, toggleTheme }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden relative z-50 mt-2 mx-3 sm:mx-6 p-4 rounded-2xl bg-white dark:bg-[#0f172a] shadow-2xl border border-slate-200 dark:border-white/10"
+              className="lg:hidden relative z-50 mt-2 mx-3 sm:mx-6 p-4 rounded-3xl ios-glass-sheet"
             >
               <div className="flex flex-col space-y-1.5">
                 {navItems.map((item) => {
@@ -242,7 +258,7 @@ const Header = ({ theme, toggleTheme }) => {
                       onClick={(e) => handleNavClick(e, item.link)}
                       className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                         isActive
-                          ? "bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600 text-white shadow-md"
+                          ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md font-bold"
                           : "text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
                       }`}
                     >
@@ -252,9 +268,10 @@ const Header = ({ theme, toggleTheme }) => {
                 })}
                 <div className="pt-3 border-t border-slate-200 dark:border-white/10 mt-2 flex items-center justify-between">
                   <a
-                    href={resumePdf}
-                    download="Ankit_Yadav_Senior_Developer_Resume.pdf"
+                    href={resumeUrl}
+                    download="Ankit_Yadav_Resume.pdf"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary py-1 px-2 hover:underline"
+                    title="Download Resume"
                   >
                     <FileDown size={14} />
                     Download CV
