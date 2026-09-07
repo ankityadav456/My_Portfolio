@@ -331,22 +331,22 @@ const Hero = () => {
           <div className="w-full max-w-md sm:max-w-lg mx-auto flex flex-col items-center space-y-6 pt-1">
             
             {/* CLEAN CALL TO ACTIONS */}
-            <div ref={actionsRef} className="w-full flex items-center justify-center gap-3.5 will-change-transform">
+            <div ref={actionsRef} className="w-full flex items-center justify-center gap-3 sm:gap-4 will-change-transform">
               <a
                 href="#work"
-                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-semibold text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-semibold text-xs sm:text-sm shadow-md transition-all hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
               >
-                <span>Explore My Work</span>
-                <ArrowRight size={15} />
+                <span>Explore Work</span>
+                <ArrowRight size={15} className="shrink-0" />
               </a>
 
               <a
                 href={resumeUrl}
                 download="Ankit_Yadav_Resume.pdf"
-                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 font-semibold text-sm shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-100 font-semibold text-xs sm:text-sm shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
                 title="Download Resume"
               >
-                <Download size={15} className="text-primary" />
+                <Download size={15} className="text-primary shrink-0" />
                 <span>Download CV</span>
               </a>
             </div>

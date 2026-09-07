@@ -169,16 +169,31 @@ const Skill = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <p className="text-xs uppercase tracking-widest font-mono text-primary font-semibold mb-2">
-            My Toolkit
-          </p>
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-950 dark:text-white mb-3">
-            Everyday tools & technologies
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-            Technologies, libraries, and tools I use to build fast, reliable, and accessible web applications.
-          </p>
+        <div className="relative text-center max-w-3xl mx-auto mb-10 sm:mb-12 select-none">
+          {/* Architectural Background Watermark */}
+          <div
+            aria-hidden="true"
+            className="absolute -top-6 sm:-top-9 left-1/2 -translate-x-1/2 font-heading font-black tracking-widest uppercase text-6xl sm:text-7xl md:text-8xl select-none pointer-events-none section-watermark whitespace-nowrap z-0"
+          >
+            SKILLS
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-orange-500/10 text-primary border border-orange-500/20 mb-2.5 shadow-2xs">
+              <Code2 size={13} className="text-primary" />
+              <span>03 // TECH STACK</span>
+            </div>
+
+            {/* Clear, Recognizable Section Title */}
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-950 dark:text-white mb-2.5">
+              Skills &amp; <span className="text-primary">Toolkit</span>
+            </h2>
+
+            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+              Technologies, libraries, and developer tools I use every day to build fast, scalable web applications.
+            </p>
+          </div>
         </div>
 
         {/* CATEGORY FILTER TABS */}
