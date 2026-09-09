@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import MotionGrid from "./MotionGrid";
 
 const AnimatedBackground = () => {
   const { theme } = useTheme();
@@ -88,8 +87,8 @@ const AnimatedBackground = () => {
         }`}
       />
 
-      {/* DYNAMIC NEON CYBER MOTION GRID WITH MOVING LIGHT BEAMS & INTERACTIVE CURSOR GLOW */}
-      <MotionGrid />
+      {/* SUBTLE LINEAR TECH GRID OVERLAY */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-25 dark:opacity-15 pointer-events-none" />
     </div>
   );
 };

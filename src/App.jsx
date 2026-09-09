@@ -13,6 +13,7 @@ import Skill from "./components/Skill";
 import Work from "./components/Work";
 import Review from "./components/Review";
 import Contact from "./components/Contact";
+import AnimatedBackground from "./components/AnimatedBackground";
 
 import "./App.css";
 
@@ -49,6 +50,10 @@ const App = () => {
       }}
     >
       <div className="relative min-h-screen bg-background text-text selection:bg-primary/20 selection:text-primary transition-colors duration-300">
+        
+        {/* AMBIENT MESH AURORA BACKGROUND */}
+        <AnimatedBackground />
+        
         <div className="relative z-10">
           <Header theme={theme} toggleTheme={toggleTheme} />
 
@@ -69,4 +74,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App;
