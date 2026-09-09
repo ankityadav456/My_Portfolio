@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { Github, Linkedin, Mail, ArrowUp, Code2, FileDown } from "lucide-react";
-import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
-import light1 from "../assets/images/Modern AY logo design.png";
+import faviconImg from "../assets/images/favicon.png";
 const baseUrl = (import.meta.env.BASE_URL || "/").endsWith("/")
   ? import.meta.env.BASE_URL || "/"
   : `${import.meta.env.BASE_URL}/`;
@@ -27,7 +27,7 @@ const socials = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/ankit-yadav",
+    href: "https://www.linkedin.com/in/ankit-yadav-y2302",
     icon: <Linkedin size={18} />,
   },
   {
@@ -38,8 +38,13 @@ const socials = [
 ];
 
 const Footer = ({ theme }) => {
+  const lenis = useLenis();
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (lenis) {
+      lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0 });
+    }
   };
 
   return (
@@ -52,18 +57,20 @@ const Footer = ({ theme }) => {
           {/* BRAND COLUMN */}
           <div className="md:col-span-5 space-y-3 sm:space-y-3.5">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl overflow-hidden ring-1 ring-black/10 dark:ring-white/10 shadow-sm">
-                <img
-                  src={theme === "dark" ? dark1 : light1}
-                  alt="Ankit Yadav Logo"
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative w-10 h-10 rounded-full p-[1.5px] bg-gradient-to-b from-orange-500/40 via-amber-400/30 to-orange-500/20 dark:from-sky-400/40 dark:via-blue-500/30 dark:to-cyan-400/20 shadow-sm shrink-0">
+                <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-slate-100 to-orange-50/60 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center ring-1 ring-black/5 dark:ring-white/10">
+                  <img
+                    src={faviconImg}
+                    alt="Ankit Yadav Favicon"
+                    className="w-full h-full object-contain p-0.5"
+                  />
+                </div>
               </div>
               <div>
-                <h3 className="font-heading font-bold text-base text-slate-900 dark:text-white">
+                <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-white">
                   Ankit Yadav
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Frontend & MERN Stack Developer</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Frontend &amp; MERN Stack Developer</p>
               </div>
             </div>
 
@@ -71,20 +78,7 @@ const Footer = ({ theme }) => {
               Building responsive, high-performance web applications with React.js, Node.js, and modern JavaScript.
             </p>
 
-            <div className="pt-1 flex items-center gap-3">
-              <a
-                href={resumePdf}
-                download="Ankit_Yadav_Resume.pdf"
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-medium transition-all shadow-sm"
-              >
-                <FileDown size={13} className="text-primary" />
-                <span>Resume (PDF)</span>
-              </a>
-              <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Available for opportunities
-              </span>
-            </div>
+            
           </div>
 
           {/* SITEMAP COLUMN */}

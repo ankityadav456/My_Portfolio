@@ -1,30 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, ShieldCheck, LayoutGrid, Sparkles, Terminal, Award, User } from "lucide-react";
-import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
-import light1 from "../assets/images/Modern AY logo design.png";
+import { User, Code2, Cpu, Zap } from "lucide-react";
+import developerAvatar from "../assets/images/developer_3d_avatar.png";
 
-const pillars = [
+const highlights = [
   {
-    icon: <LayoutGrid className="text-orange-500" size={20} />,
-    title: "Clean Component Design",
-    desc: "Writing modular, reusable React components with predictable state flow, readable hooks, and zero unnecessary re-renders.",
+    icon: <Code2 className="text-orange-500" size={18} />,
+    title: "Frontend Engineering",
+    desc: "React, Next.js, Tailwind CSS & clean modern JavaScript.",
   },
   {
-    icon: <Zap className="text-amber-500" size={20} />,
-    title: "Real Performance Audits",
-    desc: "Optimizing bundle chunks, lazy-loading heavy routes, and resolving layout shifts to keep Google Lighthouse scores 95+.",
+    icon: <Cpu className="text-sky-500" size={18} />,
+    title: "Full-Stack Backend",
+    desc: "Node.js, Express APIs, MongoDB Atlas & secure auth.",
   },
   {
-    icon: <ShieldCheck className="text-sky-500" size={20} />,
-    title: "Full-Stack Integration",
-    desc: "Connecting React frontends to robust Node/Express REST APIs with MongoDB Atlas, JWT authentication, and Stripe payments.",
-  },
-  {
-    icon: <Sparkles className="text-purple-500" size={20} />,
-    title: "Design System Fidelity",
-    desc: "Translating complex Figma wireframes into pixel-accurate, accessible, and responsive interfaces that look great on any screen.",
+    icon: <Zap className="text-amber-500" size={18} />,
+    title: "Fast Performance",
+    desc: "Optimized bundles, zero layout shifts & 95+ Lighthouse.",
   },
 ];
 
@@ -65,20 +59,28 @@ const About = ({ theme }) => {
         <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 items-stretch mb-8 sm:mb-10">
           
           {/* NARRATIVE CARD */}
-          <div className="lg:col-span-8 bg-white dark:bg-[#0f172a]/80 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-8 bg-white dark:bg-[#0f172a]/80 rounded-3xl p-6 sm:p-4 border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
             <div>
+              {/* REPLACED WITH SHARED IMAGE 1: PROFILE HEADER */}
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-white/5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden ring-1 ring-black/10 dark:ring-white/10 shadow-sm">
-                    <img
-                      src={theme === "dark" ? dark1 : light1}
-                      alt="Ankit Yadav"
-                      className="w-full h-full object-cover"
-                    />
+                <div className="flex items-center gap-3.5">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-1 bg-gradient-to-b from-orange-500/20 to-amber-500/10 dark:from-sky-500/20 dark:to-blue-500/10 border border-orange-500/30 dark:border-sky-400/30 shadow-md">
+                    <div className="w-full h-full rounded-xl overflow-hidden bg-white dark:bg-slate-900 flex items-center justify-center">
+                      <img
+                        src={developerAvatar}
+                        alt="Ankit Yadav"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="text-base font-bold font-heading text-slate-900 dark:text-white">Ankit Yadav</h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Frontend & MERN Stack Developer</p>
+                    <h3 className="text-base sm:text-lg font-bold font-heading text-slate-950 dark:text-white flex items-center gap-2">
+                      Ankit Yadav
+                      <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">
+                      Frontend &amp; MERN Developer
+                    </p>
                   </div>
                 </div>
                 <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-medium">
@@ -99,9 +101,7 @@ const About = ({ theme }) => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-5 mt-5 border-t border-slate-100 dark:border-white/5">
               {[
                 { label: "Production Experience", value: "3+ Years" },
-                // { label: "REST APIs Integrated", value: "20+ Endpoints" },
                 { label: "Degree & Honors", value: "8.14 CGPI" },
-                // { label: "Lighthouse Performance", value: "95+ Score" },
               ].map((item, idx) => (
                 <div key={idx} className="p-2.5 sm:p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-white/5 text-center">
                   <p className="text-base sm:text-lg font-heading font-bold text-slate-900 dark:text-white mb-0.5">
@@ -116,7 +116,7 @@ const About = ({ theme }) => {
           </div>
 
           {/* EDUCATION CARD */}
-          <div className="lg:col-span-4 bg-white dark:bg-[#0f172a]/80 rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-4 bg-white dark:bg-[#0f172a]/80 rounded-3xl p-6 sm:p-4 border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between">
             <div>
               <p className="text-xs uppercase tracking-widest font-mono text-primary font-semibold mb-2">
                 Education
@@ -128,7 +128,7 @@ const About = ({ theme }) => {
                 Distinction • 8.14 / 10 CGPI (2020 – 2023)
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-400 mb-3.5">
-                S.I.W.S College of Arts, Science & Commerce, Mumbai
+                S.I.W.S College of Arts, Science &amp; Commerce, Mumbai
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Strong foundation in Data Structures, Database Systems, Computer Networks, Operating Systems, and modern software architecture.
@@ -161,22 +161,24 @@ const About = ({ theme }) => {
 
         </div>
 
-        {/* 4 CORE PRINCIPLES */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-          {pillars.map((pillar, idx) => (
+        {/* REPLACED WITH SHARED IMAGE 2: THREE CLEAN FOCUS CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+          {highlights.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white dark:bg-[#0f172a]/80 p-5 rounded-2xl border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/20 transition-all shadow-sm group hover:-translate-y-0.5"
+              className="rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0f172a]/80 border border-slate-200 dark:border-white/10 p-5 sm:p-6 shadow-sm backdrop-blur-xl flex items-start gap-4 hover:border-orange-500/30 dark:hover:border-sky-400/30 transition-all duration-300 hover:-translate-y-0.5 group"
             >
-              <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-white/10 mb-3">
-                {pillar.icon}
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 border border-slate-200 dark:border-white/10 group-hover:scale-110 transition-transform">
+                {item.icon}
               </div>
-              <h3 className="font-heading font-bold text-sm text-slate-900 dark:text-white mb-1">
-                {pillar.title}
-              </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                {pillar.desc}
-              </p>
+              <div>
+                <h4 className="text-sm sm:text-base font-heading font-bold text-slate-900 dark:text-white mb-1">
+                  {item.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -187,4 +189,3 @@ const About = ({ theme }) => {
 };
 
 export default About;
-

@@ -5,32 +5,32 @@ import { MessageSquareQuote, Star, CheckCircle } from "lucide-react";
 
 const reviews = [
   {
-    name: "Rahul Sharma",
-    role: "Engineering Manager",
-    company: "FinTech Scaleup",
+    name: "Pooja Nair",
+    role: "Senior Frontend Engineer",
+    company: "Engineering Colleague",
     message:
-      "Ankit's technical mastery over full-stack architectures and React state management helped our team shave weeks off our product milestone. Highly dependable senior engineer.",
+      "Worked closely with Ankit on modular React architectures. He has a sharp eye for responsive details, handles state flow cleanly with hooks, and consistently catches mobile layout edge cases early.",
   },
   {
-    name: "Neha Verma",
-    role: "Startup Founder & CEO",
-    company: "QuickCommerce",
+    name: "Karan Mehta",
+    role: "Full-Stack Developer",
+    company: "MERN Project Partner",
     message:
-      "Working with Ankit was an absolute pleasure. He doesn't just write code; he thinks deeply about product architecture, UX micro-interactions, and backend scalability.",
+      "Ankit built the frontend for our food-ordering web app and integrated the Stripe checkout flow seamlessly. His component structure and async error handling made API integration straightforward.",
   },
   {
-    name: "Amit Patel",
-    role: "Lead Architect",
-    company: "Cloud Solutions Inc.",
+    name: "Rohan Joshi",
+    role: "UI/UX Designer",
+    company: "Design Handoff Partner",
     message:
-      "Exceptional eye for performance optimization. His clean code structure, attention to accessibility, and API resilience stand out. A true senior developer caliber.",
+      "One of the best developers to collaborate with from Figma wireframes to code. He respects design tokens, implements micro-interactions accurately, and never cuts corners on typography or spacing.",
   },
   {
-    name: "Siddharth Mehta",
-    role: "Product Director",
-    company: "OmniChannel Hub",
+    name: "Vikram Deshmukh",
+    role: "Software Engineer",
+    company: "Peer Code Reviewer",
     message:
-      "Ankit elevated our entire web platform. From GSAP animations to rock-solid MongoDB schemas, everything was delivered on schedule with 100% polish.",
+      "Ankit writes clean, readable JavaScript and React code. His pull requests are always well-structured, easy to review, and focused on real runtime performance and code reusability.",
   },
 ];
 
@@ -79,7 +79,7 @@ const Review = () => {
             ease: "linear",
             repeat: Infinity,
           }}
-          className="flex gap-4 sm:gap-6 w-max cursor-pointer hover:[animation-play-state:paused]"
+          className="flex gap-4 sm:gap-6 w-max cursor-pointer will-change-transform hover:[animation-play-state:paused]"
         >
           {duplicatedReviews.map((item, index) => (
             <div
@@ -96,7 +96,7 @@ const Review = () => {
                   </div>
                   <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
                     <CheckCircle size={12} />
-                    Verified
+                    Recommendation
                   </span>
                 </div>
 

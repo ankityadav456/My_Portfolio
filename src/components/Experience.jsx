@@ -127,7 +127,7 @@ const Experience = () => {
                   scale: 1.15,
                   boxShadow: "0 0 12px rgba(234, 88, 12, 0.6)",
                 }}
-                viewport={{ once: false, margin: "-80px" }}
+                viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.3 }}
                 className="absolute -left-[7px] top-3 w-3.5 h-3.5 rounded-full border-2 border-primary bg-white dark:bg-slate-950 z-10 transition-all flex items-center justify-center"
               >

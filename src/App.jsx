@@ -2,7 +2,7 @@ import { ReactLenis, useLenis } from "lenis/react";
 import { useTheme } from "./context/ThemeContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useEffect } from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,15 +19,21 @@ import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const App = () => {
-  const { theme, toggleTheme } = useTheme();
+/**
+ * Bridge component rendered INSIDE <ReactLenis> so useLenis()
+ * can actually access the Lenis context. Connects Lenis scroll
+ * events to ScrollTrigger and drives Lenis via the GSAP ticker.
+ */
+const LenisGSAPBridge = () => {
   const lenis = useLenis();
 
-  useGSAP(() => {
+  useEffect(() => {
     if (!lenis) return;
 
+    // Sync: Lenis scroll → ScrollTrigger update
     lenis.on("scroll", ScrollTrigger.update);
 
+    // Drive Lenis from GSAP ticker (ONE shared animation loop)
     const tickerCb = (time) => {
       lenis.raf(time * 1000);
     };
@@ -40,6 +46,12 @@ const App = () => {
     };
   }, [lenis]);
 
+  return null;
+};
+
+const App = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <ReactLenis
       root
@@ -48,7 +60,11 @@ const App = () => {
         smoothWheel: true,
         smoothTouch: false,
       }}
+      autoRaf={false}
     >
+      {/* Bridge must be a CHILD of ReactLenis to access the context */}
+      <LenisGSAPBridge />
+
       <div className="relative min-h-screen bg-background text-text selection:bg-primary/20 selection:text-primary transition-colors duration-300">
         
         {/* AMBIENT MESH AURORA BACKGROUND */}

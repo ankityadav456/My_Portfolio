@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -50,9 +51,17 @@ const techStackList = [
   {
     name: "JavaScript",
     icon: (
-      <span className="w-4 h-4 rounded-xs bg-[#fded0c69] text-white flex items-center justify-center font-bold text-[9px] leading-none">
-        JS
-      </span>
+      <svg
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-4 h-4 object-contain"
+      >
+        <rect width="48" height="48" rx="2" fill="#F7DF1E" />
+        <path
+          d="M29.54 32.95c.69 1.12 1.44 2.2 3.04 2.2 1.34 0 2.04-.67 2.04-1.59 0-1.1-.73-1.49-2.2-2.13l-.81-.34c-2.33-.99-3.88-2.23-3.88-4.84 0-2.41 1.84-4.25 4.73-4.25 2.05 0 3.53.71 4.59 2.57l-2.51 1.61c-.55-.99-1.15-1.38-2.08-1.38-.95 0-1.55.6-1.55 1.38 0 .96.6 1.35 1.98 1.95l.81.34c2.75 1.17 4.29 2.36 4.29 5.05 0 2.89-2.28 4.48-5.35 4.48-3 0-4.7-1.51-5.65-3.37l2.52-1.68ZM17.95 33.03c.51.91 1.28 1.6 2.38 1.6 1.06 0 1.67-.42 1.67-2.04V22h3.33v11.1c0 3.37-1.95 4.9-4.8 4.9-2.58 0-4.44-1.75-5.2-3.37l2.62-1.6Z"
+          fill="#000"
+        />
+      </svg>
     ),
   },
   {
@@ -77,10 +86,24 @@ const Hero = () => {
   const cornerLeftRef = useRef(null);
   const cornerRightRef = useRef(null);
   const techStackRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const lenis = useLenis();
+
+  const handleScrollTo = (target) => (e) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -80 });
+    } else {
+      const el = document.querySelector(target);
+      if (el) {
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80 });
+      }
+    }
+  };
 
   // Synchronized GSAP entrance & organic kinetic timeline
   useGSAP(
-    () => {
+    (_, contextSafe) => {
       // Set initial states
       gsap.set(topBarRef.current, { y: -16, opacity: 0 });
       gsap.set(".frontend-char", { y: 50, opacity: 0, scale: 0.92 });
@@ -129,7 +152,9 @@ const Hero = () => {
             duration: 0.9,
             ease: "back.out(1.3)",
             onComplete: () => {
-              // Gentle floating levitation on portrait
+              // Clear the filter property to remove GPU filter layer
+              gsap.set(portraitContainerRef.current, { clearProps: "filter" });
+              // Gentle floating levitation (registered with context for cleanup)
               gsap.to(portraitCircleRef.current, {
                 y: -7,
                 duration: 3.2,
@@ -153,7 +178,7 @@ const Hero = () => {
             duration: 0.8,
             ease: "power3.out",
             onComplete: () => {
-              // Gentle floating on script starts cleanly after entrance finishes
+              // Gentle floating on script (registered with context for cleanup)
               gsap.to(scriptRef.current, {
                 y: 6,
                 rotate: -4,
@@ -222,81 +247,83 @@ const Hero = () => {
     { scope: heroRef }
   );
 
-  // Butter-smooth mouse parallax tilt
-  const handleMouseMove = (e) => {
-    if (!heroRef.current || !portraitCircleRef.current || !headlineRef.current) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+  // Throttled mouse parallax via GSAP ticker (ONE update per frame)
+  useEffect(() => {
+    const heroEl = heroRef.current;
+    if (!heroEl) return;
 
-    gsap.to(portraitCircleRef.current, {
-      rotateY: x * 16,
-      rotateX: -y * 16,
-      duration: 0.45,
-      ease: "power2.out",
-    });
+    const onMouseMove = (e) => {
+      const rect = heroEl.getBoundingClientRect();
+      mouseRef.current.x = (e.clientX - rect.left) / rect.width - 0.5;
+      mouseRef.current.y = (e.clientY - rect.top) / rect.height - 0.5;
+      mouseRef.current.active = true;
+    };
 
-    gsap.to(headlineRef.current, {
-      x: -x * 20,
-      y: -y * 12,
-      duration: 0.6,
-      ease: "power2.out",
-    });
+    const onMouseLeave = () => {
+      mouseRef.current.active = false;
+    };
 
-    // Subtly track horizontal parallax on the wrapper without conflicting with the floating Y animation
-    if (scriptWrapperRef.current) {
-      gsap.to(scriptWrapperRef.current, {
-        x: x * 10,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
+    heroEl.addEventListener("mousemove", onMouseMove, { passive: true });
+    heroEl.addEventListener("mouseleave", onMouseLeave);
 
-    if (techStackRef.current) {
-      gsap.to(techStackRef.current, {
-        y: y * 12,
-        duration: 0.6,
-        ease: "power2.out",
-      });
-    }
-  };
+    // Single GSAP ticker callback applies all parallax at once
+    const tickerCb = () => {
+      const { x, y, active } = mouseRef.current;
+      const targetX = active ? x : 0;
+      const targetY = active ? y : 0;
 
-  const handleMouseLeave = () => {
-    if (!portraitCircleRef.current || !headlineRef.current) return;
-    gsap.to(portraitCircleRef.current, {
-      rotateY: 0,
-      rotateX: 0,
-      duration: 0.6,
-      ease: "power2.out",
-    });
-    gsap.to(headlineRef.current, {
-      x: 0,
-      y: 0,
-      duration: 0.7,
-      ease: "power2.out",
-    });
-    if (scriptWrapperRef.current) {
-      gsap.to(scriptWrapperRef.current, {
-        x: 0,
-        duration: 0.6,
-        ease: "power2.out",
-      });
-    }
-    if (techStackRef.current) {
-      gsap.to(techStackRef.current, {
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
-      });
-    }
-  };
+      if (portraitCircleRef.current) {
+        gsap.to(portraitCircleRef.current, {
+          rotateY: targetX * 16,
+          rotateX: -targetY * 16,
+          duration: 0.45,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+
+      if (headlineRef.current) {
+        gsap.to(headlineRef.current, {
+          x: -targetX * 20,
+          y: -targetY * 12,
+          duration: 0.6,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+
+      if (scriptWrapperRef.current) {
+        gsap.to(scriptWrapperRef.current, {
+          x: targetX * 10,
+          duration: 0.5,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+
+      if (techStackRef.current) {
+        gsap.to(techStackRef.current, {
+          y: targetY * 12,
+          duration: 0.6,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+    };
+
+    gsap.ticker.add(tickerCb);
+
+    return () => {
+      heroEl.removeEventListener("mousemove", onMouseMove);
+      heroEl.removeEventListener("mouseleave", onMouseLeave);
+      gsap.ticker.remove(tickerCb);
+    };
+  }, []);
 
   return (
     <section
       ref={heroRef}
       id="home"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       className="relative min-h-[92vh] flex flex-col justify-between pt-24 pb-6 sm:pt-28 sm:pb-8 overflow-hidden"
     >
       {/* ANIMATED BACKGROUND */}
@@ -313,10 +340,8 @@ const Hero = () => {
             CENTER STAGE WITH RIGHT TECH STACK PILLAR
             ════════════════════════════════════════════ */}
         <div className="relative w-full flex items-center justify-center my-2">
-          
           {/* CENTERPIECE: EDITORIAL SIGNATURE STAGE */}
           <div className="relative w-full h-[270px] sm:h-[320px] md:h-[360px] lg:h-[380px] flex items-center justify-center select-none">
-
             {/* LAYER 1: ARCHITECTURAL "FRONTEND" WATERMARK */}
             <div
               ref={headlineRef}
@@ -331,7 +356,7 @@ const Hero = () => {
                 {frontendLetters.map((char, idx) => (
                   <span
                     key={idx}
-                    className="frontend-char inline-block will-change-transform"
+                    className="frontend-char inline-block"
                   >
                     {char}
                   </span>
@@ -440,7 +465,7 @@ const Hero = () => {
         <div className="flex flex-col items-center text-center mt-2 sm:mt-4 space-y-4">
           
           {/* HEADLINE & BIO */}
-          <div ref={narrativeRef} className="max-w-xl mx-auto space-y-2 will-change-transform">
+          <div ref={narrativeRef} className="max-w-xl mx-auto space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold text-slate-950 dark:text-white tracking-tight">
               Hi, I'm{" "}
               <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 dark:from-sky-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
@@ -455,11 +480,12 @@ const Hero = () => {
           {/* DUAL CTA BUTTONS (Pill Style from Reference) */}
           <div
             ref={actionsRef}
-            className="w-full flex items-center justify-center gap-3.5 sm:gap-4 pt-1 will-change-transform"
+            className="w-full flex items-center justify-center gap-3.5 sm:gap-4 pt-1"
           >
             {/* Primary: View My Work */}
             <a
               href="#work"
+              onClick={handleScrollTo("#work")}
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-full bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 hover:from-orange-600 hover:to-amber-600 dark:from-blue-600 dark:to-sky-500 dark:hover:from-blue-700 dark:hover:to-sky-600 text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/25 hover:shadow-lg hover:shadow-orange-500/35 dark:shadow-blue-500/25 dark:hover:shadow-blue-500/35 transition-all hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
             >
               <span>View My Work</span>
@@ -469,6 +495,7 @@ const Hero = () => {
             {/* Secondary: Let's Talk */}
             <a
               href="#contact"
+              onClick={handleScrollTo("#contact")}
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-full border border-slate-300 dark:border-white/20 bg-white/80 dark:bg-slate-900/70 text-slate-800 dark:text-slate-100 font-semibold text-xs sm:text-sm shadow-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-orange-400/60 dark:hover:border-white/30 transition-all hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap"
             >
               <span>Let's Talk</span>
@@ -482,7 +509,7 @@ const Hero = () => {
               ════════════════════════════════════════════ */}
           <div
             ref={statsRef}
-            className="w-full max-w-lg mx-auto pt-4 sm:pt-6 will-change-transform"
+            className="w-full max-w-lg mx-auto pt-4 sm:pt-6"
           >
             <div className="grid grid-cols-3 divide-x divide-slate-200/90 dark:divide-white/10 text-center py-2">
               <div className="px-2">
@@ -496,7 +523,7 @@ const Hero = () => {
 
               <div className="px-2">
                 <div className="text-xl sm:text-2xl font-extrabold text-orange-500 dark:text-sky-400 font-heading leading-tight">
-                  10+
+                  20+
                 </div>
                 <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium pt-0.5">
                   Projects Completed
@@ -525,7 +552,7 @@ const Hero = () => {
           {/* Bottom Left Accent */}
           <div
             ref={cornerLeftRef}
-            className="hidden sm:flex items-center gap-2 text-left will-change-transform"
+            className="hidden sm:flex items-center gap-2 text-left"
           >
             <div className="w-1 h-8 rounded-full bg-orange-500 dark:bg-sky-400" />
             <div className="text-[11px] leading-tight font-medium text-slate-600 dark:text-slate-400">
@@ -541,7 +568,7 @@ const Hero = () => {
           {/* Bottom Right Accent: Scroll Down button */}
           <div
             ref={cornerRightRef}
-            className="hidden sm:flex items-center gap-2 ml-auto will-change-transform"
+            className="hidden sm:flex items-center gap-2 ml-auto"
           >
             <span
               className="font-script text-lg text-slate-500 dark:text-slate-400"
@@ -551,6 +578,7 @@ const Hero = () => {
             </span>
             <a
               href="#about"
+              onClick={handleScrollTo("#about")}
               aria-label="Scroll down to About section"
               className="w-8 h-8 rounded-full border border-slate-300 dark:border-white/20 bg-white/80 dark:bg-slate-900/60 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-500 dark:hover:text-sky-400 hover:border-orange-400 dark:hover:border-sky-400 transition-all hover:scale-105 active:scale-95 shadow-2xs"
             >

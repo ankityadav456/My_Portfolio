@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useLenis } from "lenis/react";
 import { Sun, Moon, Menu, X, FileDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import dark1 from "../assets/images/ChatGPT Image Dec 9, 2025, 09_11_36 PM.png";
-import light1 from "../assets/images/Modern AY logo design.png";
+import faviconImg from "../assets/images/favicon.png";
 
 const baseUrl = (import.meta.env.BASE_URL || "/").endsWith("/")
   ? import.meta.env.BASE_URL || "/"
@@ -27,54 +27,67 @@ const Header = ({ theme, toggleTheme }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isClickScrollingRef = useRef(false);
   const scrollTimeoutRef = useRef(null);
+  const lenis = useLenis();
 
-  // ROBUST SCROLLSPY ALGORITHM (WITH CLICK LOCK TO PREVENT BLINKING)
+  // ROBUST SCROLLSPY & BACKGROUND DETECTION (Lenis + Native fallback)
+  const updateScrollState = (scrollY) => {
+    setIsScrolled(scrollY > 20);
+
+    // Prevent scroll event from overriding active pill during programmatic smooth scrolling
+    if (isClickScrollingRef.current) return;
+
+    // If at the very top
+    if (scrollY < 100) {
+      setActiveLink("#home");
+      return;
+    }
+
+    const sectionElements = navItems
+      .map((item) => ({
+        id: item.link,
+        el: document.querySelector(item.link),
+      }))
+      .filter((item) => item.el !== null);
+
+    const scrollPosition = scrollY + window.innerHeight * 0.35;
+
+    for (let i = sectionElements.length - 1; i >= 0; i--) {
+      const { id, el } = sectionElements[i];
+      const rect = el.getBoundingClientRect();
+      const top = rect.top + scrollY;
+
+      if (scrollPosition >= top) {
+        setActiveLink(id);
+        break;
+      }
+    }
+
+    // Check if at the bottom of the page
+    if (
+      window.innerHeight + scrollY >=
+      document.documentElement.scrollHeight - 80
+    ) {
+      setActiveLink("#contact");
+    }
+  };
+
+  // 1. Primary: Lenis scroll listener
+  useLenis((lenisInstance) => {
+    updateScrollState(lenisInstance.scroll || 0);
+  });
+
+  // 2. Fallback: Native window scroll listener
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
-      // Prevent scroll event from overriding active pill during smooth scrolling
-      if (isClickScrollingRef.current) return;
-
-      // If at the very top
-      if (window.scrollY < 100) {
-        setActiveLink("#home");
-        return;
-      }
-
-      const sectionElements = navItems
-        .map((item) => ({
-          id: item.link,
-          el: document.querySelector(item.link),
-        }))
-        .filter((item) => item.el !== null);
-
-      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { id, el } = sectionElements[i];
-        const rect = el.getBoundingClientRect();
-        const top = rect.top + window.scrollY;
-
-        if (scrollPosition >= top) {
-          setActiveLink(id);
-          break;
-        }
-      }
-
-      // Check if at the bottom of the page
-      if (
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 80
-      ) {
-        setActiveLink("#contact");
-      }
+    const handleNativeScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      updateScrollState(scrollY);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener("scroll", handleNativeScroll, { passive: true });
+    handleNativeScroll();
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleNativeScroll);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, []);
@@ -91,11 +104,12 @@ const Header = ({ theme, toggleTheme }) => {
 
     const section = document.querySelector(link);
     if (section) {
-      const topOffset = section.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: topOffset,
-        behavior: "smooth",
-      });
+      if (lenis) {
+        lenis.scrollTo(section, { offset: -80 });
+      } else {
+        const topOffset = section.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: topOffset });
+      }
     }
     setMobileMenuOpen(false);
   };
@@ -104,8 +118,8 @@ const Header = ({ theme, toggleTheme }) => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "py-2.5 sm:py-3 ios-glass-bar backdrop-blur-2xl backdrop-saturate-[180%]"
-          : "py-3.5 sm:py-4 border-b border-white/20 dark:border-white/[0.05]"
+          ? "py-2.5 sm:py-3 bg-white/80 dark:bg-[#090d16]/85 ios-glass-bar backdrop-blur-2xl backdrop-saturate-[180%] border-b border-slate-200/80 dark:border-white/10 shadow-md shadow-slate-900/5 dark:shadow-black/40 rounded-b-3xl"
+          : "py-3.5 sm:py-4 bg-transparent border-b border-white/20 dark:border-white/[0.05]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -114,26 +128,31 @@ const Header = ({ theme, toggleTheme }) => {
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, "#home")}
-          className="flex items-center gap-2.5 sm:gap-3 group min-w-0"
+          className="flex items-center gap-3 group min-w-0 select-none py-1"
         >
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden ring-1 ring-black/10 dark:ring-white/10 shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0">
-            <img
-              src={theme === "dark" ? dark1 : light1}
-              alt="Ankit Yadav Logo"
-              className="w-full h-full object-cover"
-            />
+          {/* Executive Precision Medallion with Favicon */}
+          <div className="relative w-10 h-10 rounded-full p-[1.5px] bg-gradient-to-b from-orange-500/40 via-amber-400/30 to-orange-500/20 dark:from-sky-400/40 dark:via-blue-500/30 dark:to-cyan-400/20 shadow-sm group-hover:shadow-[0_0_16px_rgba(249,115,22,0.35)] dark:group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)] transition-all duration-300 shrink-0">
+            <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-slate-100 to-orange-50/60 dark:from-white-800 dark:to-slate-900 flex items-center justify-center ring-1 ring-black/5 dark:ring-white/10">
+              <img
+                src={faviconImg}
+                alt="Ankit Yadav Favicon"
+                className="w-full h-full object-contain pt-0.5 px-0.5 group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
           </div>
-          <div className="text-left min-w-0">
+
+          {/* Typography Lockup: Name + Role + Status Indicator */}
+          <div className="flex flex-col text-left justify-center min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-heading font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white truncate">
+              <span className="font-heading font-extrabold text-[18px] sm:text-[18px] tracking-tight transition-colors duration-200 truncate bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 dark:from-sky-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
                 Ankit Yadav
               </span>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1" />
-                Senior Dev
-              </span>
+              
             </div>
-            {/* <p className="text-[10px] sm:text-[11px] text-slate-600 dark:text-slate-400 font-medium truncate">3+ YOE • Full Stack</p> */}
+            {/* <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+              <span className="text-primary font-semibold">dev.</span>
+              <span className="truncate">Frontend &amp; MERN</span>
+            </div> */}
           </div>
         </a>
 
